@@ -2,7 +2,7 @@
 
 use App\DB;
 
-define('DB_NAME', 'fish.db');
+define('DB_NAME', 'db/fish.db');
 
 require_once 'functions.php';
 require_once 'vendor/autoload.php';
