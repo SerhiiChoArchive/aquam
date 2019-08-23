@@ -1,5 +1,5 @@
 <?php
-require 'inc/main.php';
+require_once 'vendor/autoload.php';
 use App\Helper;
 ?>
 <!DOCTYPE html>
