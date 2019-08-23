@@ -2,4 +2,4 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-define('DB_NAME', 'db/fish.db');
+define('FISH_CACHE_FILE_PATH', 'cache/fish.db');
