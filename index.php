@@ -1,3 +1,7 @@
+<?php
+require 'inc/main.php';
+use App\Helper;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,6 +16,12 @@
             <input type="file" name="file" id="file" required>
             <button type="submit">Загрузить</button>
         </form>
+
+        <?php if (isset($_GET['msg'])): ?>
+            <div class="message">
+                <p><?= Helper::getValidationMessage(); ?></p>
+            </div>
+        <?php endif; ?>
     </div>
     <style>
         body {
@@ -34,7 +44,7 @@
 
         form input {
             display: block;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         button {
@@ -45,6 +55,16 @@
             padding: 8px 32px;
             font-size: 19px;
             box-shadow: 2px 2px 4px #bbbaba;
+            cursor: pointer;
+        }
+
+        .message {
+            padding: 1px 18px;
+            border-left: 5px solid #447e80;
+            display: inline-block;
+            border-radius: 0px 3px 3px 0;
+            margin-top: 30px;
+            background-color: #f4fffa;
         }
     </style>
 </body>
