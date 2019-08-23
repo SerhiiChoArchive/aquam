@@ -9,21 +9,11 @@ if (!$file | empty($file['name'])) {
     die();
 }
 
-$row = 1;
+$file = new SplFileObject($file['tmp_name']);
 $result = [];
 
-if (($handle = fopen($file['tmp_name'], 'r')) !== false) {
-    
-    while (($lines = fgetcsv($handle, 1000, ",")) !== false) {
-        $num = count($lines);
-
-        for ($i = 0; $i < $num; $i++) {
-            if (!empty($lines[$i])) {
-                $result[] = trim($lines[$i]);
-            }
-        }
-    }
-    fclose($handle);
+while (!$file->eof()) {
+    $result[] = $file->fgetcsv();
 }
 
 dd($result);
