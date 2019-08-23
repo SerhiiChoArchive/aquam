@@ -1,5 +1,6 @@
 <?php declare(strict_types=1);
 
+use App\CsvHandler;
 use App\Helper;
 
 require_once '../vendor/autoload.php';
@@ -11,11 +12,5 @@ if (!$file) {
     exit;
 }
 
-$file = new SplFileObject($file['tmp_name']);
-$result = [];
-
-while (!$file->eof()) {
-    $result[] = $file->fgetcsv();
-}
-
-dd($result);
+$file_data = new CsvHandler($file['tmp_name']);
+dd($file_data->getAll());
