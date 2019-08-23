@@ -67,5 +67,10 @@ use App\Helper;
             background-color: #f4fffa;
         }
     </style>
+    <script>
+        setTimeout(function () {
+            document.querySelector('.message').remove()
+        }, 3000)
+    </script>
 </body>
 </html>
