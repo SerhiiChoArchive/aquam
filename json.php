@@ -2,9 +2,7 @@
 
 use App\DB;
 
-require_once 'vendor/autoload.php';
-
-define('DB_NAME', 'db/fish.db');
+require_once 'inc/main.php';
 
 $result = (new DB)
     ->createTable()

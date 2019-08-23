@@ -3,7 +3,7 @@
 use App\CsvHandler;
 use App\Helper;
 
-require_once '../vendor/autoload.php';
+require_once 'main.php';
 
 $file = Helper::getFileFromRequest($_FILES);
 $file || Helper::redirect('../index.php');
