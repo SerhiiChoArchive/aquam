@@ -77,9 +77,9 @@ use App\Helper;
         }
     </style>
     <script>
-        // setTimeout(function () {
-        //     document.querySelector('.message').remove()
-        // }, 3000)
+        setTimeout(function () {
+            document.querySelector('.message').remove()
+        }, 3000)
     </script>
 </body>
 </html>
