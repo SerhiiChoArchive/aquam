@@ -4,4 +4,4 @@ require_once 'vendor/autoload.php';
 
 header('Content-Type: application/json');
 
-echo json_encode($result);
+echo file_get_contents('cache/fish.json');

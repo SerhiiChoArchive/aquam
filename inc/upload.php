@@ -9,6 +9,6 @@ $file = Helper::getFileFromRequest($_FILES);
 $file || Helper::redirect('../index.php?msg=error');
 
 $file_data = new CsvHandler($file['tmp_name']);
-dd($file_data->getAll());
+$file_data->SaveData();
 
 Helper::redirect('../index.php?msg=success');
