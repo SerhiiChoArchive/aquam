@@ -1,5 +1,7 @@
 <?php declare(strict_types=1);
 
+namespace App;
+
 class Query
 {
     protected function getAllFrom(string $table_name, SQLite3 $db_inst): array
