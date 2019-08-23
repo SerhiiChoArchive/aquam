@@ -7,9 +7,9 @@
 </head>
 <body>
     <div class="container">
-        <form action="upload.php" method="POST" enctype="multipart/form-data">
+        <form action="inc/upload.php" method="POST" enctype="multipart/form-data">
             <label for="file">Выбрать CSV файл</label>
-            <input type="file" name="file" id="file">
+            <input type="file" name="file" id="file" required>
             <button type="submit">Загрузить</button>
         </form>
     </div>

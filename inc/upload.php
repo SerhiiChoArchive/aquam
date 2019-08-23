@@ -1,12 +1,14 @@
 <?php declare(strict_types=1);
 
-require_once 'vendor/autoload.php';
+use App\Helper;
 
-$file = $_FILES['file'] ?? null;
+require_once '../vendor/autoload.php';
 
-if (!$file | empty($file['name'])) {
-    header('Location: index.php');
-    die();
+$file = Helper::getFileFromRequest($_FILES);
+
+if (!$file) {
+    header('Location: ../index.php');
+    exit;
 }
 
 $file = new SplFileObject($file['tmp_name']);
