@@ -2,9 +2,10 @@
 
 namespace App;
 
+use Query;
 use SQLite3;
 
-class DB
+final class DB extends Query
 {
     private $db;
 
@@ -18,11 +19,11 @@ class DB
 
     public function createTable()
     {
-        createFishTable($this->db);
+        $this->createFishTable($this->db);
         return $this;
     }
 
-    public function insertData()
+    public function insertData(): self
     {
         $sql = "
             insert into fish (name, price)
@@ -39,7 +40,7 @@ class DB
 
     public function getAll(): array
     {
-        return getAllFrom('fish', $this->db);
+        return $this->getAllFrom('fish', $this->db);
     }
 
     public function __destruct()
