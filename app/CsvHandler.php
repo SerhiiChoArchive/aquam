@@ -30,9 +30,10 @@ final class CsvHandler
             $result[] = $file->fgetcsv();
         }
 
-        $result = json_encode($this->addTitlesForArrayItems($result));
-
-        file_put_contents(__DIR__ . '/../cache/fish.json', $result);
+        file_put_contents(__DIR__ . '/../cache/fish', json_encode([
+            'status' => 200,
+            'data' => $this->addTitlesForArrayItems($result),
+        ]));
     }
 
     private function titleIsNotValid(): bool
@@ -57,7 +58,7 @@ final class CsvHandler
                 continue;
             }
 
-            $new_items[$this->title][] = $item;
+            $new_items[$this->title][] = array_slice($item, 0, 7);
         }
 
         $new_items = $this->removeFirstItemFromEachArrayItem($new_items);
@@ -86,6 +87,6 @@ final class CsvHandler
 
     private function trimTitle(string $title): string
     {
-        return trim($title, "\t\n\r ф");
+        return trim($title, "\t\n\r\0\x0B ф");
     }
 }
