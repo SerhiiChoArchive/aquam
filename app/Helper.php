@@ -9,4 +9,10 @@ final class Helper
         $file = $files['file'] ?? null;
         return $file && !empty($file['name']) ? $file : null;
     }
+
+    public static function redirect(string $path): void
+    {
+        header("Location: {$path}");
+        exit;
+    }
 }
