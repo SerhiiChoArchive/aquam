@@ -11,6 +11,8 @@ use App\Helper;
 </head>
 <body>
     <div class="container">
+        <p><img src="assets/logo-aqua.png" alt="logo"></p>
+
         <form action="inc/upload.php" method="POST" enctype="multipart/form-data">
             <label for="file">Выбрать CSV файл</label>
             <input type="file" name="file" id="file" required>
@@ -18,9 +20,11 @@ use App\Helper;
         </form>
 
         <?php if (isset($_GET['msg'])): ?>
+        <div>
             <div class="message">
                 <p><?= Helper::getValidationMessage(); ?></p>
             </div>
+        </div>
         <?php endif; ?>
     </div>
     <style>
@@ -31,8 +35,13 @@ use App\Helper;
 
         .container {
             max-width: 1000px;
-            text-align: left;
-            padding: 40px 10%;
+            text-align: center;
+            padding: 10px 10%;
+            margin: auto;
+        }
+
+        form {
+            display: inline-block;
         }
 
         form label {
@@ -44,7 +53,7 @@ use App\Helper;
 
         form input {
             display: block;
-            margin-bottom: 20px;
+            margin: 30px auto;
         }
 
         button {
@@ -68,9 +77,9 @@ use App\Helper;
         }
     </style>
     <script>
-        setTimeout(function () {
-            document.querySelector('.message').remove()
-        }, 3000)
+        // setTimeout(function () {
+        //     document.querySelector('.message').remove()
+        // }, 3000)
     </script>
 </body>
 </html>
