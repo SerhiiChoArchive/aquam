@@ -13,7 +13,7 @@ use App\Helper;
     <div class="container">
         <p><img src="assets/logo-aqua.png" alt="logo"></p>
 
-        <form action="inc/upload.php" method="POST" enctype="multipart/form-data">
+        <form action="inc/upload" method="POST" enctype="multipart/form-data">
             <label for="file">Выбрать CSV файл</label>
             <input type="file" name="file" id="file" required>
             <button type="submit">Загрузить</button>

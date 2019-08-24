@@ -11,4 +11,4 @@ $file || Helper::redirect('../index.php?msg=error');
 $file_data = new CsvHandler($file['tmp_name']);
 $file_data->SaveData();
 
-Helper::redirect('../index.php?msg=success');
+Helper::redirect('../?msg=success');
