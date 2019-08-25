@@ -1,3 +1,9 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     font-family: Helvetica, Arial, sans-serif;
@@ -35,6 +41,7 @@ button {
     font-size: 19px;
     box-shadow: 2px 2px 4px #bbbaba;
     cursor: pointer;
+    margin-top: 32px;
 }
 
 .message {
@@ -46,6 +53,47 @@ button {
     background-color: #f4fffa;
 }
 
-.nnmp-input-field {
+/* Upload file input */
+.input-field {
     position: relative;
+    width: 300px;
+    height: 46px;
+}
+
+.input-upload-label:after {
+    width: 90%;
+    height: 60px;
+    position: absolute;
+    top: 0;
+    content: attr(data-title);
+    padding: 19px 0;
+    text-align: center;
+    border-radius: 5px;
+    border: 3px dashed #02686f;
+    color: #02686f;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    transition: color 200ms, border-color 200ms;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 15px;
+}
+
+.input-upload-label input#input-file,
+.input-upload-label input#input-file {
+    width: 0;
+    height: 0;
+}
+
+.input-upload-label:hover:after {
+    border-color: #333;
+    color: #333;
+}
+
+.input-upload-file-path {
+    position: absolute;
+    bottom: -20px;
+    left: 5px;
+    color: #02686f;
 }

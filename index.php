@@ -16,8 +16,15 @@ use App\Helper;
         <p><img src="assets/logo-aqua.png" alt="logo"></p>
 
         <form action="inc/upload" method="POST" enctype="multipart/form-data">
-            <label for="file">Выбрать CSV файл</label>
-            <input type="file" name="file" id="file" required>
+            <div class="input-field">
+                <label class="input-upload-label" for="input-file" data-title="✚ Выбрать CSV файл">
+                    <input type="file" name="file" id="input-file" required>
+                </label>
+
+                <small class="input-upload-file-path">
+                    <b id="file-path"></b>
+                </small>
+            </div>
             <button type="submit">Загрузить</button>
         </form>
 

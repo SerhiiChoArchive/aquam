@@ -1,3 +1,15 @@
 setTimeout(function () {
-    document.querySelector('.message').remove()
+    const msg = document.querySelector('.message')
+    msg ? msg.remove() : null
 }, 3000)
+
+;(function ShowFilePathAfterChoosingOfferta() {
+    const showPathIn = document.getElementById('file-path')
+    const fileInput = document.getElementById('input-file')
+
+    if (!fileInput) return
+
+    fileInput.addEventListener('change', function (e) {
+        showPathIn.innerText = e.target.files[0].name
+    })
+})()
