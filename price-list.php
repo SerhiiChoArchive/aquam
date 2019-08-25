@@ -6,4 +6,4 @@ header('Content-Type: application/json');
 
 $content = @file_get_contents('cache/fish');
 
-echo $content ? $content : json_encode(['status' => 404, 'data' => null]);
+echo $content ? $content : '{}';

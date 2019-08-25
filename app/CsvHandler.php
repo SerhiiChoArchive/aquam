@@ -30,10 +30,8 @@ final class CsvHandler
             $result[] = $file->fgetcsv();
         }
 
-        file_put_contents(__DIR__ . '/../cache/fish', json_encode([
-            'status' => 200,
-            'data' => $this->addTitlesForArrayItems($result),
-        ], JSON_UNESCAPED_UNICODE));
+        $result = $this->addTitlesForArrayItems($result);
+        file_put_contents(__DIR__ . '/../cache/fish', json_encode($result, JSON_UNESCAPED_UNICODE));
     }
 
     private function titleIsNotValid(): bool
