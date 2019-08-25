@@ -25,6 +25,9 @@ use App\Helper;
                     <b id="file-path"></b>
                 </small>
             </div>
+            <div class="input-field">
+                <input type="password" name="password" id="password" placeholder="Пароль" required>
+            </div>
             <button type="submit">Загрузить</button>
         </form>
 

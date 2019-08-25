@@ -20,18 +20,6 @@ form {
     display: inline-block;
 }
 
-form label {
-    display: block;
-    margin: 12px 0;
-    font-size: 14px;
-    font-weight: bold;
-}
-
-form input {
-    display: block;
-    margin: 30px auto;
-}
-
 button {
     background: #447e80;
     color: white;
@@ -41,7 +29,7 @@ button {
     font-size: 19px;
     box-shadow: 2px 2px 4px #bbbaba;
     cursor: pointer;
-    margin-top: 32px;
+    margin-top: 20px;
 }
 
 .message {
@@ -53,18 +41,26 @@ button {
     background-color: #f4fffa;
 }
 
+.input-field input[type=password] {
+    width: 90%;
+    border: 1px solid #447e80;
+    padding: 7px 9px;
+    border-radius: 3px;
+    margin-top: 35px;
+}
+
 /* Upload file input */
 .input-field {
     position: relative;
     width: 300px;
-    height: 46px;
+    height: 73px;
 }
 
 .input-upload-label:after {
     width: 90%;
     height: 60px;
     position: absolute;
-    top: 0;
+    top: 35px;
     content: attr(data-title);
     padding: 19px 0;
     text-align: center;
