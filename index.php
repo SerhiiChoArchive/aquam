@@ -7,6 +7,8 @@ use App\Helper;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/main.css">
+    <link rel="shortcut icon" href="assets/favicon.png" type="image/x-icon">
     <title>Загрузить файл</title>
 </head>
 <body>
@@ -27,59 +29,6 @@ use App\Helper;
         </div>
         <?php endif; ?>
     </div>
-    <style>
-        body {
-            margin: 0;
-            font-family: Helvetica, Arial, sans-serif;
-        }
-
-        .container {
-            max-width: 1000px;
-            text-align: center;
-            padding: 10px 10%;
-            margin: auto;
-        }
-
-        form {
-            display: inline-block;
-        }
-
-        form label {
-            display: block;
-            margin: 12px 0;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        form input {
-            display: block;
-            margin: 30px auto;
-        }
-
-        button {
-            background: #447e80;
-            color: white;
-            border: none;
-            border-radius: 3px;
-            padding: 8px 32px;
-            font-size: 19px;
-            box-shadow: 2px 2px 4px #bbbaba;
-            cursor: pointer;
-        }
-
-        .message {
-            padding: 1px 18px;
-            border-left: 5px solid #447e80;
-            display: inline-block;
-            border-radius: 0px 3px 3px 0;
-            margin-top: 30px;
-            background-color: #f4fffa;
-        }
-    </style>
-    <script>
-        setTimeout(function () {
-            document.querySelector('.message').remove()
-        }, 3000)
-    </script>
+    <script src="assets/main.js"></script>
 </body>
 </html>
