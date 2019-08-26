@@ -31,7 +31,9 @@ final class CsvHandler
         }
 
         $result = $this->addTitlesForArrayItems($result);
+
         file_put_contents(__DIR__ . '/../cache/fish', json_encode($result, JSON_UNESCAPED_UNICODE));
+        unlink($this->file_path);
     }
 
     private function titleIsNotValid(): bool

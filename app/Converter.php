@@ -3,30 +3,47 @@
 namespace App;
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 final class Converter
 {
-    /** @var string $file_path */
-    private $file_path;
+    /** @var string */
+    private $xls_file_path;
 
-    public function __construct(string $file_path)
+    /** @var string */
+    private $csv_file_path;
+
+    public function __construct(string $xls_file_path)
     {
-        $this->file_path = $file_path;
+        $this->xls_file_path = $xls_file_path;
+        $this->csv_file_path =$this->generateCsvFilename();
     }
 
     public function getCsvFilePath(): string
     {
-        $spreadsheet = IOFactory::load($_FILES['file']['tmp_name']);
-        $rand = mt_rand(1, 10000);
-        $filename = __DIR__ . "/../cache/$rand.csv";
+        $spreadsheet = IOFactory::load($this->xls_file_path);
 
+        $this->setHeaders();
+        $this->saveFile($spreadsheet);
+
+        return $this->csv_file_path;
+    }
+
+    private function setHeaders(): void
+    {
         header('Content-Type: application/vnd.ms-excel');
-        header("Content-Disposition: attachment; filename={$filename}");
+        header("Content-Disposition: attachment; filename={$this->csv_file_path}");
+    }
 
+    private function generateCsvFilename(): string
+    {
+        $rand = mt_rand(1, 99999);
+        return __DIR__ . "/../cache/$rand.csv";
+    }
+
+    private function saveFile(Spreadsheet $spreadsheet): void
+    {
         $io_factory = IOFactory::createWriter($spreadsheet, 'Csv');
-        $io_factory->save("/{$filename}");
-        // unlink($filename);
-
-        return $filename;
+        $io_factory->save("/{$this->csv_file_path}");
     }
 }
