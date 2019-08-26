@@ -11,7 +11,9 @@
             "App\\": "app"
         }
     },
-    "require": {},
+    "require": {
+        "phpoffice/phpspreadsheet": "^1.9"
+    },
     "require-dev": {
         "symfony/var-dumper": "^4.3"
     }
