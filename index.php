@@ -9,7 +9,7 @@ use App\Helper;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/main.css">
     <link rel="shortcut icon" href="assets/favicon.png" type="image/x-icon">
-    <title>Загрузить файл</title>
+    <title>Загрузить CSV файл</title>
 </head>
 <body>
     <div class="container">
