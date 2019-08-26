@@ -1,7 +1,8 @@
 <?php declare(strict_types=1);
 
-use App\CsvHandler;
+use App\Converter;
 use App\Helper;
+use App\CsvHandler;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -12,7 +13,8 @@ if (!Helper::passwordIsCorrect($_POST)) {
     Helper::redirect('../?msg=error_pwd_wrong');
 }
 
-$file_data = new CsvHandler($file['tmp_name']);
-$file_data->SaveData();
+$converter = new Converter($file['tmp_name']);
+$file_data = new CsvHandler($converter->getCsvFilePath());
+$file_data->saveData();
 
 Helper::redirect('../?msg=success');

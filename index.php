@@ -9,7 +9,7 @@ use App\Helper;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/main.css">
     <link rel="shortcut icon" href="assets/favicon.png" type="image/x-icon">
-    <title>Загрузить CSV файл</title>
+    <title>Загрузить XLS файл</title>
 </head>
 <body>
     <div class="container">
@@ -17,7 +17,7 @@ use App\Helper;
 
         <form action="inc/upload" method="POST" enctype="multipart/form-data">
             <div class="input-field">
-                <label class="input-upload-label" for="input-file" data-title="✚ Выбрать CSV файл">
+                <label class="input-upload-label" for="input-file" data-title="✚ Выбрать XLS файл">
                     <input type="file" name="file" id="input-file" required>
                 </label>
 
