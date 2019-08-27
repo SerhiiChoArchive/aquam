@@ -32,7 +32,7 @@ final class CsvHandler
 
         $result = $this->addTitlesForArrayItems($result);
 
-        file_put_contents(__DIR__ . '/../cache/fish', json_encode($result, JSON_UNESCAPED_UNICODE));
+        file_put_contents(get_cache_file_path('price-list'), json_encode($result, JSON_UNESCAPED_UNICODE));
         unlink($this->file_path);
     }
 
@@ -85,8 +85,8 @@ final class CsvHandler
         return !is_numeric($item) && !is_null($item);
     }
 
-    private function trimTitle(string $title): string
+    private function trimTitle(?string $title): string
     {
-        return trim($title, "\t\n\r\0\x0B ф");
+        return trim($title ?? '', "\t\n\r\0\x0B ф");
     }
 }

@@ -3,7 +3,7 @@ setTimeout(function () {
     msg ? msg.remove() : null
 }, 3000)
 
-;(function ShowFilePathAfterChoosingOfferta() {
+;(function ShowFilePathAfterChoosingFile() {
     const showPathIn = document.getElementById('file-path')
     const fileInput = document.getElementById('input-file')
 

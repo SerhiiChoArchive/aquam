@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Загрузить XLS файл{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <p><img src="{{ asset('images/logo-aqua.png') }}" alt="logo"></p>
+
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <div class="input-field">
+                <label class="input-upload-label" for="input-file" data-title="✚ Выбрать XLS файл">
+                    <input type="file" name="file" id="input-file" required>
+                </label>
+
+                <small class="input-upload-file-path">
+                    <b id="file-path"></b>
+                </small>
+            </div>
+            <div class="input-field">
+                <input type="password" name="password" id="password" placeholder="Пароль" required>
+            </div>
+            <button type="submit">Загрузить</button>
+        </form>
+
+        {% if message %}
+            <div>
+                <div class="message">{{ message }}</div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+

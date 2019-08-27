@@ -37,13 +37,12 @@ final class Converter
 
     private function generateCsvFilename(): string
     {
-        $rand = mt_rand(1, 99999);
-        return __DIR__ . "/../cache/$rand.csv";
+        return get_cache_file_path(mt_rand(1, 99999) . '.csv');
     }
 
     private function saveFile(Spreadsheet $spreadsheet): void
     {
         $io_factory = IOFactory::createWriter($spreadsheet, 'Csv');
-        $io_factory->save("/{$this->csv_file_path}");
+        $io_factory->save($this->csv_file_path);
     }
 }
