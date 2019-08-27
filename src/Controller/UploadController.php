@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Converter;
 use App\CsvHandler;
-use App\Helper;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,8 +13,6 @@ final class UploadController extends AbstractController
 {
     /**
      * @Route("/upload", methods={"POST"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function upload(Request $request): RedirectResponse
     {
