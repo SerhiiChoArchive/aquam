@@ -19,20 +19,31 @@ final class UploadController extends AbstractController
      */
     public function upload(Request $request): RedirectResponse
     {
-        $file = $request->files->get('file');
+        $validate = $this->validate($request);
 
-        if (!$file->isValid() || $file->getClientMimeType() !== 'application/vnd.ms-excel') {
-            return $this->redirect('/?msg=error');
+        if (is_string($validate)) {
+            return $this->redirect("/?msg=$validate");
         }
 
-        if ($request->get('password') !== getenv('UPLOAD_PASSWORD')) {
-            return $this->redirect('/?msg=error_pwd_wrong');
-        }
-
-        $converter = new Converter($file->getPathName());
+        $converter = new Converter($request->files->get('file')->getPathName());
         $file_data = new CsvHandler($converter->getCsvFilePath());
         $file_data->saveData();
 
         return $this->redirect('/?msg=success');
+    }
+
+    private function validate(Request $request): ?string
+    {
+        $file = $request->files->get('file');
+
+        if (!$file->isValid() || $file->getClientMimeType() !== 'application/vnd.ms-excel') {
+            return 'msg=error';
+        }
+
+        if ($request->get('password') !== getenv('UPLOAD_PASSWORD')) {
+            return 'error_pwd_wrong';
+        }
+
+        return null;
     }
 }
