@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 final class UploadController extends AbstractController
 {
     /**
-     * @Route("/upload")
+     * @Route("/upload", methods={"POST"})
      */
     public function upload()
     {

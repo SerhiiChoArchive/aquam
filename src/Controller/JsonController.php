@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 final class JsonController extends AbstractController
 {
     /**
-     * @Route("/price-list")
+     * @Route("/price-list", methods={"GET"})
      */
     public function priceList()
     {

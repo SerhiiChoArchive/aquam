@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 final class PageController extends AbstractController
 {
     /**
-     * @Route("/")
+     * @Route("/", methods={"GET"})
      */
     public function home()
     {
