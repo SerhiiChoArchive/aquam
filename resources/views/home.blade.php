@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container">
-        <p><img src="{{ asset('images/logo-aqua.png') }}" alt="logo"></p>
+        <p><img src="{{ asset('images/logo-aqua.png') }}" alt="aqua-m" width="140"></p>
 
         <form action="{{ action('UploadController@upload') }}" method="POST" enctype="multipart/form-data">
             @csrf
