@@ -30,10 +30,6 @@ class UploadController extends Controller
             return 'Выберите xls файл';
         }
 
-        if ($request->file->getClientMimeType() !== 'application/vnd.ms-excel') {
-            return 'Формат файла должен быть формата xls';
-        }
-
         if ($request->password !== config('app.password')) {
             return 'Неправильный пароль';
         }
