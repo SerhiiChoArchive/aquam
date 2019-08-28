@@ -58,7 +58,15 @@ final class CsvHandler
                 continue;
             }
 
-            $new_items[$this->title][] = array_slice($item, 0, 7);
+            $new_items[$this->title][] = [
+                'number' => $item[0],
+                'name' => $item[1],
+                'size' => $item[2],
+                'price' => $item[3],
+                'comment' => $item[4],
+                'order' => $item[5],
+                'sum' => $item[6],
+            ];
         }
 
         $new_items = $this->removeFirstItemFromEachArrayItem($new_items);
