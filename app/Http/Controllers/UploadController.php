@@ -26,7 +26,7 @@ class UploadController extends Controller
 
     public function validateRequest(Request $request): ?string
     {
-        if (!$request->has('file')) {
+        if (!$request->has('file') || is_null($request->file)) {
             return 'Выберите xls файл';
         }
 

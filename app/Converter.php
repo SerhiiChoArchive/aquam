@@ -31,8 +31,10 @@ final class Converter
 
     private function setHeaders(): void
     {
-        header('Content-Type: application/vnd.ms-excel');
-        header("Content-Disposition: attachment; filename={$this->csv_file_path}");
+        if (!app()->environment('testing')) {
+            header('Content-Type: application/vnd.ms-excel');
+            header("Content-Disposition: attachment; filename={$this->csv_file_path}");
+        }
     }
 
     private function generateCsvFilename(): string
