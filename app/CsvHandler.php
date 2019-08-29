@@ -30,7 +30,7 @@ final class CsvHandler
             $result[] = $file->fgetcsv();
         }
 
-        $result = $this->addTitlesForArrayItems($result);
+        $result = ['data' => $this->addTitlesForArrayItems($result)];
 
         cache()->forever('price-list', json_encode($result, JSON_UNESCAPED_UNICODE));
         unlink($this->file_path);
