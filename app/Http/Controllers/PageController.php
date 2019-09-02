@@ -8,6 +8,8 @@ class PageController extends Controller
 {
     public function home(): View
     {
-        return view('home');
+        return view('home', [
+            'last_upload' => time_ago(cache()->get('last_upload')),
+        ]);
     }
 }

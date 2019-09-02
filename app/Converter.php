@@ -2,7 +2,9 @@
 
 namespace App;
 
+use InvalidArgumentException;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 final class Converter
@@ -19,14 +21,19 @@ final class Converter
         $this->csv_file_path =$this->generateCsvFilename();
     }
 
-    public function getCsvFilePath(): string
+    public function getCsvFilePath(): ?string
     {
-        $spreadsheet = IOFactory::load($this->xls_file_path);
+        try {
+            $spreadsheet = IOFactory::load($this->xls_file_path);
 
-        $this->setHeaders();
-        $this->saveFile($spreadsheet);
+            $this->setHeaders();
+            $this->saveFile($spreadsheet);
 
-        return $this->csv_file_path;
+            return $this->csv_file_path;
+        } catch (Exception | InvalidArgumentException $e) {
+            logger()->error($e->getMessage());
+        }
+        return null;
     }
 
     private function setHeaders(): void

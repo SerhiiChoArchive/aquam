@@ -23,6 +23,15 @@
             <button type="submit">Загрузить</button>
         </form>
 
+        @if ($last_upload)
+            <div style="margin-top:50px">
+                <span>
+                    Последнее обновление:<br>
+                    <b style="color:#447e80">{{ $last_upload }}</b>
+                </span>
+            </div>
+        @endif
+
         {{-- Alert messages --}}
         <div>
             @if (session('error'))
