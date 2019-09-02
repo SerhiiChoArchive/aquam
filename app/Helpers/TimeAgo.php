@@ -4,8 +4,12 @@ namespace App;
 
 class TimeAgo
 {
-    public static function get($date)
+    public static function get($date = null)
     {
+        if (is_null($date)) {
+            return '';
+        }
+
         $date = strtotime($date);
         $stf = 0;
         $cur_time = time();
