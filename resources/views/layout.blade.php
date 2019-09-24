@@ -24,6 +24,10 @@
                 classes: "green darken-2",
             })
         @endif
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var inst = M.Collapsible.init(document.querySelectorAll('.collapsible'));
+        });
     </script>
 </body>
 </html>
