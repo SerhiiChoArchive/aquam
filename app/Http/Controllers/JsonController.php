@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\TimeAgo;
 use Illuminate\Http\Response;
 
 class JsonController extends Controller
