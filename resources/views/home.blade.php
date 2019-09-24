@@ -94,7 +94,7 @@
                             </div>
                         </li>
                     @empty
-                        Пусто
+                        <div class="collapsible-header"><p class="flow-text">Пусто</p></div>
                     @endforelse
                 </ul>
             </div>
