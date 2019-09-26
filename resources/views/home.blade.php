@@ -42,14 +42,6 @@
                             <td>{{ $last_request ?? '' }}</td>
                         </tr>
                         <tr>
-                            <td>Все визиты:</td>
-                            <td>{{ cache()->get('all_requests') }}</td>
-                        </tr>
-                        <tr>
-                            <td>Визиты за сегодня:</td>
-                            <td>{{ cache()->get('requests_today') }}</td>
-                        </tr>
-                        <tr>
                             <td>Количество категорий:</td>
                             <td>{{ $price_categories_amount }}</td>
                         </tr>
