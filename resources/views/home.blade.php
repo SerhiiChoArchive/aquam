@@ -34,7 +34,7 @@
                 <table style="margin-top:40px" class="striped responsive-table">
                     <tbody>
                         <tr>
-                            <td>Последнее обновление:</td>
+                            <td>Последнее обновление прайса:</td>
                             <td>{{ $last_upload ?? '' }}</td>
                         </tr>
                         <tr>
