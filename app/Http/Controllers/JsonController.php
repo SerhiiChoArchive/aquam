@@ -15,6 +15,11 @@ class JsonController extends Controller
         ]);
     }
 
+    public function info()
+    {
+        return response(date('d-m-Y', strtotime(cache()->get('last_upload'))), 200);
+    }
+
     private function handleHash(): void
     {
         $requests = (int) cache()->get('all_requests');
