@@ -17,7 +17,8 @@ class JsonController extends Controller
 
     private function handleHash(): void
     {
-        cache()->increment('all_requests');
+        $requests = (int) cache()->get('all_requests');
+        cache()->forever('all_requests', ++$requests);
 
         $visits = cache()->get('requests_today') ?? 0;
         cache()->put('requests_today', ++$visits, 60 * 60 * 24);
