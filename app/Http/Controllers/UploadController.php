@@ -7,11 +7,13 @@ use App\CsvHandler;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use SplFileObject;
 
 class UploadController extends Controller
 {
     public function upload(Request $request): RedirectResponse
     {
+        $images = $this->getImagesFromCSV($request);
         $validate = $this->validateRequest($request);
 
         if (!is_null($validate)) {
@@ -25,7 +27,7 @@ class UploadController extends Controller
             return back()->with('error', 'Ошибка конвертации файла');
         }
 
-        (new CsvHandler($file_path))->saveData();
+        (new CsvHandler($file_path, $images))->saveData();
 
         try {
             cache()->put('last_upload', date('Y-m-d H:i:s'));
@@ -34,6 +36,29 @@ class UploadController extends Controller
         }
 
         return back()->with('success', 'Файл загружен и данный успешно обновленны!');
+    }
+
+    private function getImagesFromCSV(Request $request): ?array
+    {
+        if (!$request->has('images') || is_null($request->images)) {
+            return null;
+        }
+
+        $file = new SplFileObject($request->images->getPathName());
+
+        $result = [];
+
+        while (!$file->eof()) {
+            $csv = $file->fgetcsv();
+
+            if (count($csv) !== 2) {
+                continue;
+            }
+
+            $result[current($csv)] = last($csv);
+        }
+
+        return $result;
     }
 
     public function validateRequest(Request $request): ?string
