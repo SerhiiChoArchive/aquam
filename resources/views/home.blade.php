@@ -49,7 +49,7 @@
             </div>
 
             <div class="col s12 l6">
-                <p class="flow-text">Прикрепить изображения</p>
+                <p class="flow-text">Сохранить CSV</p>
 
                 <form action="{{ action('UploadController@uploadImages') }}" method="POST" enctype="multipart/form-data">
                     @csrf
