@@ -13,9 +13,17 @@
                 <form action="{{ action('UploadController@upload') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="file-field input-field">
-                        <div class="btn btn-small teal darken-1 waves-effect waves-light">
-                            <span>Выбрать</span>
+                        <div class="btn  teal darken-1 waves-effect waves-light" style="min-width:220px">
+                            <span>Выбрать прайс</span>
                             <input type="file" name="file">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+
+                        <div class="btn teal darken-1 waves-effect waves-light" style="min-width:220px">
+                            <span>Выбрать изображения</span>
+                            <input type="file" name="images">
                         </div>
                         <div class="file-path-wrapper">
                             <input class="file-path validate" type="text">
