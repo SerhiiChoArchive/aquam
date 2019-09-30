@@ -13,7 +13,7 @@ final class CsvHandler
     private $title = '';
 
     /** @var string $placeholder_image */
-    private $placeholder_image = 'https://www.nwf.org/-/media/NEW-WEBSITE/Shared-Folder/Wildlife/Fish/fish-placeholder.ashx';
+    private $placeholder_image = 'https://i.ibb.co/9tpYXHz/fish-placeholder.jpg';
 
     /** @var array $titles */
     private $titles = [];
