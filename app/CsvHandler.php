@@ -12,12 +12,19 @@ final class CsvHandler
     /** @var string $title */
     private $title = '';
 
+    /** @var string $placeholder_image */
+    private $placeholder_image = 'https://www.nwf.org/-/media/NEW-WEBSITE/Shared-Folder/Wildlife/Fish/fish-placeholder.ashx';
+
     /** @var array $titles */
     private $titles = [];
+
+    /** @var null|array $images */
+    private $images = null;
 
     public function __construct(string $file_path)
     {
         $this->file_path = $file_path;
+        $this->images = $this->getImagesFromCSV();
     }
 
     public function saveData(): void
@@ -58,6 +65,8 @@ final class CsvHandler
                 continue;
             }
 
+            $image = $this->images[$item[1]] ?? $this->placeholder_image;
+
             $new_items[$this->title][] = [
                 'number' => (int) $item[0],
                 'name' => $item[1],
@@ -66,6 +75,7 @@ final class CsvHandler
                 'comment' => $item[4],
                 'order' => $item[5],
                 'sum' => $item[6],
+                'image' => $image,
             ];
         }
 
@@ -96,5 +106,34 @@ final class CsvHandler
     private function trimTitle(?string $title): string
     {
         return trim($title ?? '', "\t\n\r\0\x0B ф");
+    }
+
+    private function getImagesFromCSV(): ?array
+    {
+        $file_path = storage_path('app/csv/images.csv');
+
+        if (!file_exists($file_path)) {
+            return null;
+        }
+
+        $file = new SplFileObject($file_path);
+
+        if (is_null($file)) {
+            return null;
+        }
+
+        $result = [];
+
+        while (!$file->eof()) {
+            $csv = $file->fgetcsv();
+
+            if (count($csv) !== 2) {
+                continue;
+            }
+
+            $result[current($csv)] = last($csv);
+        }
+
+        return $result;
     }
 }
