@@ -12,7 +12,7 @@ class UploadController extends Controller
 {
     public function upload(Request $request): RedirectResponse
     {
-        $validate = $this->validateRequest($request);
+        $validate = $this->validateRequest($request, 'file');
 
         if (!is_null($validate)) {
             return back()->with('error', $validate);
@@ -38,15 +38,21 @@ class UploadController extends Controller
 
     public function uploadImages(Request $request): RedirectResponse
     {
+        $validate = $this->validateRequest($request, 'images');
+
+        if (!is_null($validate)) {
+            return back()->with('error', $validate);
+        }
+
         $request->file('images')->storeAs('csv', 'images.csv');
 
         return back()->with('success', 'Файл сохранен');
     }
 
-    public function validateRequest(Request $request): ?string
+    public function validateRequest(Request $request, string $param_name): ?string
     {
-        if (!$request->has('file') || is_null($request->file)) {
-            return 'Выберите xls файл';
+        if (!$request->has($param_name) || is_null(request($param_name))) {
+            return 'Выберите файл';
         }
 
         if ($request->password !== config('app.password')) {
