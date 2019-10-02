@@ -65,11 +65,12 @@ final class CsvHandler
                 continue;
             }
 
-            $image = $this->images[$item[1]] ?? $this->placeholder_image;
+            $fish_name = trim($item[1]);
+            $image = $this->images[$fish_name] ?? $this->placeholder_image;
 
             $new_items[$this->title][] = [
                 'number' => (int) $item[0],
-                'name' => trim($item[1]),
+                'name' => $fish_name,
                 'size' => $item[2],
                 'price' => $item[3],
                 'comment' => $item[4],
