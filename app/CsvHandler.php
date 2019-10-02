@@ -69,7 +69,7 @@ final class CsvHandler
 
             $new_items[$this->title][] = [
                 'number' => (int) $item[0],
-                'name' => $item[1],
+                'name' => trim($item[1]),
                 'size' => $item[2],
                 'price' => $item[3],
                 'comment' => $item[4],
