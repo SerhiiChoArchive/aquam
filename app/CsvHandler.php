@@ -60,7 +60,6 @@ final class CsvHandler
     private function addTitlesForArrayItems(array $items): array
     {
         $new_items = [];
-        $diff_items = [];
         $old_fish_names = [];
 
         $old_price_list = json_decode(cache()->get('price-list') ?? '[]', false, 512, JSON_OBJECT_AS_ARRAY);
@@ -82,18 +81,11 @@ final class CsvHandler
                 continue;
             }
 
-            $number = (int)$item[0];
             $fish_name = trim($item[1]);
-            $size = $item[2];
-
-            if (empty($fish_name) && empty($number) && empty($size)) {
-                continue;
-            }
-
             $image = $this->images[$fish_name] ?? $this->placeholder_image;
 
-            $position = [
-                'number' => $number,
+            $new_items[$this->title][] = [
+                'number' => (int)$item[0],
                 'name' => $fish_name,
                 'size' => $item[2],
                 'price' => $item[3],
@@ -103,16 +95,29 @@ final class CsvHandler
                 'image' => $image,
             ];
 
-            $new_items[$this->title][] = $position;
-
-            if (!in_array($fish_name, $old_fish_names)) {
-                $diff_items[] = $position;
-            }
         }
+
+        $new_items = $this->removeFirstItemFromEachArrayItem($new_items);
+        $diff_items = $this->getNotExistingPositions($new_items, $old_fish_names);
 
         cache()->forever('diff-items', json_encode($diff_items));
 
         return $this->removeEmptyItems($new_items);
+    }
+
+    private function getNotExistingPositions(array $items, array $old_fish_names): array
+    {
+        $diff_items = [];
+
+        foreach ($items as $new_cats) {
+            foreach ($new_cats as $new_item) {
+                if (!in_array($new_item['name'], $old_fish_names)) {
+                    $diff_items[] = $new_item;
+                }
+            }
+        }
+
+        return $diff_items;
     }
 
     private function removeEmptyItems(array $arr): array
@@ -125,6 +130,13 @@ final class CsvHandler
     private function itemIsNotNumeric(?string $item): bool
     {
         return !is_numeric($item) && !is_null($item);
+    }
+
+    private function removeFirstItemFromEachArrayItem(array $array): array
+    {
+        return array_map(function ($item) {
+            return array_slice($item, 1);
+        }, $array);
     }
 
     private function trimTitle(?string $title): string
