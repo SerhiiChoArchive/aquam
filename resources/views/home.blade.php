@@ -62,7 +62,7 @@
                                             <td>{{ $item->name }}</td>
                                             <td>{{ $item->price }}</td>
                                             <td>{{ $item->size }}</td>
-                                            <td><img src="{{ $item->image ?? '' }}" width="120"></td>
+                                            <td><img src="{{ $item->image ?? '' }}" width="120" class="materialboxed"></td>
                                         </tr>
                                     @endforeach
                                     </tbody>

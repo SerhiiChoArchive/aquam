@@ -44,6 +44,14 @@
         document.addEventListener('DOMContentLoaded', function() {
             var inst = M.Collapsible.init(document.querySelectorAll('.collapsible'));
         });
+
+        var images = document.querySelectorAll('.materialboxed')
+
+        if (images) {
+            document.addEventListener('DOMContentLoaded', function() {
+                M.Materialbox.init(images);
+            });
+        }
     </script>
 </body>
 </html>
