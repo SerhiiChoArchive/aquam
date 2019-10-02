@@ -47,14 +47,6 @@
             M.Collapsible.init(document.querySelectorAll('.collapsible'));
         });
 
-        var images = document.querySelectorAll('.materialboxed')
-
-        if (images) {
-            document.addEventListener('DOMContentLoaded', function() {
-                M.Materialbox.init(images);
-            });
-        }
-
         document.addEventListener('DOMContentLoaded', function() {
             var elems = document.querySelectorAll('.sidenav');
             M.Sidenav.init(elems);
