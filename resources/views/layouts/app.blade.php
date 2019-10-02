@@ -9,9 +9,9 @@
     <title>@yield('title') | Aqua-m</title>
 </head>
 <body>
-    <nav>
-        <div class="nav-wrapper teal darken-1">
-            <a href="/" class="brand-logo" style="padding-left:10px;font-size: 22px;">Панель управления</a>
+    <nav class="teal darken-2">
+        <div class="container nav-wrapper">
+            <a href="/" class="brand-logo" style="font-size: 22px;">Панель управления</a>
 
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 @auth
