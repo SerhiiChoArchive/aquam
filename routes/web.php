@@ -1,11 +1,10 @@
 <?php
 
-Route::get('/price-list', 'JsonController@priceList');
-Route::get('/info', 'JsonController@info');
-Route::post('/upload', 'UploadController@upload');
-Route::post('/upload-images', 'UploadController@uploadImages');
 
 Auth::routes();
 
-Route::redirect('/', '/home');
-Route::get('/home', 'HomeController@index');
+Route::get('/', 'PageController@index');
+Route::get('/update-data', 'PageController@updateData');
+
+Route::post('/upload', 'UploadController@upload');
+Route::post('/upload-images', 'UploadController@uploadImages');
