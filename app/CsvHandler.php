@@ -80,7 +80,7 @@ final class CsvHandler
             ];
         }
 
-        $new_items = $this->removeFirstItemFromEachArrayItem($new_items);
+        cache()->forever('diff-items', json_encode($diff_items));
 
         return $this->removeEmptyItems($new_items);
     }
@@ -90,13 +90,6 @@ final class CsvHandler
         return array_filter($arr, function ($item) {
             return !empty($item);
         });
-    }
-
-    private function removeFirstItemFromEachArrayItem(array $array): array
-    {
-        return array_map(function ($item) {
-            return array_slice($item, 1);
-        }, $array);
     }
 
     private function itemIsNotNumeric(?string $item): bool
