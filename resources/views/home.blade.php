@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.app')
 
 @section('title', 'Загрузить XLS файл')
 
@@ -36,14 +36,14 @@
 
                 <table style="margin-top:40px" class="striped responsive-table">
                     <tbody>
-                        <tr>
-                            <td>Последнее обновление прайса:</td>
-                            <td>{{ $last_upload ?? '' }}</td>
-                        </tr>
-                        <tr>
-                            <td>Последний визит в приложение:</td>
-                            <td>{{ $last_request ?? '' }}</td>
-                        </tr>
+                    <tr>
+                        <td>Последнее обновление прайса:</td>
+                        <td>{{ $last_upload ?? '' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Последний визит в приложение:</td>
+                        <td>{{ $last_request ?? '' }}</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -75,14 +75,14 @@
 
                 <table style="margin-top:40px" class="striped responsive-table">
                     <tbody>
-                        <tr>
-                            <td>Количество категорий:</td>
-                            <td>{{ $price_categories_amount }}</td>
-                        </tr>
-                        <tr>
-                            <td>Количество позиций:</td>
-                            <td>{{ $price_items_amount }}</td>
-                        </tr>
+                    <tr>
+                        <td>Количество категорий:</td>
+                        <td>{{ $price_categories_amount }}</td>
+                    </tr>
+                    <tr>
+                        <td>Количество позиций:</td>
+                        <td>{{ $price_items_amount }}</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -99,24 +99,24 @@
                             <div class="collapsible-body">
                                 <table class="striped responsive-table">
                                     <thead>
-                                        <tr>
-                                            <th>Номер</th>
-                                            <th>Название</th>
-                                            <th>Цена</th>
-                                            <th>Размер</th>
-                                            <th>Изображение</th>
-                                        </tr>
+                                    <tr>
+                                        <th>Номер</th>
+                                        <th>Название</th>
+                                        <th>Цена</th>
+                                        <th>Размер</th>
+                                        <th>Изображение</th>
+                                    </tr>
                                     </thead>
                                     <tbody class="striped">
-                                        @foreach ($items as $item)
-                                            <tr>
-                                                <td>{{ $item->number }}</td>
-                                                <td>{{ $item->name }}</td>
-                                                <td>{{ $item->price }}</td>
-                                                <td>{{ $item->size }}</td>
-                                                <td><img src="{{ $item->image ?? '' }}" width="120"></td>
-                                            </tr>
-                                        @endforeach
+                                    @foreach ($items as $item)
+                                        <tr>
+                                            <td>{{ $item->number }}</td>
+                                            <td>{{ $item->name }}</td>
+                                            <td>{{ $item->price }}</td>
+                                            <td>{{ $item->size }}</td>
+                                            <td><img src="{{ $item->image ?? '' }}" width="120"></td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
