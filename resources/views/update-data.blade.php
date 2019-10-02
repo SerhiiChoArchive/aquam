@@ -51,6 +51,36 @@
                 </div>
             </form>
         </div>
+
+        @if (count($diff_items) > 0)
+            <div class="col s12" style="padding-top:17px">
+                <h5>Новые позиции</h5>
+                <p>Эти названия позиций небыли найдены на прошлом прайс листе</p>
+
+                <table class="striped responsive-table">
+                    <thead>
+                        <tr>
+                            <th>Номер</th>
+                            <th>Название</th>
+                            <th>Цена</th>
+                            <th>Размер</th>
+                            <th>Изображение</th>
+                        </tr>
+                    </thead>
+                    <tbody class="striped">
+                        @foreach ($diff_items as $item)
+                            <tr>
+                                <td>{{ $item->number }}</td>
+                                <td>{{ $item->name }}</td>
+                                <td>{{ $item->price }}</td>
+                                <td>{{ $item->size }}</td>
+                                <td><img src="{{ $item->image ?? '' }}" width="120" class="z-depth-1 materialboxed" style="border-radius:3px"></td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endif
     </div>
 
 @endsection

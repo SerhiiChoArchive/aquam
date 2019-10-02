@@ -48,9 +48,26 @@ final class CsvHandler
         return empty($this->title) || mb_strlen($this->title) > 40;
     }
 
+    private function getNamesFromItems(array $items): array
+    {
+        $_ = array_map(function ($item) {
+            return array_column($item, 'name');
+        }, $items);
+
+        return array_reduce($_, 'array_merge', []);
+    }
+
     private function addTitlesForArrayItems(array $items): array
     {
         $new_items = [];
+        $diff_items = [];
+        $old_fish_names = [];
+
+        $old_price_list = json_decode(cache()->get('price-list') ?? '[]', false, 512, JSON_OBJECT_AS_ARRAY);
+
+        if (!empty($old_price_list)) {
+            $old_fish_names = $this->getNamesFromItems((array) $old_price_list);
+        }
 
         foreach (array_slice($items, 4) as $item) {
             $first_item = $item[0] ?? null;
@@ -66,10 +83,15 @@ final class CsvHandler
             }
 
             $fish_name = trim($item[1]);
+
+            if (empty($fish_name)) {
+                continue;
+            }
+
             $image = $this->images[$fish_name] ?? $this->placeholder_image;
 
-            $new_items[$this->title][] = [
-                'number' => (int) $item[0],
+            $position = [
+                'number' => (int)$item[0],
                 'name' => $fish_name,
                 'size' => $item[2],
                 'price' => $item[3],
@@ -78,6 +100,12 @@ final class CsvHandler
                 'sum' => $item[6],
                 'image' => $image,
             ];
+
+            $new_items[$this->title][] = $position;
+
+            if (!in_array($fish_name, $old_fish_names)) {
+                $diff_items[] = $position;
+            }
         }
 
         cache()->forever('diff-items', json_encode($diff_items));
