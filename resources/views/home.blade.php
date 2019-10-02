@@ -16,7 +16,7 @@
                     @csrf
 
                     <div class="file-field input-field">
-                        <div class="btn  teal darken-1 waves-effect waves-light">
+                        <div class="btn teal darken-1 waves-effect waves-light">
                             <span>Выбрать</span>
                             <input type="file" name="file">
                         </div>

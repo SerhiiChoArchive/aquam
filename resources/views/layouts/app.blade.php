@@ -10,7 +10,7 @@
 </head>
 <body>
     <nav>
-        <div class="nav-wrapper teal">
+        <div class="nav-wrapper teal darken-1">
             <a href="#" class="brand-logo" style="padding-left:10px">Aqua-m</a>
 
             <ul id="nav-mobile" class="right hide-on-med-and-down">
