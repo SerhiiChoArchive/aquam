@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="input-field">
-                    <button type="submit" class="btn teal darken-1">Войти</button>
+                    <button type="submit" class="btn teal darken-2">Войти</button>
                 </div>
             </form>
         </div>

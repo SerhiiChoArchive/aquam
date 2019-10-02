@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="input-field">
-                    <button class="btn teal darken-1 waves-effect waves-light" type="submit">Обновить прайс лист</button>
+                    <button class="btn teal darken-2 waves-effect waves-light" type="submit">Обновить прайс лист</button>
                 </div>
             </form>
         </div>
@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="input-field">
-                    <button class="btn teal darken-1 waves-effect waves-light" type="submit">Загрузить csv файл</button>
+                    <button class="btn teal darken-2 waves-effect waves-light" type="submit">Загрузить csv файл</button>
                 </div>
             </form>
         </div>
