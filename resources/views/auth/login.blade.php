@@ -13,7 +13,7 @@
                     <input id="email" type="email" name="email" value="{{ old('email') }}" required class="validate">
                     <label for="email">Ел. адрес</label>
                     @error('email')
-                        <span class="helper-text" data-error="wrong" data-success="right">{{ $message }}</span>
+                        <span class="helper-text red-text">{{ $message }}</span>
                     @enderror
                 </div>
 
@@ -21,7 +21,7 @@
                     <input id="password" type="password" name="password" required>
                     <label for="password">Пароль</label>
                     @error('password')
-                        <span class="helper-text" data-error="wrong" data-success="right">{{ $message }}</span>
+                        <span class="helper-text red-text">{{ $message }}</span>
                     @enderror
                 </div>
 

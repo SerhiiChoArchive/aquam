@@ -6,30 +6,6 @@
     <div class="container" style="margin-top:20px">
         <div class="row">
             <div class="col s12 l6">
-                <p class="flow-text">Загрузить прайс лист</p>
-
-                <form action="{{ action('UploadController@upload') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-
-                    <div class="file-field input-field">
-                        <div class="btn teal darken-1 waves-effect waves-light">
-                            <span>Выбрать</span>
-                            <input type="file" name="file">
-                        </div>
-                        <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text">
-                        </div>
-                    </div>
-
-                    <div class="input-field">
-                        <input type="password" name="password" id="password" placeholder="Пароль" required>
-                    </div>
-
-                    <div class="input-field">
-                        <button class="btn teal darken-1 waves-effect waves-light" type="submit">Загрузить</button>
-                    </div>
-                </form>
-
                 <table style="margin-top:40px" class="striped responsive-table">
                     <tbody>
                     <tr>
@@ -45,30 +21,6 @@
             </div>
 
             <div class="col s12 l6">
-                <p class="flow-text">Сохранить CSV</p>
-
-                <form action="{{ action('UploadController@uploadImages') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-
-                    <div class="file-field input-field">
-                        <div class="btn teal darken-1 waves-effect waves-light">
-                            <span>Выбрать</span>
-                            <input type="file" name="images">
-                        </div>
-                        <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text">
-                        </div>
-                    </div>
-
-                    <div class="input-field">
-                        <input type="password" name="password" id="password" placeholder="Пароль" required>
-                    </div>
-
-                    <div class="input-field">
-                        <button class="btn teal darken-1 waves-effect waves-light" type="submit">Загрузить</button>
-                    </div>
-                </form>
-
                 <table style="margin-top:40px" class="striped responsive-table">
                     <tbody>
                     <tr>
@@ -83,7 +35,7 @@
                 </table>
             </div>
 
-            <div class="col s12" style="padding-top:50px">
+            <div class="col s12" style="padding-top:20px">
                 <ul class="collapsible">
                     @forelse ($price_list as $category => $items)
                         <li class="{{ $loop->first ? 'active' : null }}">

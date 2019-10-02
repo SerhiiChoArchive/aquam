@@ -11,16 +11,21 @@
 <body>
     <nav>
         <div class="nav-wrapper teal darken-1">
-            <a href="#" class="brand-logo" style="padding-left:10px">Aqua-m</a>
+            <a href="/" class="brand-logo" style="padding-left:10px;font-size: 22px;">Панель управления</a>
 
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="badges.html">Components</a></li>
-                <li><a href="collapsible.html">JavaScript</a></li>
+                @auth
+                    <li class="{{ active_if_route_is(['/']) }}"><a href="/">Панель</a></li>
+                    <li class="{{ active_if_route_is(['update-data']) }}"><a href="/update-data">Обновить данные</a></li>
+                    <li class=""><a href="javascript:" onclick="document.getElementById('logout-form').submit()">Выйти</a></li>
+                @endauth
             </ul>
         </div>
     </nav>
 
     @yield('content')
+
+    <form action="{{ route('logout') }}" id="logout-form" method="post">@csrf</form>
 
     {{-- Alert messages --}}
     <script>
