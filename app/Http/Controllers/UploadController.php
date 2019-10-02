@@ -55,10 +55,6 @@ class UploadController extends Controller
             return 'Выберите файл';
         }
 
-        if ($request->password !== config('app.password')) {
-            return 'Неправильный пароль';
-        }
-
         return null;
     }
 }

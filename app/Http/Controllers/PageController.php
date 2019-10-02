@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\TimeAgo;
+use Illuminate\View\View;
 
-class HomeController extends Controller
+class PageController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -33,5 +34,10 @@ class HomeController extends Controller
             'price_categories_amount' => count($price_list),
             'price_list' => $price_list,
         ]);
+    }
+
+    public function updateData(): View
+    {
+        return view('update-data');
     }
 }
