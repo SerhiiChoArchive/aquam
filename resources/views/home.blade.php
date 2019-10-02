@@ -3,11 +3,7 @@
 @section('title', 'Загрузить XLS файл')
 
 @section('content')
-    <div class="container" style="margin-top:34px">
-        <div class="center" style="padding-bottom:30px">
-            <img src="{{ asset('images/logo-aqua.png') }}" alt="aqua-m" width="170">
-        </div>
-
+    <div class="container" style="margin-top:20px">
         <div class="row">
             <div class="col s12 l6">
                 <p class="flow-text">Загрузить прайс лист</p>
