@@ -82,16 +82,18 @@ final class CsvHandler
                 continue;
             }
 
+            $number = (int)$item[0];
             $fish_name = trim($item[1]);
+            $size = $item[2];
 
-            if (empty($fish_name)) {
+            if (empty($fish_name) && empty($number) && empty($size)) {
                 continue;
             }
 
             $image = $this->images[$fish_name] ?? $this->placeholder_image;
 
             $position = [
-                'number' => (int)$item[0],
+                'number' => $number,
                 'name' => $fish_name,
                 'size' => $item[2],
                 'price' => $item[3],
