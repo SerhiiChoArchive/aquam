@@ -38,6 +38,10 @@ class PageController extends Controller
 
     public function updateData(): View
     {
-        return view('update-data');
+        $diff_items = cache()->get('diff-items') ?? '[]';
+
+        return view('update-data', [
+            'diff_items' => json_decode($diff_items),
+        ]);
     }
 }
