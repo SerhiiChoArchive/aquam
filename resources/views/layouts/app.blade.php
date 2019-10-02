@@ -9,16 +9,18 @@
     <title>@yield('title') | Aqua-m</title>
 </head>
 <body>
+
     <nav class="teal darken-2">
         <div class="container nav-wrapper">
-            <a href="/" class="brand-logo" style="font-size: 22px;">Панель управления</a>
+            <a href="/" class="brand-logo" style="font-size: 24px">Aqua-m</a>
+            <a href="#" data-target="mobile-demo1" class="sidenav-trigger"><img src="images/menu.png" width="27" style="margin-top:15px"></a>
+
+            <ul class="sidenav" id="mobile-demo1">
+                @include('menu')
+            </ul>
 
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-                @auth
-                    <li class="{{ active_if_route_is(['/']) }}"><a href="/">Панель</a></li>
-                    <li class="{{ active_if_route_is(['update-data']) }}"><a href="/update-data">Обновить данные</a></li>
-                    <li class=""><a href="javascript:" onclick="document.getElementById('logout-form').submit()">Выйти</a></li>
-                @endauth
+                @include('menu')
             </ul>
         </div>
     </nav>
@@ -42,7 +44,7 @@
         @endif
 
         document.addEventListener('DOMContentLoaded', function() {
-            var inst = M.Collapsible.init(document.querySelectorAll('.collapsible'));
+            M.Collapsible.init(document.querySelectorAll('.collapsible'));
         });
 
         var images = document.querySelectorAll('.materialboxed')
@@ -52,6 +54,11 @@
                 M.Materialbox.init(images);
             });
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.sidenav');
+            M.Sidenav.init(elems);
+        });
     </script>
 </body>
 </html>
