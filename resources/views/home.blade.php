@@ -64,7 +64,7 @@
                                                 <td>{{ $item->size }}</td>
                                                 <td>
                                                     <div data-width="120"
-                                                         class="async-load"
+                                                         class="async-load spinner"
                                                          data-async-load="{{ $item->image ?? '' }}"
                                                          data-class="z-depth-1"
                                                     ></div>
