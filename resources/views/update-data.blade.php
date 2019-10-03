@@ -74,7 +74,13 @@
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->price }}</td>
                                 <td>{{ $item->size }}</td>
-                                <td><img src="{{ $item->image ?? '' }}" width="120" class="z-depth-1" style="border-radius:3px"></td>
+                                <td>
+                                    <div data-width="120"
+                                         class="async-load"
+                                         data-async-load="{{ $item->image ?? '' }}"
+                                         data-class="z-depth-1"
+                                    ></div>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -82,5 +88,6 @@
             </div>
         @endif
     </div>
+</div>
 
 @endsection

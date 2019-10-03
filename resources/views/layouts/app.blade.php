@@ -43,14 +43,7 @@
             })
         @endif
 
-        document.addEventListener('DOMContentLoaded', function() {
-            M.Collapsible.init(document.querySelectorAll('.collapsible'));
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            var elems = document.querySelectorAll('.sidenav');
-            M.Sidenav.init(elems);
-        });
     </script>
+    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>
