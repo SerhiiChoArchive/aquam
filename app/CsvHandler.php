@@ -81,7 +81,7 @@ final class CsvHandler
                 continue;
             }
 
-            $fish_name = trim($item[1]);
+            $fish_name = preg_replace('!\s+!', ' ', trim($item[1]));
             $image = $this->images[$fish_name] ?? $this->placeholder_image;
 
             $new_items[$this->title][] = [
