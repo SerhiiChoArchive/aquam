@@ -82,7 +82,7 @@ final class CsvHandler
             }
 
             $fish_name = preg_replace('!\s+!', ' ', trim($item[1]));
-            $image = $this->images[$fish_name] ?? $this->placeholder_image;
+            $image = $this->images[mb_strtolower($fish_name)] ?? $this->placeholder_image;
 
             $new_items[$this->title][] = [
                 'number' => (int)$item[0],
@@ -111,7 +111,7 @@ final class CsvHandler
 
         foreach ($items as $new_cats) {
             foreach ($new_cats as $new_item) {
-                if (!in_array($new_item['name'], $old_fish_names)) {
+                if (!in_array(mb_strtolower($new_item['name']), array_map('mb_strtolower', $old_fish_names))) {
                     $diff_items[] = $new_item;
                 }
             }
@@ -167,7 +167,7 @@ final class CsvHandler
                 continue;
             }
 
-            $result[current($csv)] = last($csv);
+            $result[mb_strtolower(current($csv))] = last($csv);
         }
 
         return $result;
