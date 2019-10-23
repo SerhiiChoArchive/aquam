@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\View\View;
-use Serhii\Ago\Ago;
+use Serhii\Ago\Time;
 
 class PageController extends Controller
 {
@@ -28,8 +28,8 @@ class PageController extends Controller
         $price_list = (array) json_decode(cache()->get('price-list') ?? '[]');
 
         return view('home', [
-            'last_upload' => Ago::take(cache()->get('last_upload')),
-            'last_request' => Ago::take(cache()->get('last_request')),
+            'last_upload' => Time::ago(cache()->get('last_upload')),
+            'last_request' => Time::ago(cache()->get('last_request')),
             'price_items_amount' => count($price_list, COUNT_RECURSIVE) - count($price_list),
             'price_categories_amount' => count($price_list),
             'price_list' => $price_list,
