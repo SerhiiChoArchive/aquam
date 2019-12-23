@@ -68,7 +68,7 @@ final class CsvHandler
             $old_fish_names = $this->getNamesFromItems((array) $old_price_list);
         }
 
-        foreach (array_slice($items, 4) as $item) {
+        foreach (array_slice($items, 3) as $item) {
             $first_item = $item[0] ?? null;
 
             if ($this->itemIsNotNumeric($first_item)) {
@@ -85,7 +85,7 @@ final class CsvHandler
             $image = $this->images[mb_strtolower($fish_name)] ?? $this->placeholder_image;
 
             $new_items[$this->title][] = [
-                'number' => (int)$item[0],
+                'number' => (int) $item[0],
                 'name' => $fish_name,
                 'size' => $item[2],
                 'price' => $item[3],
@@ -94,7 +94,6 @@ final class CsvHandler
                 'sum' => $item[6],
                 'image' => $image,
             ];
-
         }
 
         $new_items = $this->removeFirstItemFromEachArrayItem($new_items);
