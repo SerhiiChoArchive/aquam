@@ -23,9 +23,8 @@ class MailController extends Controller
             $headers .= "Content-type: text/html; charset=utf-8\r\n";
             return mail($_sEmail, $subject, $_sMessage, $headers);
         }
-        sendmail('Subject', 'some message', 'serhiicho@protonmail.com', 'office@aqua-m.com.ua', 'serhiicho@protonmail.com');
+        $res = sendmail('Subject', 'some message', 'serhiicho@protonmail.com', 'office@aqua-m.com.ua', 'serhiicho@protonmail.com');
 //        $res = Mail::to('')->send(new OrderMail);
-//        var_dump($res);
-//        exit;
+        var_dump($res);
     }
 }
