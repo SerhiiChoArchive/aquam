@@ -55,7 +55,7 @@
         @if (count($diff_items) > 0)
             <div class="col s12" style="padding-top:17px">
                 <h5>Новые позиции</h5>
-                <p>Эти названия позиций небыли найдены на прошлом прайс листе</p>
+                <p>Обратите внимание! Позиции ниже являются новыми. Их не было в прошлом прайс листе.</p>
 
                 <table class="striped responsive-table">
                     <thead>
