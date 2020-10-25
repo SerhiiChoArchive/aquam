@@ -9,6 +9,7 @@
         <div class="col s12 m6 offset-m3 l4 offset-l4">
             <form method="POST" action="{{ route('login') }}">
                 @csrf
+
                 <div class="input-field">
                     <input id="email" type="email" name="email" value="{{ old('email') }}" required class="validate">
                     <label for="email">Ел. адрес</label>
