@@ -53,6 +53,13 @@ class XlsToArrayConverter
      */
     private function getArrayFromSheet(Spreadsheet $sheets): array
     {
+        $categories = [
+            ConversionResult::PRICE_LIST,
+            ConversionResult::EQUIPMENT,
+            ConversionResult::FEED,
+            ConversionResult::CHEMISTRY,
+        ];
+
         $result = [];
 
         for ($sheet_index = 0; $sheet_index < self::NUMBER_OF_SHEETS_WE_NEED; $sheet_index++) {
@@ -60,7 +67,8 @@ class XlsToArrayConverter
 
             foreach ($sheet->getColumnIterator() as $col_name => $col_value) {
                 foreach ($col_value->getCellIterator() as $cell) {
-                    $result[$sheet_index][$col_name][] = $cell->getValue();
+                    $category = $categories[$sheet_index];
+                    $result[$category][$col_name][] = $cell->getValue();
                 }
             }
         }
@@ -75,14 +83,14 @@ class XlsToArrayConverter
      */
     private function convertToConversionResult(array $sheets): ConversionResult
     {
-        foreach ($sheets as $sheet) {
-
-        }
-
         $price_list = [];
         $equipment = [];
         $feed = [];
         $chemistry = [];
+
+        foreach ($sheets as $sheet) {
+
+        }
 
         return new ConversionResult($price_list, $equipment, $feed, $chemistry);
     }
