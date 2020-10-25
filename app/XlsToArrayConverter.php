@@ -28,13 +28,31 @@ class XlsToArrayConverter
     }
 
     /**
-     * @return array[]
+     * @return \App\ConversionResult
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    public function convert(): array
+    public function convert(): ConversionResult
     {
         $sheets = $this->getSpreadsheet();
 
+        $array_from_sheets = $this->getArrayFromSheet($sheets);
+
+        return $this->convertToConversionResult($array_from_sheets);
+    }
+
+    private function getSpreadsheet(): Spreadsheet
+    {
+        return $this->xls_reader->load($this->pathname);
+    }
+
+    /**
+     * @param \PhpOffice\PhpSpreadsheet\Spreadsheet $sheets
+     *
+     * @return array
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     */
+    private function getArrayFromSheet(Spreadsheet $sheets): array
+    {
         $result = [];
 
         for ($sheet_index = 0; $sheet_index < self::NUMBER_OF_SHEETS_WE_NEED; $sheet_index++) {
@@ -50,8 +68,22 @@ class XlsToArrayConverter
         return $result;
     }
 
-    private function getSpreadsheet(): Spreadsheet
+    /**
+     * @param array $sheets
+     *
+     * @return \App\ConversionResult
+     */
+    private function convertToConversionResult(array $sheets): ConversionResult
     {
-        return $this->xls_reader->load($this->pathname);
+        foreach ($sheets as $sheet) {
+
+        }
+
+        $price_list = [];
+        $equipment = [];
+        $feed = [];
+        $chemistry = [];
+
+        return new ConversionResult($price_list, $equipment, $feed, $chemistry);
     }
 }
