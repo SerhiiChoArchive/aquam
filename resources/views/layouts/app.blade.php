@@ -17,11 +17,11 @@
             <a href="#" data-target="mobile-demo1" class="sidenav-trigger"><img src="images/menu.png" width="27" style="margin-top:15px"></a>
 
             <ul class="sidenav" id="mobile-demo1">
-                @include('menu')
+                @include('includes.menu')
             </ul>
 
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-                @include('menu')
+                @include('includes.menu')
             </ul>
         </div>
     </nav>
