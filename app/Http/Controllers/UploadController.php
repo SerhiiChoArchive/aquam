@@ -14,7 +14,7 @@ class UploadController extends Controller
     {
         $validate = $this->validateRequest($request, 'file');
 
-        if (!is_null($validate)) {
+        if ($validate) {
             return back()->with('error', $validate);
         }
 
