@@ -52,11 +52,11 @@ final class CsvHandler
 
     private function getNamesFromItems(array $items): array
     {
-        $_ = array_map(function ($item) {
+        $items = array_map(function ($item) {
             return array_column($item, 'name');
         }, $items);
 
-        return array_reduce($_, 'array_merge', []);
+        return array_reduce($items, 'array_merge', []);
     }
 
     private function addTitlesForArrayItems(array $items): array

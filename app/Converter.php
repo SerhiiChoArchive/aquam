@@ -6,7 +6,6 @@ namespace App;
 
 use InvalidArgumentException;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 final class Converter
@@ -20,7 +19,7 @@ final class Converter
     public function __construct(string $xls_file_path)
     {
         $this->xls_file_path = $xls_file_path;
-        $this->csv_file_path =$this->generateCsvFilename();
+        $this->csv_file_path = $this->generateCsvFilename();
     }
 
     public function getCsvFilePath(): ?string
@@ -32,8 +31,8 @@ final class Converter
             $this->saveFile($spreadsheet);
 
             return $this->csv_file_path;
-        } catch (Exception | InvalidArgumentException $e) {
-            logger()->error($e->getMessage());
+        } catch (InvalidArgumentException $e) {
+            logger()->error($e);
         }
         return null;
     }
