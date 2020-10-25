@@ -19,7 +19,7 @@ class UploadController extends Controller
         }
 
         $new_file_name = sprintf("%s-%s.xls", date('Y-m-d_H-i-s'), time());
-        $result = $request->file('file')->move(storage_path('xls'), $new_file_name);
+        $result = $request->file('file')->move(storage_path('app/xls'), $new_file_name);
 
         $converter = new Converter($result->getPathname());
         $file_path = $converter->getCsvFilePath();
