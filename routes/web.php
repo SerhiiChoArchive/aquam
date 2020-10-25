@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::redirect('/', 'login');
+Route::redirect('/', '/login');
 
 Route::middleware('auth')->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index']);

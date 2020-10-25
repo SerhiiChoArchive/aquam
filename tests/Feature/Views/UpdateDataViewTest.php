@@ -23,7 +23,7 @@ class UpdateDataViewTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->path = action([UpdateDataController::class, 'index']);
+        $this->path = action('UpdateDataController@index');
         $this->user = User::factory()->create();
     }
 
