@@ -22,10 +22,18 @@ class XlsToArrayConverter
      */
     private $xls_reader;
 
+    /**
+     * @var array|null
+     */
+    private $images;
+
+    private $placeholder_image = 'https://i.ibb.co/9tpYXHz/fish-placeholder.jpg';
+
     public function __construct(string $pathname, Xls $xls_reader)
     {
         $this->pathname = $pathname;
         $this->xls_reader = $xls_reader;
+        $this->images = $this->getImagesFromCSV();
     }
 
     /**
@@ -34,18 +42,43 @@ class XlsToArrayConverter
      */
     public function convert(): ConversionResult
     {
-        $sheets = $this->getSpreadsheet();
+        $sheets = $this->xls_reader->load($this->pathname);
 
         $categories = $this->getArrayFromSheet($sheets);
 
-        $price_list = $this->convertToPriceList($categories['price-list']);
+        $price_list = $this->convertToPriceList($categories[ConversionResult::PRICE_LIST]);
+        $equipment = $this->convertToEquipment($categories[ConversionResult::EQUIPMENT]);
 
-        return new ConversionResult($price_list, [], [], []);
+        return new ConversionResult($price_list, $equipment, [], []);
     }
 
-    private function getSpreadsheet(): Spreadsheet
+    private function getImagesFromCSV(): ?array
     {
-        return $this->xls_reader->load($this->pathname);
+        $file_path = storage_path('app/csv/images.csv');
+
+        if (!file_exists($file_path)) {
+            return null;
+        }
+
+        $file = new SplFileObject($file_path);
+
+        if (is_null($file)) {
+            return null;
+        }
+
+        $result = [];
+
+        while (!$file->eof()) {
+            $csv = $file->fgetcsv();
+
+            if (count($csv) !== 2) {
+                continue;
+            }
+
+            $result[mb_strtolower(current($csv))] = last($csv);
+        }
+
+        return $result;
     }
 
     /**
@@ -91,8 +124,6 @@ class XlsToArrayConverter
     {
         $result = [];
         $title = '';
-        $images = $this->getImagesFromCSV();
-        $placeholder_image = 'https://i.ibb.co/9tpYXHz/fish-placeholder.jpg';
 
         for ($i = 3; $i < count($price_list[0]); $i++) {
             $columns = [
@@ -122,8 +153,7 @@ class XlsToArrayConverter
                 continue;
             }
 
-            $fish_name = mb_strtolower(preg_replace('!\s+!', ' ', trim($columns['name'] ?? '')));
-            $image = $images[$fish_name] ?? $placeholder_image;
+            $image = $this->getImageFrom($columns['name']);
 
             $result[$title][] = array_merge($columns, compact('image'));
         }
@@ -131,32 +161,55 @@ class XlsToArrayConverter
         return $result;
     }
 
-    private function getImagesFromCSV(): ?array
+    /**
+     * @param array[] $equip
+     *
+     * @return array[]
+     */
+    private function convertToEquipment(array $equip): array
     {
-        $file_path = storage_path('app/csv/images.csv');
-
-        if (!file_exists($file_path)) {
-            return null;
-        }
-
-        $file = new SplFileObject($file_path);
-
-        if (is_null($file)) {
-            return null;
-        }
-
         $result = [];
+        $title = '';
 
-        while (!$file->eof()) {
-            $csv = $file->fgetcsv();
+        for ($i = 3; $i < count($equip[0]); $i++) {
+            $columns = [
+                'number' => $equip[0][$i],
+                'name' => $equip[1][$i],
+                'size' => $equip[2][$i],
+                'price' => $equip[3][$i],
+                'comment' => $equip[4][$i] ?? '',
+                'order' => $equip[5][$i] ?? '',
+                'sum' => $equip[6][$i] ?? '0.00',
+            ];
 
-            if (count($csv) !== 2) {
+            $not_nulls = array_filter($columns, function ($item) {
+                return !is_null($item) && $item !== '' && $item !== '0.00';
+            });
+
+            if (empty($not_nulls)) {
                 continue;
             }
 
-            $result[mb_strtolower(current($csv))] = last($csv);
+            if (count($not_nulls) === 1) {
+                if (is_object(current($not_nulls))) {
+                    continue;
+                }
+
+                $title = current($not_nulls);
+                continue;
+            }
+
+            $image = $this->getImageFrom($columns['name']);
+
+            $result[$title][] = array_merge($columns, compact('image'));
         }
 
         return $result;
+    }
+
+    private function getImageFrom(?string $name): ?string
+    {
+        $id = mb_strtolower(preg_replace('!\s+!', ' ', trim($name ?? '')));
+        return $this->images[$id] ?? $this->placeholder_image;
     }
 }
