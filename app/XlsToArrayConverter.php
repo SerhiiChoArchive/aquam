@@ -48,6 +48,7 @@ class XlsToArrayConverter
 
         $price_list = $this->convertToPriceList($categories[ConversionResult::PRICE_LIST]);
         $equipment = $this->convertToEquipment($categories[ConversionResult::EQUIPMENT]);
+        dd($equipment);
 
         return new ConversionResult($price_list, $equipment, [], []);
     }
@@ -136,9 +137,7 @@ class XlsToArrayConverter
                 'sum' => $price_list[6][$i] ?? '0.00',
             ];
 
-            $not_nulls = array_filter($columns, function ($item) {
-                return !is_null($item) && $item !== '' && $item !== '0.00';
-            });
+            $not_nulls = $this->getNotNulls($columns);
 
             if (empty($not_nulls)) {
                 continue;
@@ -171,20 +170,22 @@ class XlsToArrayConverter
         $result = [];
         $title = '';
 
-        for ($i = 3; $i < count($equip[0]); $i++) {
+        for ($i = 1; $i < count($equip[0]); $i++) {
             $columns = [
-                'number' => $equip[0][$i],
+                'article' => $equip[0][$i],
                 'name' => $equip[1][$i],
-                'size' => $equip[2][$i],
-                'price' => $equip[3][$i],
-                'comment' => $equip[4][$i] ?? '',
+                'description' => $equip[2][$i],
+                'producer' => $equip[3][$i],
+                'price' => $equip[4][$i],
                 'order' => $equip[5][$i] ?? '',
-                'sum' => $equip[6][$i] ?? '0.00',
+                'sum' => $equip[6][$i],
             ];
 
-            $not_nulls = array_filter($columns, function ($item) {
-                return !is_null($item) && $item !== '' && $item !== '0.00';
-            });
+            if ($columns['sum'][0] === '=') {
+                $columns['sum'] = '0.00';
+            }
+
+            $not_nulls = $this->getNotNulls($columns);
 
             if (empty($not_nulls)) {
                 continue;
@@ -199,7 +200,8 @@ class XlsToArrayConverter
                 continue;
             }
 
-            $image = $this->getImageFrom($columns['name']);
+            $article = is_int($columns['article']) ? (string) $columns['article'] : $columns['article'];
+            $image = $this->getImageFrom($article);
 
             $result[$title][] = array_merge($columns, compact('image'));
         }
@@ -212,4 +214,11 @@ class XlsToArrayConverter
         $id = mb_strtolower(preg_replace('!\s+!', ' ', trim($name ?? '')));
         return $this->images[$id] ?? $this->placeholder_image;
     }
+
+    private function getNotNulls(array $columns): array
+    {
+        return array_filter($columns, function ($item) {
+            return !is_null($item) && $item !== '' && $item !== '0.00';
+        });
+}
 }
