@@ -35,9 +35,11 @@ class XlsToArrayConverter
     {
         $sheets = $this->getSpreadsheet();
 
-        $array_from_sheets = $this->getArrayFromSheet($sheets);
+        $categories = $this->getArrayFromSheet($sheets);
 
-        return $this->convertToConversionResult($array_from_sheets);
+        $price_list = $this->convertToPriceList($categories['price-list']);
+
+        return new ConversionResult($price_list, [], [], []);
     }
 
     private function getSpreadsheet(): Spreadsheet
@@ -64,12 +66,15 @@ class XlsToArrayConverter
 
         for ($sheet_index = 0; $sheet_index < self::NUMBER_OF_SHEETS_WE_NEED; $sheet_index++) {
             $sheet = $sheets->getSheet($sheet_index);
+            $index = 0;
 
-            foreach ($sheet->getColumnIterator() as $col_name => $col_value) {
-                foreach ($col_value->getCellIterator() as $cell) {
+            foreach ($sheet->getColumnIterator() as $column) {
+                foreach ($column->getCellIterator() as $cell) {
                     $category = $categories[$sheet_index];
-                    $result[$category][$col_name][] = $cell->getValue();
+                    $result[$category][$index][] = $cell->getValue();
                 }
+
+                $index++;
             }
         }
 
@@ -77,21 +82,29 @@ class XlsToArrayConverter
     }
 
     /**
-     * @param array $sheets
+     * @param array $price_list
      *
-     * @return \App\ConversionResult
+     * @return array[]
      */
-    private function convertToConversionResult(array $sheets): ConversionResult
+    private function convertToPriceList(array $price_list): array
     {
-        $price_list = [];
-        $equipment = [];
-        $feed = [];
-        $chemistry = [];
+        $result = [];
 
-        foreach ($sheets as $sheet) {
+        for ($i = 0; $i < count($price_list[0]); $i++) {
+            $result[$i] = [
+                'number' => $price_list[0][$i],
+                'name' => $price_list[1][$i],
+                'size' => $price_list[2][$i],
+                'price' => $price_list[3][$i],
+                'comment' => $price_list[4][$i],
+                'order' => $price_list[5][$i],
+                'sum' => $price_list[6][$i],
+            ];
 
+            $result[$i]['image'] = '';
         }
 
-        return new ConversionResult($price_list, $equipment, $feed, $chemistry);
+        dd($result);
+        return $result;
     }
 }
