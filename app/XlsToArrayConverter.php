@@ -89,20 +89,39 @@ class XlsToArrayConverter
     private function convertToPriceList(array $price_list): array
     {
         $result = [];
+        $title = '';
 
-        for ($i = 0; $i < count($price_list[0]); $i++) {
-            $result[$i] = [
+        for ($i = 3; $i < count($price_list[0]); $i++) {
+            $columns = [
                 'number' => $price_list[0][$i],
                 'name' => $price_list[1][$i],
                 'size' => $price_list[2][$i],
                 'price' => $price_list[3][$i],
-                'comment' => $price_list[4][$i],
-                'order' => $price_list[5][$i],
-                'sum' => $price_list[6][$i],
+                'comment' => $price_list[4][$i] ?? '',
+                'order' => $price_list[5][$i] ?? '',
+                'sum' => $price_list[6][$i] ?? '0.00',
             ];
 
-            $result[$i]['image'] = '';
+            $not_nulls = array_filter($columns, function ($item) {
+                return !is_null($item) && $item !== '' && $item !== '0.00';
+            });
+
+            if (empty($not_nulls)) {
+                continue;
+            }
+
+            if (count($not_nulls) === 1) {
+                if (is_object(current($not_nulls))) {
+                    continue;
+                }
+
+                $title = current($not_nulls);
+            }
+
+            $result[$title][] = array_merge($columns, ['image' => '']);
         }
+
+        array_pop($result);
 
         dd($result);
         return $result;
