@@ -6,6 +6,7 @@ namespace App;
 
 use PhpOffice\PhpSpreadsheet\Reader\Xls;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use SplFileObject;
 
 class XlsToArrayConverter
 {
@@ -90,6 +91,8 @@ class XlsToArrayConverter
     {
         $result = [];
         $title = '';
+        $images = $this->getImagesFromCSV();
+        $placeholder_image = 'https://i.ibb.co/9tpYXHz/fish-placeholder.jpg';
 
         for ($i = 3; $i < count($price_list[0]); $i++) {
             $columns = [
@@ -116,14 +119,44 @@ class XlsToArrayConverter
                 }
 
                 $title = current($not_nulls);
+                continue;
             }
 
-            $result[$title][] = array_merge($columns, ['image' => '']);
+            $fish_name = mb_strtolower(preg_replace('!\s+!', ' ', trim($columns['name'] ?? '')));
+            $image = $images[$fish_name] ?? $placeholder_image;
+
+            $result[$title][] = array_merge($columns, compact('image'));
         }
 
-        array_pop($result);
+        return $result;
+    }
 
-        dd($result);
+    private function getImagesFromCSV(): ?array
+    {
+        $file_path = storage_path('app/csv/images.csv');
+
+        if (!file_exists($file_path)) {
+            return null;
+        }
+
+        $file = new SplFileObject($file_path);
+
+        if (is_null($file)) {
+            return null;
+        }
+
+        $result = [];
+
+        while (!$file->eof()) {
+            $csv = $file->fgetcsv();
+
+            if (count($csv) !== 2) {
+                continue;
+            }
+
+            $result[mb_strtolower(current($csv))] = last($csv);
+        }
+
         return $result;
     }
 }
