@@ -12,6 +12,7 @@
     @yield('content')
 
     <script src="{{ asset('js/app.js') }}"></script>
+
     @include('includes.messages')
 </body>
 </html>
