@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Views;
 
-use App\Http\Controllers\UpdateDataController;
+use App\Http\Controllers\PriceListController;
 use App\Models\User;
 use Tests\TestCase;
 

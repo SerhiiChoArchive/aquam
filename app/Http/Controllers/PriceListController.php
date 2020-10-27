@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\ConversionResult;
 use App\XlsToArrayConverter;
 use Error;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -15,15 +16,26 @@ use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Reader\Xls;
 use TypeError;
 
-class UploadController extends Controller
+class PriceListController extends Controller
 {
-    public function upload(Request $request): RedirectResponse
+    /**
+     * @return \Illuminate\Contracts\View\View
+     * @throws \Exception
+     */
+    public function index(): View
     {
-        $validate = $this->validateRequest($request, 'file');
+        $diff_items = cache()->get('diff-items') ?? '[]';
+        return view('price-list', ['diff_items' => json_decode($diff_items)]);
+    }
 
-        if ($validate) {
-            return back()->with('error', $validate);
-        }
+    public function store(Request $request): RedirectResponse
+    {
+//        $validate = $this->validateRequest($request, 'file');
+        //todo:here
+
+//        if ($validate) {
+//            return back()->with('error', $validate);
+//        }
 
         $new_file_name = sprintf("%s-%s.xls", date('Y-m-d_H-i-s'), time());
         $pathname = $request->file('file')->move(storage_path('app/xls'), $new_file_name)->getPathname();
@@ -40,28 +52,6 @@ class UploadController extends Controller
         $this->cacheTheData($result);
 
         return back()->with('success', 'Файл загружен и данный успешно обновленны!');
-    }
-
-    public function uploadImages(Request $request): RedirectResponse
-    {
-        $validate = $this->validateRequest($request, 'images');
-
-        if (!is_null($validate)) {
-            return back()->with('error', $validate);
-        }
-
-        $request->file('images')->storeAs('csv', 'images.csv');
-
-        return back()->with('success', 'Файл сохранен');
-    }
-
-    public function validateRequest(Request $request, string $param_name): ?string
-    {
-        if (!$request->has($param_name) || is_null(request($param_name))) {
-            return 'Выберите файл';
-        }
-
-        return null;
     }
 
     /**
