@@ -17,12 +17,7 @@ class ImagesController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-//        $validate = $this->validateRequest($request, 'images');
-        //todo:here
-
-//        if (!is_null($validate)) {
-//            return back()->with('error', $validate);
-//        }
+        $request->validate(['images' => ['required']]);
 
         $request->file('images')->storeAs('csv', 'images.csv');
 

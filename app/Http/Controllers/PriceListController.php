@@ -30,12 +30,7 @@ class PriceListController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-//        $validate = $this->validateRequest($request, 'file');
-        //todo:here
-
-//        if ($validate) {
-//            return back()->with('error', $validate);
-//        }
+        $request->validate(['file' => ['required']]);
 
         $new_file_name = sprintf("%s-%s.xls", date('Y-m-d_H-i-s'), time());
         $pathname = $request->file('file')->move(storage_path('app/xls'), $new_file_name)->getPathname();

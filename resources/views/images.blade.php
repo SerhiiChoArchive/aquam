@@ -19,12 +19,14 @@
                         <input type="file" name="images">
                     </div>
                     <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text">
+                        <input class="file-path validate" type="text" required>
                     </div>
                 </div>
 
                 <div class="input-field">
-                    <button class="btn teal darken-2 waves-effect waves-light" type="submit">Загрузить csv файл</button>
+                    <button class="btn teal darken-2 waves-effect waves-light" type="submit">
+                        <i class="material-icons right">file_upload</i>Загрузить
+                    </button>
                 </div>
             </form>
         </div>
