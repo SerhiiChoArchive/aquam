@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Views;
 
-use App\Http\Controllers\PriceListController;
 use App\Models\User;
 use Tests\TestCase;
 
-class UpdateDataViewTest extends TestCase
+class PriceListViewTest extends TestCase
 {
     /**
      * @var string
@@ -23,7 +22,7 @@ class UpdateDataViewTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->path = action('UpdateDataController@index');
+        $this->path = action('PriceListController@index');
         $this->user = User::factory()->create();
     }
 
