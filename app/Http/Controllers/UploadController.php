@@ -69,7 +69,7 @@ class UploadController extends Controller
      */
     private function cacheTheData(ConversionResult $result): void
     {
-        Cache::forever(ConversionResult::PRICE_LIST, $this->encodeData($result->getPriceList()));
+        Cache::forever(ConversionResult::FISH, $this->encodeData($result->getFish()));
         Cache::forever(ConversionResult::EQUIPMENT, $this->encodeData($result->getEquipment()));
         Cache::forever(ConversionResult::FEED, $this->encodeData($result->getFeed()));
         Cache::forever(ConversionResult::CHEMISTRY, $this->encodeData($result->getChemistry()));

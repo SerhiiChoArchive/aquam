@@ -46,11 +46,10 @@ class XlsToArrayConverter
 
         $categories = $this->getArrayFromSheet($sheets);
 
-        $price_list = $this->convertToPriceList($categories[ConversionResult::PRICE_LIST]);
+        $fish = $this->convertToFish($categories[ConversionResult::FISH]);
         $equipment = $this->convertToEquipment($categories[ConversionResult::EQUIPMENT]);
-        dd($equipment);
 
-        return new ConversionResult($price_list, $equipment, [], []);
+        return new ConversionResult($fish, $equipment, [], []);
     }
 
     private function getImagesFromCSV(): ?array
@@ -91,7 +90,7 @@ class XlsToArrayConverter
     private function getArrayFromSheet(Spreadsheet $sheets): array
     {
         $categories = [
-            ConversionResult::PRICE_LIST,
+            ConversionResult::FISH,
             ConversionResult::EQUIPMENT,
             ConversionResult::FEED,
             ConversionResult::CHEMISTRY,
@@ -121,7 +120,7 @@ class XlsToArrayConverter
      *
      * @return array[]
      */
-    private function convertToPriceList(array $price_list): array
+    private function convertToFish(array $price_list): array
     {
         $result = [];
         $title = '';
