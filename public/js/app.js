@@ -308,9 +308,7 @@ __webpack_require__.r(__webpack_exports__);
 
 document.addEventListener('DOMContentLoaded', function () {
   M.Collapsible.init(document.querySelectorAll('.collapsible'));
-  M.Tabs.init(document.querySelector('.tabs'), {
-    swipeable: true
-  });
+  M.Tabs.init(document.querySelector('.tabs'));
   M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'), {
     coverTrigger: false,
     constrainWidth: false
