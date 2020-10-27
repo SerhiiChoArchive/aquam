@@ -17,10 +17,11 @@ class CreatePriceListsTable extends Migration
         Schema::create('price_lists', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('user_id');
-            $table->mediumText(ConversionResult::FISH);
-            $table->mediumText(ConversionResult::EQUIPMENT);
-            $table->mediumText(ConversionResult::FEED);
-            $table->mediumText(ConversionResult::CHEMISTRY);
+            $table->mediumText('fish');
+            $table->mediumText('equipment');
+            $table->mediumText('feed');
+            $table->mediumText('chemistry');
+            $table->mediumText('aquariums');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

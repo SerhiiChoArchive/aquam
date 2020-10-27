@@ -46,8 +46,8 @@ class XlsToArrayConverter
 
         $categories = $this->getArrayFromSheet($sheets);
 
-        $fish = $this->convertToFish($categories[ConversionResult::FISH]);
-        $equipment = $this->convertToEquipment($categories[ConversionResult::EQUIPMENT]);
+        $fish = $this->convertToFish($categories['fish']);
+        $equipment = $this->convertToEquipment($categories['equipment']);
 
         return new ConversionResult($fish, $equipment, [], []);
     }
@@ -89,12 +89,7 @@ class XlsToArrayConverter
      */
     private function getArrayFromSheet(Spreadsheet $sheets): array
     {
-        $categories = [
-            ConversionResult::FISH,
-            ConversionResult::EQUIPMENT,
-            ConversionResult::FEED,
-            ConversionResult::CHEMISTRY,
-        ];
+        $categories = ['fish', 'equipment', 'feed', 'chemistry', 'aquariums'];
 
         $result = [];
 

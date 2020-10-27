@@ -6,11 +6,6 @@ namespace App;
 
 class ConversionResult
 {
-    const FISH = 'fish';
-    const EQUIPMENT = 'equipment';
-    const FEED = 'feed';
-    const CHEMISTRY = 'chemistry';
-
     /**
      * @var array[]
      */
@@ -32,19 +27,26 @@ class ConversionResult
     private $chemistry;
 
     /**
+     * @var array[]
+     */
+    private $aquariums;
+
+    /**
      * ConversionResult constructor.
      *
      * @param array[] $fish
      * @param array[] $equipment
      * @param array[] $feed
      * @param array[] $chemistry
+     * @param array $aquariums
      */
-    public function __construct(array $fish, array $equipment, array $feed, array $chemistry)
+    public function __construct(array $fish, array $equipment, array $feed, array $chemistry, array $aquariums)
     {
         $this->fish = $fish;
         $this->equipment = $equipment;
         $this->feed = $feed;
         $this->chemistry = $chemistry;
+        $this->aquariums = $aquariums;
     }
 
     /**
@@ -77,5 +79,13 @@ class ConversionResult
     public function getChemistry(): array
     {
         return $this->chemistry;
+    }
+
+    /**
+     * @return array[]
+     */
+    public function getAquariums(): array
+    {
+        return $this->aquariums;
     }
 }
