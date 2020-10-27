@@ -5,80 +5,51 @@
 @section('content')
     <div class="container" style="margin-top:20px">
         <div class="row">
-            <div class="col s12 l6">
-                <table style="margin-top:40px" class="striped responsive-table">
+            <div class="col s12 m6">
+                <table class="striped">
                     <tbody>
                     <tr>
-                        <td>Последнее обновление прайса:</td>
+                        <td>Последнее обновление прайса</td>
                         <td>{{ $last_upload ?? '' }}</td>
                     </tr>
                     <tr>
-                        <td>Последний визит в приложение:</td>
+                        <td>Последний визит в приложение</td>
                         <td>{{ $last_request ?? '' }}</td>
                     </tr>
                     </tbody>
                 </table>
             </div>
+        </div>
 
-            <div class="col s12 l6">
-                <table style="margin-top:40px" class="striped responsive-table">
-                    <tbody>
-                    <tr>
-                        <td>Количество категорий:</td>
-                        <td>{{ count($price_list->fish) }}</td>
-                    </tr>
-                    <tr>
-                        <td>Количество позиций:</td>
-                        <td>{{ array_reduce($price_list->fish, function ($carry, $item) { return $carry + count($item); }) }}</td>
-                    </tr>
-                    </tbody>
-                </table>
+        <div class="row" style="margin-top: 30px">
+            <div class="col s12">
+                <ul class="tabs">
+                    <li class="tab col s3">
+                        <a class="active" href="#fish">Рыба <b>({{ $count_fish }})</b></a>
+                    </li>
+                    <li class="tab col s3">
+                        <a href="#equipment">Оборудывание <b>({{ $count_equipment }})</b></a>
+                    </li>
+                    <li class="tab col s3">
+                        <a href="#feed">Корма <b>({{ $count_feed }})</b></a>
+                    </li>
+                    <li class="tab col s3">
+                        <a href="#chemistry">Химия <b>({{ $count_chemistry }})</b></a>
+                    </li>
+                </ul>
             </div>
 
-            <div class="col s12" style="padding-top:20px">
-                <ul class="collapsible">
-                    @forelse ($price_list->fish as $category => $items)
-                        <li class="{{ $loop->first ? 'active' : null }}">
-                            <div class="collapsible-header">
-                                <b class="teal-text darken-4" style="margin-right:5px">{{ count($items) }}</b>
-                                {{ $category }}
-                            </div>
+            <div id="fish" class="col s12">
+                @include('includes.fish')
+            </div>
+            <div id="equipment" class="col s12">
 
-                            <div class="collapsible-body">
-                                <table class="striped responsive-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Номер</th>
-                                            <th>Название</th>
-                                            <th>Цена</th>
-                                            <th>Размер</th>
-                                            <th>Изображение</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="striped">
-                                        @foreach ($items as $item)
-                                            <tr>
-                                                <td>{{ $item['number'] }}</td>
-                                                <td>{{ $item['name'] }}</td>
-                                                <td>{{ $item['price'] }}</td>
-                                                <td>{{ $item['size'] }}</td>
-                                                <td>
-                                                    <div data-width="120"
-                                                         class="async-load spinner"
-                                                         data-async-load="{{ $item['image'] ?? '' }}"
-                                                         data-class="z-depth-1"
-                                                    ></div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </li>
-                    @empty
-                        <div class="collapsible-header"><p class="flow-text">Пусто</p></div>
-                    @endforelse
-                </ul>
+            </div>
+            <div id="feed" class="col s12">
+
+            </div>
+            <div id="chemistry" class="col s12">
+
             </div>
         </div>
     </div>

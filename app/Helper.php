@@ -19,4 +19,16 @@ class Helper
 
         return '';
     }
+
+    /**
+     * @param array[] $arr
+     *
+     * @return int
+     */
+    public static function countArrayItems(?array $arr): int
+    {
+        return array_reduce($arr ?? [], function ($carry, $item) {
+            return $carry + count($item);
+        }, 0);
+    }
 }
