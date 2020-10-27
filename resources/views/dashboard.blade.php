@@ -39,12 +39,8 @@
                 </ul>
             </div>
 
-            <div id="fish" class="col s12">
-                @include('includes.fish')
-            </div>
-            <div id="equipment" class="col s12">
-
-            </div>
+            <div id="fish" class="col s12">@include('includes.fish')</div>
+            <div id="equipment" class="col s12">@include('includes.equipment')</div>
             <div id="feed" class="col s12">
 
             </div>
