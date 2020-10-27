@@ -17,13 +17,14 @@ class DashboardController extends Controller
     public function index(): View
     {
         return view('dashboard', [
-            'last_upload' => Time::ago(cache()->get('last_upload')),
-            'last_request' => Time::ago(cache()->get('last_request')),
             'price_list' => $price_list = auth()->user()->priceLists->last(),
+            'last_upload' => Time::ago($price_list->created_at),
+            'last_request' => Time::ago(cache()->get('last_request')),
             'count_fish' => Helper::countArrayItems($price_list->fish),
             'count_equipment' => Helper::countArrayItems($price_list->equipment),
             'count_feed' => Helper::countArrayItems($price_list->feed),
             'count_chemistry' => Helper::countArrayItems($price_list->chemistry),
+            'count_aquariums' => Helper::countArrayItems($price_list->aquariums),
         ]);
     }
 }

@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $equipment
  * @property string $feed
  * @property string $chemistry
+ * @property string $aquariums
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $created_at
  */
@@ -20,7 +21,6 @@ class PriceList extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
-    public $timestamps = false;
 
     public function setFishAttribute(array $fish): void
     {
@@ -64,5 +64,15 @@ class PriceList extends Model
     public function getChemistryAttribute(?string $chemistry): ?array
     {
         return $chemistry ? json_decode($chemistry, true) : null;
+    }
+
+    public function setAquariumsAttribute(array $aquariums): void
+    {
+        $this->attributes['aquariums'] = $aquariums ? json_encode($aquariums, JSON_UNESCAPED_UNICODE) : '';
+    }
+
+    public function getAquariumsAttribute(?string $aquariums): ?array
+    {
+        return $aquariums ? json_decode($aquariums, true) : null;
     }
 }

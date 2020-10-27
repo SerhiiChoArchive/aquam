@@ -50,6 +50,7 @@ class PriceListController extends Controller
             'equipment' => $result->getEquipment(),
             'feed' => $result->getFeed(),
             'chemistry' => $result->getChemistry(),
+            'aquariums' => $result->getAquariums(),
         ]);
 
         Cache::forever('last_upload', date('Y-m-d H:i:s'));

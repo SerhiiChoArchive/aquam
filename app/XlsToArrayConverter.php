@@ -49,7 +49,7 @@ class XlsToArrayConverter
         $fish = $this->convertToFish($categories['fish']);
         $equipment = $this->convertToEquipment($categories['equipment']);
 
-        return new ConversionResult($fish, $equipment, [], []);
+        return new ConversionResult($fish, $equipment, [], [], []);
     }
 
     private function getImagesFromCSV(): ?array
