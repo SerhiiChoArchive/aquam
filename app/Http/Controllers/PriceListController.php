@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\ConversionResult;
+use App\Models\PriceList;
 use App\XlsToArrayConverter;
 use Error;
 use Illuminate\Contracts\View\View;
@@ -44,31 +44,16 @@ class PriceListController extends Controller
             return back()->with('error', 'Ошибка при попытке конвертации данных');
         }
 
-        $this->cacheTheData($result);
-
-        return back()->with('success', 'Файл загружен и данный успешно обновленны!');
-    }
-
-    /**
-     * @param \App\ConversionResult $result
-     */
-    private function cacheTheData(ConversionResult $result): void
-    {
-        Cache::forever(ConversionResult::FISH, $this->encodeData($result->getFish()));
-        Cache::forever(ConversionResult::EQUIPMENT, $this->encodeData($result->getEquipment()));
-        Cache::forever(ConversionResult::FEED, $this->encodeData($result->getFeed()));
-        Cache::forever(ConversionResult::CHEMISTRY, $this->encodeData($result->getChemistry()));
+        PriceList::query()->create([
+            'user_id' => $request->user()->id,
+            'fish' => $result->getFish(),
+            'equipment' => $result->getEquipment(),
+            'feed' => $result->getFeed(),
+            'chemistry' => $result->getChemistry(),
+        ]);
 
         Cache::forever('last_upload', date('Y-m-d H:i:s'));
-    }
 
-    /**
-     * @param array[] $result
-     *
-     * @return false|string
-     */
-    private function encodeData(array $result)
-    {
-        return json_encode($result, JSON_UNESCAPED_UNICODE);
+        return back()->with('success', 'Файл загружен и данный успешно обновленны!');
     }
 }

@@ -25,11 +25,11 @@
                     <tbody>
                     <tr>
                         <td>Количество категорий:</td>
-                        <td>{{ $price_categories_amount }}</td>
+                        <td>{{ count($price_list->fish) }}</td>
                     </tr>
                     <tr>
                         <td>Количество позиций:</td>
-                        <td>{{ $price_items_amount }}</td>
+                        <td>{{ array_reduce($price_list->fish, function ($carry, $item) { return $carry + count($item); }) }}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -37,7 +37,7 @@
 
             <div class="col s12" style="padding-top:20px">
                 <ul class="collapsible">
-                    @forelse ($price_list as $category => $items)
+                    @forelse ($price_list->fish as $category => $items)
                         <li class="{{ $loop->first ? 'active' : null }}">
                             <div class="collapsible-header">
                                 <b class="teal-text darken-4" style="margin-right:5px">{{ count($items) }}</b>
@@ -58,14 +58,14 @@
                                     <tbody class="striped">
                                         @foreach ($items as $item)
                                             <tr>
-                                                <td>{{ $item->number }}</td>
-                                                <td>{{ $item->name }}</td>
-                                                <td>{{ $item->price }}</td>
-                                                <td>{{ $item->size }}</td>
+                                                <td>{{ $item['number'] }}</td>
+                                                <td>{{ $item['name'] }}</td>
+                                                <td>{{ $item['price'] }}</td>
+                                                <td>{{ $item['size'] }}</td>
                                                 <td>
                                                     <div data-width="120"
                                                          class="async-load spinner"
-                                                         data-async-load="{{ $item->image ?? '' }}"
+                                                         data-async-load="{{ $item['image'] ?? '' }}"
                                                          data-class="z-depth-1"
                                                     ></div>
                                                 </td>
