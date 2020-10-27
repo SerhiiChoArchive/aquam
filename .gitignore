@@ -1,5 +1,6 @@
 /node_modules
-/public/hot
+/public/js
+/public/css
 /public/storage
 /storage/*.key
 /storage/app/xls/
