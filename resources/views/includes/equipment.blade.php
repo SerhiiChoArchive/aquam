@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col s12">
         <ul class="collapsible">
-            @forelse ($price_list->equipment as $category => $items)
+            @foreach ($price->equipment as $category => $items)
                 <li>
                     <div class="collapsible-header">
                         <b class="teal-text darken-4" style="margin-right:5px">{{ count($items) }}</b>
@@ -41,9 +41,7 @@
                         </table>
                     </div>
                 </li>
-            @empty
-                <div class="collapsible-header"><p class="flow-text">Пусто</p></div>
-            @endforelse
+            @endforeach
         </ul>
     </div>
 </div>

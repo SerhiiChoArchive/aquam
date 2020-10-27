@@ -91,3 +91,20 @@ table.striped.responsive-table td {
   }
 }
 
+.tabs .indicator {
+  background-color: #0c796b;
+  height: 3px;
+}
+
+.tabs .tab:nth-child(5) > a {
+  border-right: none !important;
+}
+
+.tabs .tab > a {
+  border-right: 1px solid #dadada;
+}
+
+.tabs .tab > a.active {
+  background-color: #f0f0f0 !important;
+}
+
