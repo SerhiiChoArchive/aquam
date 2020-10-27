@@ -132,8 +132,6 @@ class XlsToArrayConverter
                 'size' => $price_list[2][$i],
                 'price' => $price_list[3][$i],
                 'comment' => $price_list[4][$i] ?? '',
-                'order' => $price_list[5][$i] ?? '',
-                'sum' => $price_list[6][$i] ?? '0.00',
             ];
 
             $not_nulls = $this->getNotNulls($columns);
@@ -170,19 +168,15 @@ class XlsToArrayConverter
         $title = '';
 
         for ($i = 1; $i < count($equip[0]); $i++) {
+            $article = $equip[0][$i] ?? '';
+
             $columns = [
-                'article' => $equip[0][$i],
+                'article' => is_int($article) ? (string) $article : trim($article),
                 'name' => $equip[1][$i],
                 'description' => $equip[2][$i],
                 'producer' => $equip[3][$i],
                 'price' => $equip[4][$i],
-                'order' => $equip[5][$i] ?? '',
-                'sum' => $equip[6][$i],
             ];
-
-            if ($columns['sum'][0] === '=') {
-                $columns['sum'] = '0.00';
-            }
 
             $not_nulls = $this->getNotNulls($columns);
 
@@ -199,8 +193,7 @@ class XlsToArrayConverter
                 continue;
             }
 
-            $article = is_int($columns['article']) ? (string) $columns['article'] : $columns['article'];
-            $image = $this->getImageFrom($article);
+            $image = $this->getImageFrom($columns['article']);
 
             $result[$title][] = array_merge($columns, compact('image'));
         }
@@ -211,6 +204,7 @@ class XlsToArrayConverter
     private function getImageFrom(?string $name): ?string
     {
         $id = mb_strtolower(preg_replace('!\s+!', ' ', trim($name ?? '')));
+        $id = preg_replace('/ /', '', $id);
         return $this->images[$id] ?? $this->placeholder_image;
     }
 
