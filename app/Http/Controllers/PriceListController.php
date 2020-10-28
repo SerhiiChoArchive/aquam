@@ -41,7 +41,10 @@ class PriceListController extends Controller
             $result = $converter->convert();
         } catch (Exception | TypeError | Error $e) {
             Log::error($e->getMessage(), ['trace' => $e->getTraceAsString()]);
-            return back()->with('error', 'Ошибка при попытке конвертации данных');
+            return back()->with('error', <<<TEXT
+            Ошибка при попытке конвертации данных.
+            Проверьте правильность введенных данных в прайс.
+            TEXT);
         }
 
         PriceList::query()->create([
