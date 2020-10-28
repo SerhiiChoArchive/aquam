@@ -2,14 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Converters;
 
+use App\ConversionResult;
 use PhpOffice\PhpSpreadsheet\Reader\Xls;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use SplFileObject;
 
-class XlsToArrayConverter
+class XlsToArray
 {
+    use CanConvertToFish;
+    use CanConvertToEquipment;
+
     const NUMBER_OF_SHEETS_WE_NEED = 4;
 
     /**
@@ -105,92 +109,6 @@ class XlsToArrayConverter
 
                 $index++;
             }
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param array $price_list
-     *
-     * @return array[]
-     */
-    private function convertToFish(array $price_list): array
-    {
-        $result = [];
-        $title = '';
-
-        for ($i = 3; $i < count($price_list[0]); $i++) {
-            $columns = [
-                'number' => $price_list[0][$i],
-                'name' => $price_list[1][$i],
-                'size' => $price_list[2][$i],
-                'price' => $price_list[3][$i],
-                'comment' => $price_list[4][$i] ?? '',
-            ];
-
-            $not_nulls = $this->getNotNulls($columns);
-
-            if (empty($not_nulls)) {
-                continue;
-            }
-
-            if (count($not_nulls) === 1) {
-                if (is_object(current($not_nulls))) {
-                    continue;
-                }
-
-                $title = current($not_nulls);
-                continue;
-            }
-
-            $image = $this->getImageFrom($columns['name']);
-
-            $result[$title][] = array_merge($columns, compact('image'));
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param array[] $equip
-     *
-     * @return array[]
-     */
-    private function convertToEquipment(array $equip): array
-    {
-        $result = [];
-        $title = '';
-
-        for ($i = 1; $i < count($equip[0]); $i++) {
-            $article = $equip[0][$i] ?? '';
-
-            $columns = [
-                'article' => is_int($article) ? (string) $article : trim($article),
-                'name' => $equip[1][$i],
-                'description' => $equip[2][$i],
-                'producer' => $equip[3][$i],
-                'price' => $equip[4][$i],
-            ];
-
-            $not_nulls = $this->getNotNulls($columns);
-
-            if (empty($not_nulls)) {
-                continue;
-            }
-
-            if (count($not_nulls) === 1) {
-                if (is_object(current($not_nulls))) {
-                    continue;
-                }
-
-                $title = current($not_nulls);
-                continue;
-            }
-
-            $image = $this->getImageFrom($columns['article']);
-
-            $result[$title][] = array_merge($columns, compact('image'));
         }
 
         return $result;
