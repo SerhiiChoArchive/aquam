@@ -16,22 +16,10 @@ class XlsToArray
 
     const NUMBER_OF_SHEETS_WE_NEED = 4;
 
-    /**
-     * @var string
-     */
-    private $pathname;
-
-    /**
-     * @var \PhpOffice\PhpSpreadsheet\Reader\Xls
-     */
-    private $xls_reader;
-
-    /**
-     * @var array|null
-     */
-    private $images;
-
-    private $placeholder_image = 'https://i.ibb.co/9tpYXHz/fish-placeholder.jpg';
+    private string $pathname;
+    private Xls $xls_reader;
+    private ?array $images;
+    private string $placeholder_image = 'https://i.ibb.co/9tpYXHz/fish-placeholder.jpg';
 
     public function __construct(string $pathname, Xls $xls_reader)
     {
@@ -46,14 +34,15 @@ class XlsToArray
      */
     public function convert(): ConversionResult
     {
-        $sheets = $this->xls_reader->load($this->pathname);
+        $sheets = $this->getArrayFromSheet($this->xls_reader->load($this->pathname));
 
-        $categories = $this->getArrayFromSheet($sheets);
-
-        $fish = $this->convertToFish($categories['fish']);
-        $equipment = $this->convertToEquipment($categories['equipment']);
-
-        return new ConversionResult($fish, $equipment, [], [], []);
+        return new ConversionResult(
+            $this->convertToFish($sheets['fish']),
+            $this->convertToEquipment($sheets['equipment']),
+            [],
+            [],
+            []
+        );
     }
 
     private function getImagesFromCSV(): ?array

@@ -12,10 +12,7 @@ class RegisterViewTest extends TestCase
 {
     use DatabaseTransactions;
 
-    /**
-     * @var string
-     */
-    private $path;
+    private string $path;
 
     public function setUp(): void
     {

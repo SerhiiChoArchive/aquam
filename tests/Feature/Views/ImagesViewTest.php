@@ -9,15 +9,9 @@ use Tests\TestCase;
 
 class ImagesViewTest extends TestCase
 {
-    /**
-     * @var string
-     */
-    private $path;
+    private string $path;
 
-    /**
-     * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
-     */
-    private $user;
+    private User $user;
 
     public function setUp(): void
     {

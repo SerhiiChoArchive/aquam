@@ -9,15 +9,8 @@ use Tests\TestCase;
 
 class PriceListViewTest extends TestCase
 {
-    /**
-     * @var string
-     */
-    private $path;
-
-    /**
-     * @var \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
-     */
-    private $user;
+    private string $path;
+    private User $user;
 
     public function setUp(): void
     {

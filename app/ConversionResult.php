@@ -9,27 +9,27 @@ class ConversionResult
     /**
      * @var array[]
      */
-    private $fish;
+    private array $fish;
 
     /**
      * @var array[]
      */
-    private $equipment;
+    private array $equipment;
 
     /**
      * @var array[]
      */
-    private $feed;
+    private array $feed;
 
     /**
      * @var array[]
      */
-    private $chemistry;
+    private array $chemistry;
 
     /**
      * @var array[]
      */
-    private $aquariums;
+    private array $aquariums;
 
     /**
      * ConversionResult constructor.
