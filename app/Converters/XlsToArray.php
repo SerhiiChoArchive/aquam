@@ -13,6 +13,7 @@ class XlsToArray
 {
     use CanConvertToFish;
     use CanConvertToEquipment;
+    use CanConvertToFeed;
 
     const NUMBER_OF_SHEETS_WE_NEED = 4;
 
@@ -31,6 +32,7 @@ class XlsToArray
     /**
      * @return \App\ConversionResult
      * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws \Exception
      */
     public function convert(): ConversionResult
     {
@@ -39,7 +41,7 @@ class XlsToArray
         return new ConversionResult(
             $this->convertToFish($sheets['fish']),
             $this->convertToEquipment($sheets['equipment']),
-            [],
+            $this->convertToFeed($sheets['feed']),
             [],
             []
         );

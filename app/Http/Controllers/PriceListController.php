@@ -7,12 +7,13 @@ namespace App\Http\Controllers;
 use App\Models\PriceList;
 use App\Converters\XlsToArray;
 use Error;
+use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
-use PhpOffice\PhpSpreadsheet\Exception;
+use PhpOffice\PhpSpreadsheet\Exception as SpreadsheetException;
 use PhpOffice\PhpSpreadsheet\Reader\Xls;
 use TypeError;
 
@@ -39,12 +40,9 @@ class PriceListController extends Controller
 
         try {
             $result = $converter->convert();
-        } catch (Exception | TypeError | Error $e) {
+        } catch (Exception | SpreadsheetException | TypeError | Error $e) {
             Log::error($e->getMessage(), ['trace' => $e->getTraceAsString()]);
-            return back()->with('error', <<<TEXT
-            Ошибка при попытке конвертации данных.
-            Проверьте правильность введенных данных в прайс.
-            TEXT);
+            return back()->with('error', $e->getMessage());
         }
 
         PriceList::query()->create([

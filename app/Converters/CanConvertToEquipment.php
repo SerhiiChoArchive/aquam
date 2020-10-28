@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\Converters;
 
+use Exception;
+
 trait CanConvertToEquipment
 {
     /**
      * @param array[] $equip
      *
      * @return array[]
+     * @throws \Exception
      */
     private function convertToEquipment(array $equip): array
     {
@@ -18,6 +21,13 @@ trait CanConvertToEquipment
 
         for ($i = 1; $i < count($equip[0]); $i++) {
             $article = $equip[0][$i] ?? '';
+
+            if (is_object($article) || is_float($article)) {
+                throw new Exception(<<<MSG
+                Проверьте новые артикли в "Обор-ние, аксессуары", один из них имеет неподдерживаемый тип.
+                Убедитесь что артикль является строкой.
+                MSG);
+            }
 
             $columns = [
                 'article' => is_int($article) ? (string) $article : trim($article),

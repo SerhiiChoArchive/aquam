@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\Converters;
 
+use Exception;
+
 trait CanConvertToFish
 {
     /**
      * @param array $price_list
      *
      * @return array[]
+     * @throws \Exception
      */
     private function convertToFish(array $price_list): array
     {
@@ -17,9 +20,11 @@ trait CanConvertToFish
         $title = '';
 
         for ($i = 3; $i < count($price_list[0]); $i++) {
+            $name = $price_list[1][$i];
+
             $columns = [
                 'number' => $price_list[0][$i],
-                'name' => $price_list[1][$i],
+                'name' => $name,
                 'size' => $price_list[2][$i],
                 'price' => $price_list[3][$i],
                 'comment' => $price_list[4][$i] ?? '',
@@ -40,7 +45,11 @@ trait CanConvertToFish
                 continue;
             }
 
-            $image = $this->getImageFrom($columns['name']);
+            if (is_null($name)) {
+                throw new Exception('Проверьте колонку "Наименование" в "Акв.рыба", одина из них пустая.');
+            }
+
+            $image = $this->getImageFrom($name);
 
             $result[$title][] = array_merge($columns, compact('image'));
         }
