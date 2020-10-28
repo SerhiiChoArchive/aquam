@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\PriceList;
 use App\Http\Controllers\JsonController;
 use Illuminate\Support\Facades\Route;
 
