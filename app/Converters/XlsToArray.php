@@ -14,7 +14,7 @@ class XlsToArray
 {
     use CanConvertToFish;
 
-    const NUMBER_OF_SHEETS_WE_NEED = 4;
+    const NUMBER_OF_SHEETS_WE_NEED = 5;
 
     private string $pathname;
     private Xls $xls_reader;
@@ -42,7 +42,7 @@ class XlsToArray
             $this->convertTo($sheets['equipment'], ['name', 'description', 'producer', 'price'], 'Обор-ние, аксессуары'),
             $this->convertTo($sheets['feed'], ['name', 'description', 'weight', 'price'], 'Корма для рыб'),
             $this->convertTo($sheets['chemistry'], ['name', 'capacity', 'description', 'type', 'price'], 'Химия'),
-            [],
+            $this->convertTo($sheets['aquariums'], ['name', 'capacity', 'description', 'price'], 'Аквариумы, крышки'),
         );
     }
 

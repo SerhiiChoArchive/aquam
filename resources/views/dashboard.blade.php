@@ -72,7 +72,11 @@
                     ></x-price-tab-content>
                 </div>
                 <div id="aquariums" class="col s12">
-                    //
+                    <x-price-tab-content
+                        :categories="$price->aquariums"
+                        names="Артикль,Название,Обьем,Описание,Цена"
+                        keys="article,name,capacity,description,price"
+                    ></x-price-tab-content>
                 </div>
             @else
                 <div class="center" style="padding-top: 100px">
