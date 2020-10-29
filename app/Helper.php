@@ -32,7 +32,7 @@ class Helper
         }, 0);
     }
 
-    public static function arrayDiffRecursive($arr1, $arr2): array
+    public static function arrayDiffRecursive(array $arr1, array $arr2): array
     {
         $result = [];
 

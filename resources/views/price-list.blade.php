@@ -31,39 +31,12 @@
             </form>
         </div>
 
-        @if (count($diff_items) > 0)
+        @if ($diff->hasCategories())
             <div class="col s12" style="padding-top:17px">
                 <h5>Новые позиции</h5>
                 <p>Обратите внимание! Позиции ниже являются новыми. Их не было в прошлом прайс листе.</p>
 
-                <table class="striped responsive-table">
-                    <thead>
-                        <tr>
-                            <th>Номер</th>
-                            <th>Название</th>
-                            <th>Цена</th>
-                            <th>Размер</th>
-                            <th>Изображение</th>
-                        </tr>
-                    </thead>
-                    <tbody class="striped">
-                        @foreach ($diff_items as $item)
-                            <tr>
-                                <td>{{ $item->number }}</td>
-                                <td>{{ $item->name }}</td>
-                                <td>{{ $item->price }}</td>
-                                <td>{{ $item->size }}</td>
-                                <td>
-                                    <div data-width="120"
-                                         class="async-load spinner"
-                                         data-async-load="{{ $item->image ?? '' }}"
-                                         data-class="z-depth-1"
-                                    ></div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                <x-price-list-tabs :price="$diff"></x-price-list-tabs>
             </div>
         @endif
     </div>

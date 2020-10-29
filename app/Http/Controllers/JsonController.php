@@ -11,27 +11,27 @@ class JsonController extends Controller
 {
     public function fish(): array
     {
-        return PriceList::query()->select('fish')->latest()->first()->fish;
+        return PriceList::getLatestCategory('fish');
     }
 
     public function equipment(): array
     {
-        return PriceList::query()->select('equipment')->latest()->first()->equipment;
+        return PriceList::getLatestCategory('equipment');
     }
 
     public function feed(): array
     {
-        return PriceList::query()->select('feed')->latest()->first()->feed;
+        return PriceList::getLatestCategory('feed');
     }
 
     public function chemistry(): array
     {
-        return PriceList::query()->select('chemistry')->latest()->first()->chemistry;
+        return PriceList::getLatestCategory('chemistry');
     }
 
     public function aquariums(): array
     {
-        return PriceList::query()->select('aquariums')->latest()->first()->aquariums;
+        return PriceList::getLatestCategory('aquariums');
     }
 
     public function info(): string

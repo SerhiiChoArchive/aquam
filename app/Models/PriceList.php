@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $id
  * @property int $user_id
- * @property string $fish
- * @property string $equipment
- * @property string $feed
- * @property string $chemistry
- * @property string $aquariums
+ * @property array $fish
+ * @property array $equipment
+ * @property array $feed
+ * @property array $chemistry
+ * @property array $aquariums
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $created_at
  */
@@ -22,13 +22,35 @@ class PriceList extends Model
 
     protected $guarded = ['id'];
 
+    public static function getLatest(): ?PriceList
+    {
+        return self::query()->latest()->first();
+    }
+
+    public static function getPreLatest(): ?PriceList
+    {
+        return self::query()->orderBy('id', 'desc')->skip(1)->take(1)->first();
+    }
+
+    public function hasCategories(): bool
+    {
+        return !empty(array_sum([
+            count($this->fish ?? []),
+            count($this->equipment ?? []),
+            count($this->feed ?? []),
+            count($this->chemistry ?? []),
+            count($this->aquariums ?? [])
+        ]));
+    }
+
+    public static function getLatestCategory(string $category): array
+    {
+        return self::query()->select($category)->latest()->first()->{$category} ?? [];
+    }
+
     public function setFishAttribute(array $fish): void
     {
-        if ($fish) {
-            $this->attributes['fish'] = json_encode($fish, JSON_UNESCAPED_UNICODE);
-        } else {
-            $this->attributes['fish'] = '';
-        }
+        $this->attributes['fish'] = $fish ? json_encode($fish, JSON_UNESCAPED_UNICODE) : '';
     }
 
     public function getFishAttribute(?string $fish): ?array

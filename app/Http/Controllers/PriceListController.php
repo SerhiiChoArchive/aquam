@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Helper;
 use App\Models\PriceList;
 use App\Converters\XlsToArray;
 use Error;
@@ -25,8 +26,18 @@ class PriceListController extends Controller
      */
     public function index(): View
     {
-        $diff_items = cache()->get('diff-items') ?? '[]';
-        return view('price-list', ['diff_items' => json_decode($diff_items)]);
+        $latest = PriceList::getLatest();
+        $pre_latest = PriceList::getPreLatest();
+
+        $diff = new PriceList([
+            'fish' => Helper::arrayDiffRecursive($latest->fish, $pre_latest->fish),
+            'equipment' => Helper::arrayDiffRecursive($latest->equipment, $pre_latest->equipment),
+            'feed' => Helper::arrayDiffRecursive($latest->feed, $pre_latest->feed),
+            'chemistry' => Helper::arrayDiffRecursive($latest->chemistry, $pre_latest->chemistry),
+            'aquariums' => Helper::arrayDiffRecursive($latest->aquariums, $pre_latest->aquariums),
+        ]);
+
+        return view('price-list', compact('diff'));
     }
 
     public function store(Request $request): RedirectResponse
