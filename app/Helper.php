@@ -31,4 +31,32 @@ class Helper
             return $carry + count($item);
         }, 0);
     }
+
+    public static function arrayDiffRecursive($arr1, $arr2): array
+    {
+        $result = [];
+
+        foreach ($arr1 as $key => $value) {
+            if (!array_key_exists($key, $arr2)) {
+                $result[$key] = $value;
+                continue;
+            }
+
+            if (is_array($value)) {
+                $recursive_diff = self::arrayDiffRecursive($value, $arr2[$key]);
+
+                if (count($recursive_diff) > 0) {
+                    $result[$key] = $recursive_diff;
+                }
+
+                continue;
+            }
+
+            if ($value !== $arr2[$key]) {
+                $result[$key] = $value;
+            }
+        }
+
+        return $result;
+    }
 }
