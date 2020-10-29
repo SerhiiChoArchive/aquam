@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Converters;
 
 use App\ConversionResult;
+use Exception;
 use PhpOffice\PhpSpreadsheet\Reader\Xls;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use SplFileObject;
@@ -12,8 +13,6 @@ use SplFileObject;
 class XlsToArray
 {
     use CanConvertToFish;
-    use CanConvertToEquipment;
-    use CanConvertToFeed;
 
     const NUMBER_OF_SHEETS_WE_NEED = 4;
 
@@ -40,10 +39,10 @@ class XlsToArray
 
         return new ConversionResult(
             $this->convertToFish($sheets['fish']),
-            $this->convertToEquipment($sheets['equipment']),
-            $this->convertToFeed($sheets['feed']),
+            $this->convertTo($sheets['equipment'], ['name', 'description', 'producer', 'price'], 'Обор-ние, аксессуары'),
+            $this->convertTo($sheets['feed'], ['name', 'description', 'weight', 'price'], 'Корма для рыб'),
+            $this->convertTo($sheets['chemistry'], ['name', 'capacity', 'description', 'type', 'price'], 'Химия'),
             [],
-            []
         );
     }
 
@@ -51,7 +50,7 @@ class XlsToArray
     {
         $file_path = storage_path('app/csv/images.csv');
 
-        if (!file_exists($file_path)) {
+        if ( ! file_exists($file_path)) {
             return null;
         }
 
@@ -63,7 +62,7 @@ class XlsToArray
 
         $result = [];
 
-        while (!$file->eof()) {
+        while ( ! $file->eof()) {
             $csv = $file->fgetcsv();
 
             if (count($csv) !== 2) {
@@ -109,13 +108,68 @@ class XlsToArray
     {
         $id = mb_strtolower(preg_replace('!\s+!', ' ', trim($name ?? '')));
         $id = preg_replace('/ /', '', $id);
+
         return $this->images[$id] ?? $this->placeholder_image;
     }
 
     private function getNotNulls(array $columns): array
     {
         return array_filter($columns, function ($item) {
-            return !is_null($item) && $item !== '' && $item !== '0.00';
+            return ! is_null($item) && $item !== '' && $item !== '0.00';
         });
-}
+    }
+
+    /**
+     * @param array[] $items
+     * @param array $column_names
+     * @param string $category
+     *
+     * @return array[]
+     * @throws \Exception
+     */
+    private function convertTo(array $items, array $column_names, string $category): array
+    {
+        $result = [];
+        $title = '';
+
+        for ($i = 1; $i < count($items[0]); $i++) {
+            $article = $items[0][$i] ?? '';
+
+            if (is_object($article) || is_float($article)) {
+                throw new Exception(<<<MSG
+                Проверьте новые артикли в "$category", один из них имеет неподдерживаемый тип.
+                Убедитесь что артикль является строкой.
+                MSG);
+            }
+
+            $columns = ['article' => is_int($article) ? (string) $article : trim($article)];
+            $index = 1;
+
+            foreach ($column_names as $name) {
+                $columns[$name] = $items[$index][$i];
+                $index++;
+            }
+
+            $not_nulls = $this->getNotNulls($columns);
+
+            if (empty($not_nulls)) {
+                continue;
+            }
+
+            if (count($not_nulls) === 1) {
+                if (is_object(current($not_nulls))) {
+                    continue;
+                }
+
+                $title = current($not_nulls);
+                continue;
+            }
+
+            $image = $this->getImageFrom($columns['article']);
+
+            $result[$title][] = array_merge($columns, compact('image'));
+        }
+
+        return $result;
+    }
 }

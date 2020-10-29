@@ -45,10 +45,6 @@ trait CanConvertToFish
                 continue;
             }
 
-            if (is_null($name)) {
-                throw new Exception('Проверьте колонку "Наименование" в "Акв.рыба", одина из них пустая.');
-            }
-
             $image = $this->getImageFrom($name);
 
             $result[$title][] = array_merge($columns, compact('image'));
