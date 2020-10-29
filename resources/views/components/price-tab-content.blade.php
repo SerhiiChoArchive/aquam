@@ -4,7 +4,8 @@
             @foreach ($categories as $category => $items)
                 <li>
                     <div class="collapsible-header">
-                        <b class="teal-text darken-4" style="margin-right:5px">{{ count($items) }}</b>
+                        <i class="material-icons teal-text text-darken-2">arrow_drop_down</i>
+                        <b class="teal-text text-darken-2" style="margin-right:5px">{{ count($items) }}</b>
                         {{ $category }}
                     </div>
 

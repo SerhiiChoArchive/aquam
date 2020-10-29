@@ -43,11 +43,33 @@
             </div>
 
             @if ($price)
-                <div id="fish" class="col s12">@include('includes.fish')</div>
-                <div id="equipment" class="col s12">@include('includes.equipment')</div>
-                <div id="feed" class="col s12"></div>
-                <div id="chemistry" class="col s12"></div>
-                <div id="aquariums" class="col s12"></div>
+                <div id="fish" class="col s12">
+                    <x-price-tab-content
+                        :categories="$price->fish"
+                        names="Номер,Название,Цена,Размер"
+                        keys="number,name,price,size"
+                    ></x-price-tab-content>
+                </div>
+                <div id="equipment" class="col s12">
+                    <x-price-tab-content
+                        :categories="$price->equipment"
+                        names="Артикль,Название,Описание,Производитель,Цена"
+                        keys="article,name,description,producer,price"
+                    ></x-price-tab-content>
+                </div>
+                <div id="feed" class="col s12">
+                    <x-price-tab-content
+                        :categories="$price->feed"
+                        names="Артикль,Название,Описание,Упаковка,Цена"
+                        keys="article,name,description,weight,price"
+                    ></x-price-tab-content>
+                </div>
+                <div id="chemistry" class="col s12">
+                    //
+                </div>
+                <div id="aquariums" class="col s12">
+                    //
+                </div>
             @else
                 <div class="center" style="padding-top: 100px">
                     <a href="{{ action('PriceListController@index') }}" class="btn teal darken-1">
