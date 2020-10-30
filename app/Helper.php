@@ -34,34 +34,38 @@ class Helper
 
     public static function getCategoriesDiff(array $categories1, array $categories2, string $column_to_compare): array
     {
-        $names1 = [];
-        $names2 = [];
+        $names1 = self::getAllNames($categories1, $column_to_compare);
+        $names2 = self::getAllNames($categories2, $column_to_compare);
 
-        foreach ($categories1 as $category)
-            foreach ($category as $item)
-                if (mb_strlen($item[$column_to_compare]) > 0)
-                    $names1[] = $item[$column_to_compare];
+        $diff = array_diff($names1, $names2) + array_diff($names2, $names1);
 
-        foreach ($categories2 as $category)
-            foreach ($category as $item)
-                if (mb_strlen($item[$column_to_compare]) > 0)
-                    $names2[] = $item[$column_to_compare];
-
-        $diff1 = array_diff($names1, $names2);
-        $diff2 = array_diff($names2, $names1);
-        $diff = array_merge($diff1, $diff2);
-
-        $new_items1 = array_map(function ($cat) use ($diff, $column_to_compare) {
-            return array_filter($cat, fn($item) => in_array($item[$column_to_compare], $diff));
-        }, $categories1);
-
-        $new_items2 = array_map(function ($cat) use ($diff, $column_to_compare) {
-            return array_filter($cat, fn($item) => in_array($item[$column_to_compare], $diff));
-        }, $categories2);
-
-        $new_items1 = array_filter($new_items1, fn($item) => !empty($item));
-        $new_items2 = array_filter($new_items2, fn($item) => !empty($item));
+        $new_items1 = self::getDifferentItems($column_to_compare, $diff, $categories1);
+        $new_items2 = self::getDifferentItems($column_to_compare, $diff, $categories2);
 
         return empty($new_items1) ? $new_items2 : $new_items1;
+    }
+
+    private static function getAllNames(array $categories, string $column_to_compare): array
+    {
+        $result = [];
+
+        foreach ($categories as $category) {
+            foreach ($category as $item) {
+                if (mb_strlen($item[$column_to_compare]) > 0) {
+                    $result[] = $item[$column_to_compare];
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    private static function getDifferentItems(string $column_to_compare, array $diff, array $categories1): array
+    {
+        $different_items = array_map(function ($cat) use ($column_to_compare, $diff) {
+             return array_filter($cat, fn($item) => in_array($item[$column_to_compare], $diff));
+        }, $categories1);
+
+        return array_filter($different_items, fn($item) => !empty($item));
     }
 }
