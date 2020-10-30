@@ -29,6 +29,10 @@ class PriceListController extends Controller
         $latest = PriceList::getLatest();
         $pre_latest = PriceList::getPreLatest();
 
+        if (!$latest || !$pre_latest) {
+            return view('price-list', ['diff' => new PriceList()]);
+        }
+
         $diff = new PriceList([
             'fish' => Helper::getCategoriesDiff($latest->fish, $pre_latest->fish, 'name'),
             'equipment' => Helper::getCategoriesDiff($latest->equipment, $pre_latest->equipment, 'article'),
