@@ -107,8 +107,6 @@ class XlsToArray
     private function getImageFrom(?string $name): ?string
     {
         $id = mb_strtolower(preg_replace('!\s+!', ' ', trim($name ?? '')));
-        $id = preg_replace('/ /', '', $id);
-
         return $this->images[$id] ?? $this->placeholder_image;
     }
 
