@@ -113,7 +113,7 @@ class XlsToArray
     private function getNotNulls(array $columns): array
     {
         return array_filter($columns, function ($item) {
-            return ! is_null($item) && $item !== '' && $item !== '0.00';
+            return !is_null($item) && $item !== '' && $item !== '0.00';
         });
     }
 
@@ -144,7 +144,8 @@ class XlsToArray
             $index = 1;
 
             foreach ($column_names as $name) {
-                $columns[$name] = $items[$index][$i];
+                $value = $items[$index][$i];
+                $columns[$name] = is_string($value) ? trim($value) : $value;
                 $index++;
             }
 

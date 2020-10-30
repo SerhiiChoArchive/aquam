@@ -22,10 +22,10 @@ trait CanConvertToFish
 
             $columns = [
                 'number' => $price_list[0][$i],
-                'name' => $name,
+                'name' => is_string($name) ? trim($name) : $name,
                 'size' => $price_list[2][$i],
                 'price' => $price_list[3][$i],
-                'comment' => $price_list[4][$i] ?? '',
+                'comment' => trim($price_list[4][$i] ?? ''),
             ];
 
             $not_nulls = $this->getNotNulls($columns);
