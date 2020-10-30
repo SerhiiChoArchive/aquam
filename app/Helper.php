@@ -32,31 +32,36 @@ class Helper
         }, 0);
     }
 
-    public static function arrayDiffRecursive(array $arr1, array $arr2): array
+    public static function getCategoriesDiff(array $categories1, array $categories2, string $column_to_compare): array
     {
-        $result = [];
+        $names1 = [];
+        $names2 = [];
 
-        foreach ($arr1 as $key => $value) {
-            if (!array_key_exists($key, $arr2)) {
-                $result[$key] = $value;
-                continue;
-            }
+        foreach ($categories1 as $category)
+            foreach ($category as $item)
+                if (mb_strlen($item[$column_to_compare]) > 0)
+                    $names1[] = $item[$column_to_compare];
 
-            if (is_array($value)) {
-                $recursive_diff = self::arrayDiffRecursive($value, $arr2[$key]);
+        foreach ($categories2 as $category)
+            foreach ($category as $item)
+                if (mb_strlen($item[$column_to_compare]) > 0)
+                    $names2[] = $item[$column_to_compare];
 
-                if (count($recursive_diff) > 0) {
-                    $result[$key] = $recursive_diff;
-                }
+        $diff1 = array_diff($names1, $names2);
+        $diff2 = array_diff($names2, $names1);
+        $diff = array_merge($diff1, $diff2);
 
-                continue;
-            }
+        $new_items1 = array_map(function ($cat) use ($diff, $column_to_compare) {
+            return array_filter($cat, fn($item) => in_array($item[$column_to_compare], $diff));
+        }, $categories1);
 
-            if ($value !== $arr2[$key]) {
-                $result[$key] = $value;
-            }
-        }
+        $new_items2 = array_map(function ($cat) use ($diff, $column_to_compare) {
+            return array_filter($cat, fn($item) => in_array($item[$column_to_compare], $diff));
+        }, $categories2);
 
-        return $result;
+        $new_items1 = array_filter($new_items1, fn($item) => !empty($item));
+        $new_items2 = array_filter($new_items2, fn($item) => !empty($item));
+
+        return empty($new_items1) ? $new_items2 : $new_items1;
     }
 }

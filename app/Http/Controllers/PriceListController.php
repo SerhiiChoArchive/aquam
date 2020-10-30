@@ -30,11 +30,11 @@ class PriceListController extends Controller
         $pre_latest = PriceList::getPreLatest();
 
         $diff = new PriceList([
-            'fish' => Helper::arrayDiffRecursive($latest->fish, $pre_latest->fish),
-            'equipment' => Helper::arrayDiffRecursive($latest->equipment, $pre_latest->equipment),
-            'feed' => Helper::arrayDiffRecursive($latest->feed, $pre_latest->feed),
-            'chemistry' => Helper::arrayDiffRecursive($latest->chemistry, $pre_latest->chemistry),
-            'aquariums' => Helper::arrayDiffRecursive($latest->aquariums, $pre_latest->aquariums),
+            'fish' => Helper::getCategoriesDiff($latest->fish, $pre_latest->fish, 'name'),
+            'equipment' => Helper::getCategoriesDiff($latest->equipment, $pre_latest->equipment, 'article'),
+            'feed' => Helper::getCategoriesDiff($latest->feed, $pre_latest->feed, 'article'),
+            'chemistry' => Helper::getCategoriesDiff($latest->chemistry, $pre_latest->chemistry, 'article'),
+            'aquariums' => Helper::getCategoriesDiff($latest->aquariums, $pre_latest->aquariums, 'article'),
         ]);
 
         return view('price-list', compact('diff'));
