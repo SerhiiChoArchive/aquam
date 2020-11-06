@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use PhpOffice\PhpSpreadsheet\Exception as SpreadsheetException;
-use PhpOffice\PhpSpreadsheet\Reader\Xls;
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use TypeError;
 
 class PriceListController extends Controller
@@ -48,10 +48,10 @@ class PriceListController extends Controller
     {
         $request->validate(['file' => ['required']]);
 
-        $new_file_name = sprintf("%s-%s.xls", date('Y-m-d_H-i-s'), time());
-        $pathname = $request->file('file')->move(storage_path('app/xls'), $new_file_name)->getPathname();
+        $new_file_name = sprintf("%s-%s.xlsx", date('Y-m-d_H-i-s'), time());
+        $pathname = $request->file('file')->move(storage_path('app/xlsx'), $new_file_name)->getPathname();
 
-        $converter = new XlsToArray($pathname, new Xls());
+        $converter = new XlsToArray($pathname, new Xlsx());
 
         try {
             $result = $converter->convert();

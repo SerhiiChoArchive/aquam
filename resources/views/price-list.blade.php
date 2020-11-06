@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col s12 l6 offset-l3">
             <h5>Обновить прайс лист</h5>
-            <p style="padding:10px 0">Выберите прайс лист формата .xls и нажмите "Загрузить"</p>
+            <p style="padding:10px 0">Выберите прайс лист формата .xlsx и нажмите "Загрузить"</p>
 
             <form action="{{ action('PriceListController@store') }}" method="post" enctype="multipart/form-data">
                 @csrf

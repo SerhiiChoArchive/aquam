@@ -6,7 +6,7 @@ namespace App\Converters;
 
 use App\ConversionResult;
 use Exception;
-use PhpOffice\PhpSpreadsheet\Reader\Xls;
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use SplFileObject;
 
@@ -17,14 +17,14 @@ class XlsToArray
     const NUMBER_OF_SHEETS_WE_NEED = 5;
 
     private string $pathname;
-    private Xls $xls_reader;
+    private Xlsx $xlsx_reader;
     private ?array $images;
     private string $placeholder_image = 'https://i.ibb.co/9tpYXHz/fish-placeholder.jpg';
 
-    public function __construct(string $pathname, Xls $xls_reader)
+    public function __construct(string $pathname, Xlsx $xlsx_reader)
     {
         $this->pathname = $pathname;
-        $this->xls_reader = $xls_reader;
+        $this->xlsx_reader = $xlsx_reader;
         $this->images = $this->getImagesFromCSV();
     }
 
@@ -35,7 +35,7 @@ class XlsToArray
      */
     public function convert(): ConversionResult
     {
-        $sheets = $this->getArrayFromSheet($this->xls_reader->load($this->pathname));
+        $sheets = $this->getArrayFromSheet($this->xlsx_reader->load($this->pathname));
 
         return new ConversionResult(
             $this->convertToFish($sheets['fish']),
@@ -62,7 +62,7 @@ class XlsToArray
 
         $result = [];
 
-        while ( ! $file->eof()) {
+        while (!$file->eof()) {
             $csv = $file->fgetcsv();
 
             if (count($csv) !== 2) {

@@ -1,7 +1,7 @@
 /node_modules
 /public/storage
 /storage/*.key
-/storage/app/xls/
+/storage/app/xlsx/
 /vendor
 .env
 .env.backup
