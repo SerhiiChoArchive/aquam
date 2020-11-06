@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Converters;
 
 use App\ConversionResult;
-use Exception;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+use PhpOffice\PhpSpreadsheet\RichText\RichText;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use SplFileObject;
 
@@ -133,11 +133,8 @@ class XlsxToArray
         for ($i = 1; $i < count($items[0]); $i++) {
             $article = $items[0][$i] ?? '';
 
-            if (is_object($article) || is_float($article)) {
-                throw new Exception(<<<MSG
-                Проверьте новые артикли в "$category", один из них имеет неподдерживаемый тип.
-                Убедитесь что артикль является строкой.
-                MSG);
+            if ($article instanceof RichText) {
+                $article = $article->getPlainText();
             }
 
             $columns = ['article' => is_int($article) ? (string) $article : trim($article)];
