@@ -10,7 +10,7 @@ use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use SplFileObject;
 
-class XlsToArray
+class XlsxToArray
 {
     use CanConvertToFish;
 

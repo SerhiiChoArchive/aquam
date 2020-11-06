@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Helper;
 use App\Models\PriceList;
-use App\Converters\XlsToArray;
+use App\Converters\XlsxToArray;
 use Error;
 use Exception;
 use Illuminate\Contracts\View\View;
@@ -51,7 +51,7 @@ class PriceListController extends Controller
         $new_file_name = sprintf("%s-%s.xlsx", date('Y-m-d_H-i-s'), time());
         $pathname = $request->file('file')->move(storage_path('app/xlsx'), $new_file_name)->getPathname();
 
-        $converter = new XlsToArray($pathname, new Xlsx());
+        $converter = new XlsxToArray($pathname, new Xlsx());
 
         try {
             $result = $converter->convert();
