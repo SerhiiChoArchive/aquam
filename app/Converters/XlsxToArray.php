@@ -39,10 +39,10 @@ class XlsxToArray
 
         return new ConversionResult(
             $this->convertToFish($sheets['fish']),
-            $this->convertTo($sheets['equipment'], ['name', 'description', 'producer', 'price'], 'Обор-ние, аксессуары'),
-            $this->convertTo($sheets['feed'], ['name', 'description', 'weight', 'price'], 'Корма для рыб'),
-            $this->convertTo($sheets['chemistry'], ['name', 'capacity', 'description', 'type', 'price'], 'Химия'),
-            $this->convertTo($sheets['aquariums'], ['name', 'capacity', 'description', 'price'], 'Аквариумы, крышки'),
+            $this->convertTo($sheets['equipment'], ['name', 'description', 'producer', 'price']),
+            $this->convertTo($sheets['feed'], ['name', 'description', 'weight', 'price']),
+            $this->convertTo($sheets['chemistry'], ['name', 'capacity', 'description', 'price']),
+            $this->convertTo($sheets['aquariums'], ['name', 'capacity', 'description', 'price']),
         );
     }
 
@@ -120,12 +120,11 @@ class XlsxToArray
     /**
      * @param array[] $items
      * @param array $column_names
-     * @param string $category
      *
      * @return array[]
      * @throws \Exception
      */
-    private function convertTo(array $items, array $column_names, string $category): array
+    private function convertTo(array $items, array $column_names): array
     {
         $result = [];
         $title = '';
