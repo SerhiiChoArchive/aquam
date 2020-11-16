@@ -33,7 +33,7 @@
 
         @if ($diff->hasCategories())
             <div class="col s12" style="padding-top:17px">
-                <h5>Новые позиции</h5>
+                <h5>Измененные позиции</h5>
                 <p>Обратите внимание! Позиции ниже являются добавленными или удаленными. Либо их не было в прошлом прайс листе, либо из нет в новом.</p>
 
                 <x-price-list-tabs :price="$diff"></x-price-list-tabs>
