@@ -41,8 +41,8 @@
     <div id="chemistry" class="col s12">
         <x-price-tab-content
             :categories="$price->chemistry"
-            names="Артикль,Название,Обьем,Описание,Тип,Цена"
-            keys="article,name,capacity,description,type,price"
+            names="Артикль,Название,Обьем,Описание,Цена"
+            keys="article,name,capacity,description,price"
         ></x-price-tab-content>
     </div>
     <div id="aquariums" class="col s12">
