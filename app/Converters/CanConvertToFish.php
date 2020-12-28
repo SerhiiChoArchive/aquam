@@ -17,7 +17,7 @@ trait CanConvertToFish
         $result = [];
         $title = '';
 
-        for ($i = 3; $i < count($price_list[0]); $i++) {
+        for ($i = 3, $i_max = count($price_list[0]); $i < $i_max; $i++) {
             $name = $price_list[1][$i];
 
             $columns = [

@@ -14,7 +14,7 @@ class XlsxToArray
 {
     use CanConvertToFish;
 
-    const NUMBER_OF_SHEETS_WE_NEED = 5;
+    private const NUMBER_OF_SHEETS_WE_NEED = 5;
 
     private string $pathname;
     private Xlsx $xlsx_reader;
