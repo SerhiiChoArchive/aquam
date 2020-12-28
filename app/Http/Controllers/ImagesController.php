@@ -23,7 +23,9 @@ class ImagesController extends Controller
             return back()->with('error', 'Файл не найден');
         }
 
-        $request->file('images')->storeAs('csv', 'images.csv');
+        $file_category = $request->get('file-category');
+
+        $request->file('images')->storeAs('csv', "$file_category.csv");
 
         return back()->with('success', 'Файл сохранен');
     }

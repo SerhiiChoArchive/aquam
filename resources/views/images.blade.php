@@ -24,8 +24,8 @@
                 </div>
                 
                 <div>
-                    <label for="file-type">Выберите категорию к которой принадлежат загружаемые изображения</label>
-                    <select id="file-type" name="file-type" class="browser-default" required>
+                    <label for="file-category">Выберите категорию к которой принадлежат загружаемые изображения</label>
+                    <select id="category-type" name="file-category" class="browser-default" required>
                         <option value="fish">Рыба</option>
                         <option value="equipment">Оборудывание</option>
                         <option value="feed">Корма</option>
