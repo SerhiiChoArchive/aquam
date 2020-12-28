@@ -19,6 +19,10 @@ class ImagesController extends Controller
     {
         $request->validate(['images' => ['required']]);
 
+        if (!$request->file('images')) {
+            return back()->with('error', 'Файл не найден');
+        }
+
         $request->file('images')->storeAs('csv', 'images.csv');
 
         return back()->with('success', 'Файл сохранен');
