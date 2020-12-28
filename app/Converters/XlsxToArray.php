@@ -25,7 +25,13 @@ class XlsxToArray
     {
         $this->pathname = $pathname;
         $this->xlsx_reader = $xlsx_reader;
-        $this->images = $this->getImagesFromCSV();
+        $this->images = [
+            'fish' => $this->getImagesFromCSV('fish'),
+            'equipment' => $this->getImagesFromCSV('equipment'),
+            'feed' => $this->getImagesFromCSV('feed'),
+            'chemistry' => $this->getImagesFromCSV('chemistry'),
+            'aquariums' => $this->getImagesFromCSV('aquariums'),
+        ];
     }
 
     /**
@@ -39,18 +45,18 @@ class XlsxToArray
 
         return new ConversionResult(
             $this->convertToFish($sheets['fish']),
-            $this->convertTo($sheets['equipment'], ['name', 'description', 'producer', 'price']),
-            $this->convertTo($sheets['feed'], ['name', 'description', 'weight', 'price']),
-            $this->convertTo($sheets['chemistry'], ['name', 'capacity', 'description', 'price']),
-            $this->convertTo($sheets['aquariums'], ['name', 'capacity', 'description', 'price']),
+            $this->convertTo($sheets['equipment'], ['name', 'description', 'producer', 'price'], 'equipment'),
+            $this->convertTo($sheets['feed'], ['name', 'description', 'weight', 'price'], 'feed'),
+            $this->convertTo($sheets['chemistry'], ['name', 'capacity', 'description', 'price'], 'chemistry'),
+            $this->convertTo($sheets['aquariums'], ['name', 'capacity', 'description', 'price'], 'aquariums'),
         );
     }
 
-    private function getImagesFromCSV(): ?array
+    private function getImagesFromCSV(string $file_name): ?array
     {
-        $file_path = storage_path('app/csv/images.csv');
+        $file_path = storage_path("app/csv/$file_name.csv");
 
-        if ( ! file_exists($file_path)) {
+        if (!file_exists($file_path)) {
             return null;
         }
 
@@ -104,15 +110,15 @@ class XlsxToArray
         return $result;
     }
 
-    private function getImageFrom(?string $name): ?string
+    private function getImageFrom(?string $name, string $images_category): ?string
     {
         $id = mb_strtolower(preg_replace('!\s+!', ' ', trim($name ?? '')));
-        return $this->images[$id] ?? $this->placeholder_image;
+        return $this->images[$images_category][$id] ?? $this->placeholder_image;
     }
 
     private function getNotNulls(array $columns): array
     {
-        return array_filter($columns, function ($item) {
+        return array_filter($columns, static function ($item) {
             return !is_null($item) && $item !== '' && $item !== '0.00';
         });
     }
@@ -120,16 +126,16 @@ class XlsxToArray
     /**
      * @param array[] $items
      * @param array $column_names
+     * @param string $images_category
      *
      * @return array[]
-     * @throws \Exception
      */
-    private function convertTo(array $items, array $column_names): array
+    private function convertTo(array $items, array $column_names, string $images_category): array
     {
         $result = [];
         $title = '';
 
-        for ($i = 1; $i < count($items[0]); $i++) {
+        for ($i = 1, $i_max = count($items[0]); $i < $i_max; $i++) {
             $article = $items[0][$i] ?? '';
 
             if ($article instanceof RichText) {
@@ -160,7 +166,7 @@ class XlsxToArray
                 continue;
             }
 
-            $image = $this->getImageFrom($columns['article']);
+            $image = $this->getImageFrom($columns['article'], $images_category);
 
             $result[$title][] = array_merge($columns, compact('image'));
         }
