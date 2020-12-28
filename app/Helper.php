@@ -9,7 +9,7 @@ class Helper
     public static function activeIfRouteIs(array $routes): string
     {
         foreach ($routes as $route) {
-            $route_starts_with_slash = $route[0] == '/' && strlen($route) != 1;
+            $route_starts_with_slash = $route[0] === '/' && strlen($route) !== 1;
             $given_request = $route_starts_with_slash ? substr($route, 1) : $route;
 
             if (request()->is($given_request)) {
@@ -27,7 +27,7 @@ class Helper
      */
     public static function countArrayItems(?array $arr): int
     {
-        return array_reduce($arr ?? [], function ($carry, $item) {
+        return array_reduce($arr ?? [], static function ($carry, $item) {
             return $carry + count($item);
         }, 0);
     }
@@ -51,7 +51,7 @@ class Helper
 
         foreach ($categories as $category) {
             foreach ($category as $item) {
-                if (mb_strlen($item[$column_to_compare]) > 0) {
+                if ($item[$column_to_compare] !== '') {
                     $result[] = $item[$column_to_compare];
                 }
             }
@@ -62,10 +62,10 @@ class Helper
 
     private static function getDifferentItems(string $column_to_compare, array $diff, array $categories1): array
     {
-        $different_items = array_map(function ($cat) use ($column_to_compare, $diff) {
-             return array_filter($cat, fn($item) => in_array($item[$column_to_compare], $diff));
+        $different_items = array_map(static function ($cat) use ($column_to_compare, $diff) {
+            return array_filter($cat, static fn($item) => in_array($item[$column_to_compare], $diff, true));
         }, $categories1);
 
-        return array_filter($different_items, fn($item) => !empty($item));
+        return array_filter($different_items, static fn($item) => !empty($item));
     }
 }
