@@ -69,7 +69,7 @@ class XlsxToArray
         $result = [];
 
         while (!$file->eof()) {
-            $csv = $file->fgetcsv();
+            $csv = $file->fgetcsv('|');
 
             if (count($csv) !== 2) {
                 continue;
