@@ -2,7 +2,7 @@
     <div class="col s12">
         <ul class="collapsible">
             @foreach ($categories as $category => $items)
-                <li>
+                <li class="{{ $loop->index === 0 ? 'active' : '' }}">
                     <div class="collapsible-header">
                         <i class="material-icons teal-text text-darken-2">arrow_drop_down</i>
                         <b class="teal-text text-darken-2" style="margin-right:5px">{{ count($items) }}</b>
