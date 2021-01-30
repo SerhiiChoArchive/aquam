@@ -1,5 +1,5 @@
 {
-    "name": "SerhiiCho/aquam",
+    "name": "serhii/aquam",
     "type": "project",
     "description": "Admin panel for aquam",
     "keywords": [
@@ -15,7 +15,7 @@
         "phpoffice/phpspreadsheet": "^1.9",
         "facade/ignition": "^2.3.6",
         "guzzlehttp/guzzle": "^7.0.1",
-        "serhii/ago": "^1.0"
+        "serhii/ago": "^2.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
