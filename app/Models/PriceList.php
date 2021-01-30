@@ -22,14 +22,14 @@ class PriceList extends Model
 
     protected $guarded = ['id'];
 
-    public static function getLatest(): ?PriceList
+    public static function getLatest(int $api_version): ?PriceList
     {
-        return self::query()->latest()->first();
+        return self::query()->where('api_version', $api_version)->latest()->first();
     }
 
-    public static function getPreLatest(): ?PriceList
+    public static function getPreLatest(int $api_version): ?PriceList
     {
-        return self::query()->orderBy('id', 'desc')->skip(1)->take(1)->first();
+        return self::query()->where('api_version', $api_version)->orderBy('id', 'desc')->skip(1)->take(1)->first();
     }
 
     public function hasCategories(): bool
@@ -43,9 +43,14 @@ class PriceList extends Model
         ]));
     }
 
-    public static function getLatestCategory(string $category): array
+    public static function getLatestCategory(string $category, int $api_version): array
     {
-        return self::query()->select($category)->latest()->first()->{$category} ?? [];
+        return self::query()
+           ->select($category)
+           ->where('api_version', $api_version)
+           ->latest()
+           ->first()
+           ->{$category} ?? [];
     }
 
     public function setFishAttribute(array $fish): void

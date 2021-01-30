@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\V1;
 
+use App\Http\Controllers\Controller;
 use App\Models\PriceList;
 use Illuminate\Support\Facades\Cache;
 
@@ -11,27 +12,27 @@ class JsonController extends Controller
 {
     public function fish(): array
     {
-        return PriceList::getLatestCategory('fish');
+        return PriceList::getLatestCategory('fish', 1);
     }
 
     public function equipment(): array
     {
-        return PriceList::getLatestCategory('equipment');
+        return PriceList::getLatestCategory('equipment', 1);
     }
 
     public function feed(): array
     {
-        return PriceList::getLatestCategory('feed');
+        return PriceList::getLatestCategory('feed', 1);
     }
 
     public function chemistry(): array
     {
-        return PriceList::getLatestCategory('chemistry');
+        return PriceList::getLatestCategory('chemistry', 1);
     }
 
     public function aquariums(): array
     {
-        return PriceList::getLatestCategory('aquariums');
+        return PriceList::getLatestCategory('aquariums', 1);
     }
 
     public function info(): string

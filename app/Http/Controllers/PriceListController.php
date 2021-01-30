@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\ConversionResult;
 use App\Helper;
 use App\Models\PriceList;
-use App\Converters\XlsxToArray;
+use App\Converters\V1\XlsxToArray as V1XlsxToArray;
+use App\Converters\V2\XlsxToArray as V2XlsxToArray;
 use Error;
 use Exception;
 use Illuminate\Contracts\View\View;
@@ -26,8 +28,8 @@ class PriceListController extends Controller
      */
     public function index(): View
     {
-        $latest = PriceList::getLatest();
-        $pre_latest = PriceList::getPreLatest();
+        $latest = PriceList::getLatest(1);
+        $pre_latest = PriceList::getPreLatest(1);
 
         if (!$latest || !$pre_latest) {
             return view('price-list', ['diff' => new PriceList()]);
@@ -46,31 +48,44 @@ class PriceListController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $request->validate(['file' => ['required']]);
-
         $new_file_name = sprintf("%s-%s.xlsx", date('Y-m-d_H-i-s'), time());
-        $pathname = $request->file('file')->move(storage_path('app/xlsx'), $new_file_name)->getPathname();
+        $file = $request->file('file');
 
-        $converter = new XlsxToArray($pathname, new Xlsx());
+        if (!$file) {
+            return back()->with('error', 'Файл не найден');
+        }
+
+        $pathname = $file->move(storage_path('app/xlsx'), $new_file_name)->getPathname();
+
+        $converter_v1 = new V1XlsxToArray($pathname, new Xlsx());
+        $converter_v2 = new V2XlsxToArray($pathname, new Xlsx());
 
         try {
-            $result = $converter->convert();
+            $result_v1 = $converter_v1->convert();
+            $result_v2 = $converter_v2->convert();
         } catch (Exception | SpreadsheetException | TypeError | Error $e) {
             Log::error($e->getMessage(), ['trace' => $e->getTraceAsString()]);
             return back()->with('error', $e->getMessage());
         }
 
+        $this->savePriceListWithVersion(1, $result_v1, $request->user()->id);
+        $this->savePriceListWithVersion(2, $result_v2, $request->user()->id);
+
+        Cache::forever('last_upload', date('Y-m-d H:i:s'));
+
+        return back()->with('success', 'Файл загружен и данный успешно обновленны!');
+    }
+
+    private function savePriceListWithVersion(int $api_version, ConversionResult $result, int $user_id): void
+    {
         PriceList::query()->create([
-            'user_id' => $request->user()->id,
+            'user_id' => $user_id,
             'fish' => $result->getFish(),
             'equipment' => $result->getEquipment(),
             'feed' => $result->getFeed(),
             'chemistry' => $result->getChemistry(),
             'aquariums' => $result->getAquariums(),
+            'api_version' => $api_version,
         ]);
-
-        Cache::forever('last_upload', date('Y-m-d H:i:s'));
-
-        return back()->with('success', 'Файл загружен и данный успешно обновленны!');
     }
 }

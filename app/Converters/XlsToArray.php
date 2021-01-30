@@ -6,20 +6,19 @@ namespace App\Converters;
 
 use App\ConversionResult;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
-use PhpOffice\PhpSpreadsheet\RichText\RichText;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use SplFileObject;
 
-class XlsxToArray
+abstract class XlsToArray
 {
     use CanConvertToFish;
 
-    private const NUMBER_OF_SHEETS_WE_NEED = 5;
+    protected const NUMBER_OF_SHEETS_WE_NEED = 5;
 
-    private string $pathname;
-    private Xlsx $xlsx_reader;
-    private ?array $images;
-    private string $placeholder_image = 'https://i.ibb.co/9tpYXHz/fish-placeholder.jpg';
+    protected string $pathname;
+    protected Xlsx $xlsx_reader;
+    protected ?array $images;
+    protected string $placeholder_image = 'https://i.ibb.co/9tpYXHz/fish-placeholder.jpg';
 
     public function __construct(string $pathname, Xlsx $xlsx_reader)
     {
@@ -52,7 +51,7 @@ class XlsxToArray
         );
     }
 
-    private function getImagesFromCSV(string $file_name): ?array
+    protected function getImagesFromCSV(string $file_name): ?array
     {
         $file_path = storage_path("app/csv/$file_name.csv");
 
@@ -87,7 +86,7 @@ class XlsxToArray
      * @return array
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    private function getArrayFromSheet(Spreadsheet $sheets): array
+    protected function getArrayFromSheet(Spreadsheet $sheets): array
     {
         $categories = ['fish', 'equipment', 'feed', 'chemistry', 'aquariums'];
 
@@ -110,67 +109,34 @@ class XlsxToArray
         return $result;
     }
 
-    private function getImageFrom(?string $name, string $images_category): ?string
+    protected function getImageFrom(?string $name, string $images_category): ?string
     {
         $id = mb_strtolower(preg_replace('!\s+!', ' ', trim($name ?? '')));
         return $this->images[$images_category][$id] ?? $this->placeholder_image;
     }
 
-    private function getNotNulls(array $columns): array
+    protected function getNotNulls(array $columns): array
     {
         return array_filter($columns, static function ($item) {
             return !is_null($item) && $item !== '' && $item !== '0.00';
         });
     }
 
-    /**
-     * @param array[] $items
-     * @param array $column_names
-     * @param string $images_category
-     *
-     * @return array[]
-     */
-    private function convertTo(array $items, array $column_names, string $images_category): array
+    protected function stringIsCategory(?string $str): bool
     {
-        $result = [];
-        $title = '';
-
-        for ($i = 1, $i_max = count($items[0]); $i < $i_max; $i++) {
-            $article = $items[0][$i] ?? '';
-
-            if ($article instanceof RichText) {
-                $article = $article->getPlainText();
-            }
-
-            $columns = ['article' => is_int($article) ? (string) $article : trim($article)];
-            $index = 1;
-
-            foreach ($column_names as $name) {
-                $value = $items[$index][$i];
-                $columns[$name] = is_string($value) ? trim($value) : $value;
-                $index++;
-            }
-
-            $not_nulls = $this->getNotNulls($columns);
-
-            if (empty($not_nulls)) {
-                continue;
-            }
-
-            if (count($not_nulls) === 1) {
-                if (is_object(current($not_nulls))) {
-                    continue;
-                }
-
-                $title = current($not_nulls);
-                continue;
-            }
-
-            $image = $this->getImageFrom($columns['article'], $images_category);
-
-            $result[$title][] = array_merge($columns, compact('image'));
+        if (!$str) {
+            return false;
         }
 
-        return $result;
+        return trim($str)[0] === '~';
+    }
+
+    protected function stringIsSubCategory(?string $str): bool
+    {
+        if (!$str) {
+            return false;
+        }
+
+        return trim($str)[0] === '*';
     }
 }
