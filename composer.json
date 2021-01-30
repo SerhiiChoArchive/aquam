@@ -15,11 +15,11 @@
         "phpoffice/phpspreadsheet": "^1.9",
         "facade/ignition": "^2.3.6",
         "guzzlehttp/guzzle": "^7.0.1",
+        "laravel/ui": "^3.0",
         "serhii/ago": "^2.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
-        "laravel/ui": "^3.0",
         "filp/whoops": "^2.0",
         "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
