@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Converters;
+namespace App\Converters\V1;
 
 use App\ConversionResult;
+use App\Converters\CanConvertToFish;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use PhpOffice\PhpSpreadsheet\RichText\RichText;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
