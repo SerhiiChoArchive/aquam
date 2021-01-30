@@ -43,9 +43,14 @@ class PriceList extends Model
         ]));
     }
 
-    public static function getLatestCategory(string $category): array
+    public static function getLatestCategory(string $category, ?int $api_version = 1): array
     {
-        return self::query()->select($category)->latest()->first()->{$category} ?? [];
+        return self::query()
+           ->select($category)
+           ->where('api_version', $api_version)
+           ->latest()
+           ->first()
+           ->{$category} ?? [];
     }
 
     public function setFishAttribute(array $fish): void
