@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\JsonController;
+use App\Http\Controllers\V1\JsonController;
 use App\Http\Controllers\V2\JsonController as V2JsonController;
 use Illuminate\Support\Facades\Route;
 
