@@ -49,7 +49,13 @@ class PriceListController extends Controller
         $request->validate(['file' => ['required']]);
 
         $new_file_name = sprintf("%s-%s.xlsx", date('Y-m-d_H-i-s'), time());
-        $pathname = $request->file('file')->move(storage_path('app/xlsx'), $new_file_name)->getPathname();
+        $file = $request->file('file');
+
+        if (!$file) {
+            return back()->with('error', 'Файл не найден');
+        }
+
+        $pathname = $file->move(storage_path('app/xlsx'), $new_file_name)->getPathname();
 
         $converter = new XlsxToArray($pathname, new Xlsx());
 
