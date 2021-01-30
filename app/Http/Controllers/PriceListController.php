@@ -28,8 +28,8 @@ class PriceListController extends Controller
      */
     public function index(): View
     {
-        $latest = PriceList::getLatest();
-        $pre_latest = PriceList::getPreLatest();
+        $latest = PriceList::getLatest(1);
+        $pre_latest = PriceList::getPreLatest(1);
 
         if (!$latest || !$pre_latest) {
             return view('price-list', ['diff' => new PriceList()]);
