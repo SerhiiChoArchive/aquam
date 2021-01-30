@@ -7,6 +7,7 @@ namespace App\Http\Controllers\V1;
 use App\Http\Controllers\Controller;
 use App\Models\PriceList;
 use Illuminate\Support\Facades\Cache;
+use Serhii\Ago\TimeAgo;
 
 class JsonController extends Controller
 {
@@ -38,6 +39,7 @@ class JsonController extends Controller
     public function info(): string
     {
         Cache::put('last_request', date('Y-m-d H:i:s'));
-        return PriceList::query()->select('created_at')->latest()->first()->created_at->format('d.m.Y');
+        $date = PriceList::query()->select('created_at')->latest()->first()->created_at->toDateTimeString();
+        return TimeAgo::trans($date);
     }
 }
