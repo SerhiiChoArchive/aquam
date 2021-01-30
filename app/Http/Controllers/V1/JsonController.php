@@ -35,9 +35,9 @@ class JsonController extends Controller
         return PriceList::getLatestCategory('aquariums', 1);
     }
 
-    public function info(): string
+    public function info()
     {
         Cache::put('last_request', date('Y-m-d H:i:s'));
-        return PriceList::query()->select('created_at')->latest()->first()->created_at->format('d.m.Y');
+        return response(PriceList::query()->select('created_at')->latest()->first()->created_at->format('d.m.Y'), 500);
     }
 }
