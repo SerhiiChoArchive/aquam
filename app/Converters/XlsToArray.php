@@ -141,16 +141,16 @@ abstract class XlsToArray
     }
 
     /**
-     * @param string $article
+     * @param mixed $article
      * @param array[] $items
      * @param string[] $column_names
      * @param int $i Iteration index
      *
      * @return string[]
      */
-    protected function getColumns(string $article, array $items, array $column_names, int $i): array
+    protected function getColumns($article, array $items, array $column_names, int $i): array
     {
-        $article = $article instanceof RichText ? $article->getPlainText() : $article;
+        $article = $article instanceof RichText ? $article->getPlainText() : (string) $article;
         $result = ['article' => trim($article)];
 
         $index = 1;

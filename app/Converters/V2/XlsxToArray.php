@@ -26,7 +26,7 @@ class XlsxToArray extends XlsToArray
             $article = $items[0][$i] ?? '';
             $next_article = (string) ($items[0][$i + 1] ?? '');
 
-            $columns = $this->getColumns((string) $article, $items, $column_names, $i);
+            $columns = $this->getColumns($article, $items, $column_names, $i);
             $not_nulls = $this->getNotNulls($columns);
 
             if (empty($not_nulls)) {

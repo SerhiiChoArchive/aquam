@@ -23,7 +23,7 @@ class XlsxToArray extends XlsToArray
         for ($i = 1, $i_max = count($items[0]); $i < $i_max; $i++) {
             $article = $items[0][$i] ?? '';
 
-            $columns = $this->getColumns((string) $article, $items, $column_names, $i);
+            $columns = $this->getColumns($article, $items, $column_names, $i);
             $not_nulls = $this->getNotNulls($columns);
 
             if (empty($not_nulls)) {
