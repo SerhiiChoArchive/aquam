@@ -125,20 +125,14 @@ abstract class XlsToArray
 
     protected function stringIsCategory(?string $str): bool
     {
-        if (!$str) {
-            return false;
-        }
-
-        return trim($str)[0] === '~';
+        $str = $str ?? '';
+        return (trim($str)[0] ?? '') === '~';
     }
 
     protected function stringIsSubCategory(?string $str): bool
     {
-        if (!$str) {
-            return false;
-        }
-
-        return trim($str)[0] === '*';
+        $str = $str ?? '';
+        return (trim($str)[0] ?? '') === '*';
     }
 
     protected function removeMultipleSpaces(?string $string): string

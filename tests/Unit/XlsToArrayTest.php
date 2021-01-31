@@ -64,4 +64,58 @@ class XlsToArrayTest extends TestCase
 
         $this->assertSame($expected, $result);
     }
+
+    /**
+     * @dataProvider provider_for_stringIsCategory_returns_correct_results
+     * @test
+     *
+     * @param string|null $input
+     * @param bool $expect
+     */
+    public function stringIsCategory_returns_correct_results(?string $input, bool $expect): void
+    {
+        $this->assertSame($expect, call_private_method($this->class, 'stringIsCategory', $input));
+    }
+
+    public function provider_for_stringIsCategory_returns_correct_results(): array
+    {
+        return [
+            ['~Some title~', true],
+            ['~Русский заголовок~', true],
+            ['~Without last tilda', true],
+            ['Without first tilda~', false],
+            ['Without both tildas', false],
+            ['  ', false],
+            [' ', false],
+            ['', false],
+            [null, false],
+        ];
+    }
+
+    /**
+     * @dataProvider provider_for_stringIsSubCategory_returns_correct_results
+     * @test
+     *
+     * @param string|null $input
+     * @param bool $expect
+     */
+    public function stringIsSubCategory_returns_correct_results(?string $input, bool $expect): void
+    {
+        $this->assertSame($expect, call_private_method($this->class, 'stringIsSubCategory', $input));
+    }
+
+    public function provider_for_stringIsSubCategory_returns_correct_results(): array
+    {
+        return [
+            ['*Some title*', true],
+            ['*Русский заголовок*', true],
+            ['*Without last tilda', true],
+            ['Without first tilda*', false],
+            ['Without both tildas', false],
+            ['  ', false],
+            [' ', false],
+            ['', false],
+            [null, false],
+        ];
+    }
 }
