@@ -1,9 +1,10 @@
+test:
+	./vendor/bin/phpunit --colors
+
 push:
-	php artisan test
+	make test
 	git pull origin master
 	git push origin master
 
-test:
-	php artisan test
 
 .DEFAULT_GOAL: test
