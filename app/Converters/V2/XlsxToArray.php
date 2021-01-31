@@ -66,9 +66,11 @@ class XlsxToArray extends XlsToArray
             $category = $this->removeMultipleSpaces($category);
             $sub_category = $this->removeMultipleSpaces($sub_category);
 
+            $columns_with_image = array_merge($columns, compact('image'));
+
             $sub_category === ''
-                ? $result[$category][] = array_merge($columns, compact('image'))
-                : $result[$category][$sub_category][] = array_merge($columns, compact('image'));
+                ? $result[$category][] = $columns_with_image
+                : $result[$category][$sub_category][] = $columns_with_image;
         }
 
         return $result;
