@@ -151,16 +151,16 @@ abstract class XlsToArray
     protected function getColumns(string $article, array $items, array $column_names, int $i): array
     {
         $article = $article instanceof RichText ? $article->getPlainText() : $article;
-        $columns = ['article' => trim($article)];
+        $result = ['article' => trim($article)];
 
         $index = 1;
 
         foreach ($column_names as $name) {
             $value = $items[$index][$i];
-            $columns[$name] = is_string($value) ? trim($value) : $value;
+            $result[$name] = is_string($value) ? trim($value) : $value;
             $index++;
         }
 
-        return $columns;
+        return $result;
     }
 }

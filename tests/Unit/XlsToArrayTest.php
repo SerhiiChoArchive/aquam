@@ -141,4 +141,77 @@ class XlsToArrayTest extends TestCase
             [null, ''],
         ];
     }
+
+    /** @test */
+    public function getColumns_returns_correct_result_if_article_is_column_title(): void
+    {
+        $items = $this->getItemsForTestingGetColumnsMethod();
+        $article = '~ГОЛОВЫ~';
+        $column_names = ['name', 'description', 'price'];
+
+        $expected = [
+            'article' => '~ГОЛОВЫ~',
+            'name' => null,
+            'description' => null,
+            'price' => null,
+        ];
+
+        $result = call_private_method($this->class, 'getColumns', $article, $items, $column_names, 1);
+
+        $this->assertSame($expected, $result);
+    }
+
+    /** @test */
+    public function getColumns_returns_correct_result_if_article_is_column_second_title(): void
+    {
+        $items = $this->getItemsForTestingGetColumnsMethod();
+        $article = '   *XILONG*';
+        $column_names = ['name', 'description', 'price'];
+
+        $expected = [
+            'article' => '*XILONG*',
+            'name' => null,
+            'description' => null,
+            'price' => null,
+        ];
+
+        $result = call_private_method($this->class, 'getColumns', $article, $items, $column_names, 2);
+
+        $this->assertSame($expected, $result);
+    }
+
+    /** @test */
+    public function getColumns_returns_correct_result_if_article_is_not_column_title(): void
+    {
+        $items = $this->getItemsForTestingGetColumnsMethod();
+        $article = 'XL-008';
+        $column_names = ['name', 'description', 'price'];
+
+        $expected = [
+            'article' => 'XL-008',
+            'name' => 'Awesome',
+            'description' => 'Short',
+            'price' => 234.2,
+        ];
+
+        $result = call_private_method($this->class, 'getColumns', $article, $items, $column_names, 3);
+
+        $this->assertSame($expected, $result);
+    }
+
+    /**
+     * @return array[]
+     */
+    protected function getItemsForTestingGetColumnsMethod(): array
+    {
+        $items = [
+            ['Артикул', '~ГОЛОВЫ~', '   *XILONG*', 'XL-008', 'XL-010', 'XL-011', 'XL-012'],
+            ['Имя', null, null, 'Awesome', 'Cool', 'Nice', 'Ugly'],
+            ['Описание', null, null, 'Short', 'Long', 'Medium', 'Some'],
+            ['Цена', null, null, 234.2, 33, 344, 11.1],
+            ['Акция', null, null, 'нет', 'да', 'нет', 'нет'],
+        ];
+
+        return $items;
+    }
 }
