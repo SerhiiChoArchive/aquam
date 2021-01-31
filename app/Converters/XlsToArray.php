@@ -118,9 +118,9 @@ abstract class XlsToArray
 
     protected function getNotNulls(array $columns): array
     {
-        return array_filter($columns, static function ($item) {
+        return array_values(array_filter($columns, static function ($item) {
             return !is_null($item) && $item !== '' && $item !== '0.00';
-        });
+        }));
     }
 
     protected function stringIsCategory(?string $str): bool
