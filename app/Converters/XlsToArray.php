@@ -6,6 +6,7 @@ namespace App\Converters;
 
 use App\ConversionResult;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+use PhpOffice\PhpSpreadsheet\RichText\RichText;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use SplFileObject;
 
@@ -138,5 +139,34 @@ abstract class XlsToArray
         }
 
         return trim($str)[0] === '*';
+    }
+
+    protected function removeMultipleSpaces(?string $string): string
+    {
+        return preg_replace('/\s\s+/', ' ', $string ?? '');
+    }
+
+    /**
+     * @param string $article
+     * @param array[] $items
+     * @param string[] $column_names
+     * @param int $i Iteration index
+     *
+     * @return string[]
+     */
+    protected function getColumns(string $article, array $items, array $column_names, int $i): array
+    {
+        $article = $article instanceof RichText ? $article->getPlainText() : $article;
+        $columns = ['article' => trim($article)];
+
+        $index = 1;
+
+        foreach ($column_names as $name) {
+            $value = $items[$index][$i];
+            $columns[$name] = is_string($value) ? trim($value) : $value;
+            $index++;
+        }
+
+        return $columns;
     }
 }

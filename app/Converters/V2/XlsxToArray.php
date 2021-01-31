@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace App\Converters\V2;
 
 use App\Converters\XlsToArray;
-use PhpOffice\PhpSpreadsheet\RichText\RichText;
 
 class XlsxToArray extends XlsToArray
 {
     /**
      * @param array[] $items
-     * @param array $column_names
+     * @param string[] $column_names
      * @param string $images_category
      *
      * @return array[]
@@ -27,19 +26,7 @@ class XlsxToArray extends XlsToArray
             $article = $items[0][$i] ?? '';
             $next_article = (string) ($items[0][$i + 1] ?? '');
 
-            if ($article instanceof RichText) {
-                $article = $article->getPlainText();
-            }
-
-            $columns = ['article' => is_int($article) ? (string) $article : trim($article)];
-            $index = 1;
-
-            foreach ($column_names as $name) {
-                $value = $items[$index][$i];
-                $columns[$name] = is_string($value) ? trim($value) : $value;
-                $index++;
-            }
-
+            $columns = $this->getColumns((string) $article, $items, $column_names, $i);
             $not_nulls = $this->getNotNulls($columns);
 
             if (empty($not_nulls)) {
@@ -76,7 +63,8 @@ class XlsxToArray extends XlsToArray
                 continue;
             }
 
-            [$category, $sub_category] = $this->removeMultipleSpaces($category, $sub_category);
+            $category = $this->removeMultipleSpaces($category);
+            $sub_category = $this->removeMultipleSpaces($sub_category);
 
             $sub_category === ''
                 ? $result[$category][] = array_merge($columns, compact('image'))
@@ -84,19 +72,5 @@ class XlsxToArray extends XlsToArray
         }
 
         return $result;
-    }
-
-    /**
-     * @param string|null $category
-     * @param string|null $sub_category
-     *
-     * @return array
-     */
-    protected function removeMultipleSpaces(?string $category, ?string $sub_category): array
-    {
-        $category = preg_replace("/\s\s+/", ' ', $category ?? '');
-        $sub_category = preg_replace("/\s\s+/", ' ', $sub_category ?? '');
-
-        return [$category, $sub_category];
     }
 }
