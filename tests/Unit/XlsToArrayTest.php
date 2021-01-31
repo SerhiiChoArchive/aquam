@@ -6,6 +6,7 @@ namespace Tests\Unit;
 
 use App\Converters\XlsToArray;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+use PhpOffice\PhpSpreadsheet\RichText\RichText;
 use PHPUnit\Framework\MockObject\MockObject;
 use Tests\TestCase;
 
@@ -197,6 +198,32 @@ class XlsToArrayTest extends TestCase
         $result = call_private_method($this->class, 'getColumns', $article, $items, $column_names, 3);
 
         $this->assertSame($expected, $result);
+    }
+
+    /** @test */
+    public function getColumns_returns_text_from_RichText_object_for_article_if_article_is_RichText_object(): void
+    {
+        $items = $this->getItemsForTestingGetColumnsMethod();
+        $column_names = ['name', 'description', 'price'];
+
+        $rich_text = $this->createStub(RichText::class);
+        $rich_text->method('getPlainText')->willReturn('Plain text');
+
+        $result = call_private_method($this->class, 'getColumns', $rich_text, $items, $column_names, 3);
+
+        $this->assertSame('Plain text', $result['article']);
+    }
+
+    /** @test */
+    public function getColumns_casts_article_to_string_if_provided_article_is_int(): void
+    {
+        $items = $this->getItemsForTestingGetColumnsMethod();
+        $column_names = ['name', 'description', 'price'];
+        $article = 24;
+
+        $result = call_private_method($this->class, 'getColumns', $article, $items, $column_names, 3);
+
+        $this->assertSame('24', $result['article']);
     }
 
     /**
