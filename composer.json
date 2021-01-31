@@ -6,7 +6,7 @@
         "panel"
     ],
     "require": {
-        "php": "^7.4",
+        "php": "^8.0",
         "ext-json": "*",
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
