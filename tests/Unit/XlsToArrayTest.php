@@ -118,4 +118,27 @@ class XlsToArrayTest extends TestCase
             [null, false],
         ];
     }
+
+    /**
+     * @dataProvider provider_for_removeMultipleSpaces_removes_string_with_only_1_space_instead_of_multiple
+     * @test
+     * @param string|null $input
+     * @param string $expect
+     */
+    public function removeMultipleSpaces_removes_string_with_only_1_space_instead_of_multiple(?string $input, string $expect): void
+    {
+        $this->assertSame($expect, call_private_method($this->class, 'removeMultipleSpaces', $input));
+    }
+
+    public function provider_for_removeMultipleSpaces_removes_string_with_only_1_space_instead_of_multiple(): array
+    {
+        return [
+            ['Some  string   with    lots of spaces', 'Some string with lots of spaces'],
+            ['   Lots of   spaces  ', ' Lots of spaces '],
+            ['C  o  o  l', 'C o o l'],
+            ['          ', ' '],
+            ['', ''],
+            [null, ''],
+        ];
+    }
 }
