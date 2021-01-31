@@ -16,15 +16,11 @@ abstract class XlsToArray
 
     protected const NUMBER_OF_SHEETS_WE_NEED = 5;
 
-    protected string $pathname;
-    protected Xlsx $xlsx_reader;
     protected ?array $images;
     protected string $placeholder_image = 'https://i.ibb.co/9tpYXHz/fish-placeholder.jpg';
 
-    public function __construct(string $pathname, Xlsx $xlsx_reader)
+    public function __construct(protected string $pathname, protected Xlsx $xlsx_reader)
     {
-        $this->pathname = $pathname;
-        $this->xlsx_reader = $xlsx_reader;
         $this->images = [
             'fish' => $this->getImagesFromCSV('fish'),
             'equipment' => $this->getImagesFromCSV('equipment'),
@@ -125,14 +121,14 @@ abstract class XlsToArray
 
     protected function stringIsCategory(?string $str): bool
     {
-        $str = $str ?? '';
-        return (trim($str)[0] ?? '') === '~';
+        $str = $str ? trim($str) : '';
+        return str_starts_with($str, '~');
     }
 
     protected function stringIsSubCategory(?string $str): bool
     {
-        $str = $str ?? '';
-        return (trim($str)[0] ?? '') === '*';
+        $str = $str ? trim($str) : '';
+        return str_starts_with($str, '*');
     }
 
     protected function removeMultipleSpaces(?string $string): string
@@ -141,14 +137,14 @@ abstract class XlsToArray
     }
 
     /**
-     * @param mixed $article
+     * @param string|int|float|\PhpOffice\PhpSpreadsheet\RichText\RichText $article
      * @param array[] $items
      * @param string[] $column_names
      * @param int $i Iteration index
      *
      * @return string[]
      */
-    protected function getColumns($article, array $items, array $column_names, int $i): array
+    protected function getColumns(string|int|float|RichText $article, array $items, array $column_names, int $i): array
     {
         $article = $article instanceof RichText ? $article->getPlainText() : (string) $article;
         $result = ['article' => trim($article)];
