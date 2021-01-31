@@ -16,15 +16,11 @@ abstract class XlsToArray
 
     protected const NUMBER_OF_SHEETS_WE_NEED = 5;
 
-    protected string $pathname;
-    protected Xlsx $xlsx_reader;
     protected ?array $images;
     protected string $placeholder_image = 'https://i.ibb.co/9tpYXHz/fish-placeholder.jpg';
 
-    public function __construct(string $pathname, Xlsx $xlsx_reader)
+    public function __construct(protected string $pathname, protected Xlsx $xlsx_reader)
     {
-        $this->pathname = $pathname;
-        $this->xlsx_reader = $xlsx_reader;
         $this->images = [
             'fish' => $this->getImagesFromCSV('fish'),
             'equipment' => $this->getImagesFromCSV('equipment'),
@@ -125,14 +121,14 @@ abstract class XlsToArray
 
     protected function stringIsCategory(?string $str): bool
     {
-        $str = $str ?? '';
-        return (trim($str)[0] ?? '') === '~';
+        $str = $str ? trim($str) : '';
+        return str_starts_with($str, '~');
     }
 
     protected function stringIsSubCategory(?string $str): bool
     {
-        $str = $str ?? '';
-        return (trim($str)[0] ?? '') === '*';
+        $str = $str ? trim($str) : '';
+        return str_starts_with($str, '*');
     }
 
     protected function removeMultipleSpaces(?string $string): string
