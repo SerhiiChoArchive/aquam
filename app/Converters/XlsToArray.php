@@ -174,9 +174,13 @@ abstract class XlsToArray
             return;
         }
 
-        $no_chars = !$this->stringIsCategory($title) && !$this->stringIsSubCategory($title);
+        if (is_bool($title)) {
+            throw new PriceListValidationException(<<<MSG
+            Проверте правильность прайса. Убедитесь что нет пустых строк, категорий и подкатегорий.
+            MSG);
+        }
 
-        if (is_bool($title) || $no_chars) {
+        if (!$this->stringIsCategory($title) && !$this->stringIsSubCategory($title)) {
             throw new PriceListValidationException(<<<MSG
             Проверте правильность ввода категории или подкатегории "$title".
             Каждая категория должна начинаться с символа ~, а подкатегория с символа *.
