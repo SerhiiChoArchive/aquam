@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit;
 
 use App\Converters\XlsToArray;
+use App\Exceptions\PriceListValidationException;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use PhpOffice\PhpSpreadsheet\RichText\RichText;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -240,5 +241,57 @@ class XlsToArrayTest extends TestCase
         ];
 
         return $items;
+    }
+
+    /** @test */
+    public function throwIfTitleDoesntHaveSpecialCharacters_throws_exception_if_title_is_boolean(): void
+    {
+        $this->expectException(PriceListValidationException::class);
+        $this->expectExceptionMessage(<<<'MSG'
+        Проверте правильность прайса. Убедитесь что нет пустых строк, категорий и подкатегорий.
+        MSG);
+
+        $title = false;
+        $next_title = 'Some title';
+        call_private_method($this->class, 'throwIfTitleDoesntHaveSpecialCharacters', $title, $next_title);
+    }
+
+    /** @test */
+    public function throwIfTitleDoesntHaveSpecialCharacters_throws_exception_if_title_doesnt_have_special_symbol(): void
+    {
+        $this->expectException(PriceListValidationException::class);
+        $this->expectExceptionMessage(<<<'MSG'
+        Проверте правильность ввода категории или подкатегории "Title is here".
+        Каждая категория должна начинаться с символа ~, а подкатегория с символа *.
+        MSG);
+
+        $title = 'Title is here';
+        $next_title = 'Some title';
+        call_private_method($this->class, 'throwIfTitleDoesntHaveSpecialCharacters', $title, $next_title);
+    }
+
+    /** @test */
+    public function throwIfTitleDoesntHaveSpecialCharacters_doesnt_throw_exception_if_next_title_is_empty(): void
+    {
+        $title = 'Title is here';
+        call_private_method($this->class, 'throwIfTitleDoesntHaveSpecialCharacters', $title, '');
+        $this->assertTrue(true);
+    }
+
+    /** @test */
+    public function throwIfTitleDoesntHaveSpecialCharacters_doesnt_throw_exception_if_title_has_category_characters(): void
+    {
+        $title = '~Title is here~';
+        $next_title = '';
+        call_private_method($this->class, 'throwIfTitleDoesntHaveSpecialCharacters', $title, $next_title);
+        $this->assertTrue(true);
+    }
+
+    /** @test */
+    public function throwIfTitleDoesntHaveSpecialCharacters_doesnt_throw_exception_if_title_has_subcategory_characters(): void
+    {
+        $title = '*Title is here*';
+        call_private_method($this->class, 'throwIfTitleDoesntHaveSpecialCharacters', $title, '');
+        $this->assertTrue(true);
     }
 }
