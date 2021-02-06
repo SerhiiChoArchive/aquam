@@ -14,6 +14,7 @@ class XlsxToArray extends XlsToArray
      * @param string $images_category
      *
      * @return array[]
+     * @throws \App\Exceptions\PriceListValidationException
      */
     protected function convertTo(array $items, array $column_names, string $images_category): array
     {
@@ -51,11 +52,13 @@ class XlsxToArray extends XlsToArray
             }
 
             if ($this->stringIsCategory($title)) {
+                $this->throwIfTitleDoesntHaveSpecialCharacters($title, $next_article);
                 $category = $clean_title;
                 $sub_category = '';
             }
 
             if ($this->stringIsSubCategory($title)) {
+                $this->throwIfTitleDoesntHaveSpecialCharacters($title, $next_article);
                 $sub_category = $clean_title;
             }
 

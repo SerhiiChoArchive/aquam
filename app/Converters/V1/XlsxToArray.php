@@ -14,6 +14,7 @@ class XlsxToArray extends XlsToArray
      * @param string $images_category
      *
      * @return array[]
+     * @throws \App\Exceptions\PriceListValidationException
      */
     protected function convertTo(array $items, array $column_names, string $images_category): array
     {
@@ -22,6 +23,7 @@ class XlsxToArray extends XlsToArray
 
         for ($i = 1, $i_max = count($items[0]); $i < $i_max; $i++) {
             $article = $items[0][$i] ?? '';
+            $next_article = (string) ($items[0][$i + 1] ?? '');
 
             $columns = $this->getColumns($article, $items, $column_names, $i);
             $not_nulls = $this->getNotNulls($columns);
@@ -36,6 +38,7 @@ class XlsxToArray extends XlsToArray
                 }
 
                 $title = current($not_nulls);
+                $this->throwIfTitleDoesntHaveSpecialCharacters($title, $next_article);
                 continue;
             }
 
