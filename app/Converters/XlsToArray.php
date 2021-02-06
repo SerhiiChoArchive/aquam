@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Converters;
 
 use App\ConversionResult;
+use App\Exceptions\PriceListValidationException;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use PhpOffice\PhpSpreadsheet\RichText\RichText;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -34,6 +35,7 @@ abstract class XlsToArray
      * @return \App\ConversionResult
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      * @throws \Exception
+     * @throws \App\Exceptions\PriceListValidationException convertTo method throws it
      */
     public function convert(): ConversionResult
     {
@@ -158,5 +160,27 @@ abstract class XlsToArray
         }
 
         return $result;
+    }
+
+    /**
+     * @param string|bool $title
+     * @param string $next_article
+     *
+     * @throws \App\Exceptions\PriceListValidationException
+     */
+    protected function throwIfTitleDoesntHaveSpecialCharacters(string|bool $title, string $next_article): void
+    {
+        if (empty($next_article)) {
+            return;
+        }
+
+        $no_chars = !$this->stringIsCategory($title) && !$this->stringIsSubCategory($title);
+
+        if (is_bool($title) || $no_chars) {
+            throw new PriceListValidationException(<<<MSG
+            Проверте правильность ввода категории или подкатегории "$title".
+            Каждая категория должна начинаться с символа ~, а подкатегория с символа *.
+            MSG);
+        }
     }
 }
