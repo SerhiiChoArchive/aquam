@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\ConversionResult;
+use App\Exceptions\PriceListValidationException;
 use App\Helper;
 use App\Models\PriceList;
 use App\Converters\V1\XlsxToArray as V1XlsxToArray;
@@ -63,9 +64,12 @@ class PriceListController extends Controller
         try {
             $result_v1 = $converter_v1->convert();
             $result_v2 = $converter_v2->convert();
-        } catch (Exception | SpreadsheetException | TypeError | Error $e) {
+        } catch (PriceListValidationException $e) {
             Log::error($e->getMessage(), ['trace' => $e->getTraceAsString()]);
             return back()->with('error', $e->getMessage());
+        } catch (Exception | SpreadsheetException | TypeError | Error $e) {
+            Log::error($e->getMessage(), ['trace' => $e->getTraceAsString()]);
+            return back()->with('error', 'Произошла ошибка');
         }
 
         $this->savePriceListWithVersion(1, $result_v1, $request->user()->id);
