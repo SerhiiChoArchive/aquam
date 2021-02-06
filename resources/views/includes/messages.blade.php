@@ -3,7 +3,7 @@
         M.toast({
             html: `{{ session('error') }}`,
             classes: "red darken-2",
-            displayLength: 8000,
+            displayLength: 10000,
         })
     @elseif (session('success'))
         M.toast({
@@ -16,7 +16,7 @@
             M.toast({
                 html: `{{ $error }}`,
                 classes: "red darken-2",
-                displayLength: 8000,
+                displayLength: 10000,
             })
         @endforeach
     @endif
