@@ -1,5 +1,5 @@
 test:
-	./vendor/bin/phpunit --colors
+	php8.0 ./vendor/bin/phpunit --colors
 
 push:
 	make test
