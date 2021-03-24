@@ -31,6 +31,7 @@
                                                  class="async-load spinner"
                                                  data-async-load="{{ $item['image'] ?? '' }}"
                                                  data-class="z-depth-1"
+                                                 data-id="image-{{ $loop->index }}"
                                             ></div>
                                         </td>
                                         <td>
@@ -40,13 +41,18 @@
                                                     id="input-{{ $loop->index }}"
                                                     class="_upload-image"
                                                     data-article="{{ $item['article'] }}"
+                                                    data-image="image-{{ $loop->index }}"
                                                 >
                                                 <label
                                                    class="upload-image"
                                                    title="Выбрать изображение"
                                                    for="input-{{ $loop->index }}"
                                                 >
-                                                    <img src="{{ asset('storage/upload-image.png') }}" alt="upload" width="30" height="30">
+                                                    <img src="{{ asset('storage/upload-image.png') }}"
+                                                         alt="upload"
+                                                         width="30"
+                                                         height="30"
+                                                    >
                                                 </label>
                                             </form>
                                         </td>

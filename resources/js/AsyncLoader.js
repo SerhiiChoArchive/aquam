@@ -50,6 +50,7 @@ export default class {
         attrs.class ? (image.className = attrs.class) : ''
         attrs.src ? (image.src = attrs.src) : ''
         attrs.alt ? (image.alt = attrs.alt) : ''
+        attrs.id ? (image.id = attrs.id) : ''
     }
 
     /**
@@ -66,6 +67,7 @@ export default class {
             height: holder.getAttribute('data-height'),
             src: holder.getAttribute('data-async-load'),
             alt: holder.getAttribute('data-alt'),
+            id: holder.getAttribute('data-id'),
         }
     }
 

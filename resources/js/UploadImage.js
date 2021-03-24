@@ -9,14 +9,15 @@ export default class {
 
     handleEvent(input) {
         const formData = new FormData()
+        const currentImage = document.getElementById(input.dataset.image)
 
         formData.append('file', input.files[0])
         formData.append('article', input.dataset.article)
 
-        this.makeRequest(formData)
+        this.makeRequest(formData, currentImage)
     }
 
-    makeRequest(formData) {
+    makeRequest(formData, currentImage) {
         fetch('/image-upload', {
             method: 'post',
             body: formData,
@@ -25,7 +26,9 @@ export default class {
             }
         })
             .then(res => res.text())
-            .then(res => console.log(res))
+            .then(imageUrl => {
+                currentImage.src = imageUrl
+            })
             .catch(err => console.error(err))
     }
 
