@@ -1,7 +1,8 @@
 /node_modules
 /public/storage
 /storage/*.key
-/storage/app/xlsx/
+/storage/app/xlsx/*
+!/storage/app/xlsx/.gitkeep
 /vendor
 .env
 .env.backup
