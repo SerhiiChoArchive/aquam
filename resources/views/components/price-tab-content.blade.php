@@ -42,6 +42,7 @@
                                                     class="_upload-image"
                                                     data-article="{{ $item['article'] }}"
                                                     data-image="image-{{ $loop->index }}"
+                                                    data-category="{{ $category }}"
                                                 >
                                                 <label
                                                    class="upload-image"

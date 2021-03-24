@@ -13,6 +13,7 @@ export default class {
 
         formData.append('file', input.files[0])
         formData.append('article', input.dataset.article)
+        formData.append('category', input.dataset.category)
 
         this.makeRequest(formData, currentImage)
     }
