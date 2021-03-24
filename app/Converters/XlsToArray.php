@@ -108,9 +108,9 @@ abstract class XlsToArray
         return $result;
     }
 
-    protected function getImageFrom(?string $name, string $images_category): ?string
+    protected function getImageFrom(?string $article, string $images_category): ?string
     {
-        $id = mb_strtolower(preg_replace('!\s+!', ' ', trim($name ?? '')));
+        $id = mb_strtolower(preg_replace('!\s+!', ' ', trim($article ?? '')));
         return $this->images[$images_category][$id] ?? $this->placeholder_image;
     }
 

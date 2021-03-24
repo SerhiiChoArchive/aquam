@@ -32,8 +32,12 @@ class Helper
         }, 0);
     }
 
-    public static function getCategoriesDiff(array $categories1, array $categories2, string $column_to_compare): array
+    public static function getCategoriesDiff(?array $categories1, ?array $categories2, string $column_to_compare): array
     {
+        if (!$categories1 || !$categories2) {
+            return [];
+        }
+
         $names1 = self::getAllNames($categories1, $column_to_compare);
         $names2 = self::getAllNames($categories2, $column_to_compare);
 

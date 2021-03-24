@@ -20,8 +20,8 @@
     <div id="fish" class="col s12">
         <x-price-tab-content
             :categories="$price->fish"
-            names="Номер,Название,Цена,Размер"
-            keys="number,name,price,size"
+            names="Артикль,Название,Цена,Размер"
+            keys="article,name,price,size"
         ></x-price-tab-content>
     </div>
     <div id="equipment" class="col s12">

@@ -18,14 +18,15 @@ trait CanConvertToFish
         $title = '';
 
         for ($i = 3, $i_max = count($price_list[0]); $i < $i_max; $i++) {
-            $name = $price_list[1][$i];
+            $name = $price_list[2][$i];
+            $article = $price_list[1][$i];
 
             $columns = [
-                'number' => $price_list[0][$i],
+                'article' => is_string($article) ? trim($article) : $article,
                 'name' => is_string($name) ? trim($name) : $name,
-                'size' => $price_list[2][$i],
-                'price' => $price_list[3][$i],
-                'comment' => trim($price_list[4][$i] ?? ''),
+                'size' => $price_list[3][$i],
+                'price' => $price_list[4][$i],
+                'comment' => trim($price_list[5][$i] ?? ''),
             ];
 
             $not_nulls = $this->getNotNulls($columns);
@@ -43,7 +44,7 @@ trait CanConvertToFish
                 continue;
             }
 
-            $image = $this->getImageFrom($name, 'fish');
+            $image = $this->getImageFrom($article, 'fish');
 
             $result[$title][] = array_merge($columns, compact('image'));
         }
