@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ImagesController extends Controller
 {
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request): int
     {
-        return back()->with('success', 'Файл сохранен');
+        return 1;
     }
 }

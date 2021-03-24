@@ -23,8 +23,8 @@
 
         <div class="row" style="margin-top: 30px">
             <div class="col s12" style="margin-bottom: 10px">
-
-            <x-price-list-tabs :price="$price"></x-price-list-tabs>
+                <x-price-list-tabs :price="$price"></x-price-list-tabs>
+            </div>
         </div>
     </div>
 @endsection

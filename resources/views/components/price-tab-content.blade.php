@@ -33,6 +33,23 @@
                                                  data-class="z-depth-1"
                                             ></div>
                                         </td>
+                                        <td>
+                                            <form>
+                                                <input type="file"
+                                                    style="display: none"
+                                                    id="input-{{ $loop->index }}"
+                                                    class="_upload-image"
+                                                    data-article="{{ $item['article'] }}"
+                                                >
+                                                <label
+                                                   class="upload-image"
+                                                   title="Выбрать изображение"
+                                                   for="input-{{ $loop->index }}"
+                                                >
+                                                    <img src="{{ asset('storage/upload-image.png') }}" alt="upload" width="30" height="30">
+                                                </label>
+                                            </form>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
