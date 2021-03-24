@@ -5,17 +5,18 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\ConversionResult;
+use App\Converters\V1\XlsxToArray as V1XlsxToArray;
+use App\Converters\V2\XlsxToArray as V2XlsxToArray;
 use App\Exceptions\PriceListValidationException;
 use App\Helper;
 use App\Models\PriceList;
-use App\Converters\V1\XlsxToArray as V1XlsxToArray;
-use App\Converters\V2\XlsxToArray as V2XlsxToArray;
 use Error;
 use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use PhpOffice\PhpSpreadsheet\Exception as SpreadsheetException;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
@@ -76,6 +77,7 @@ class PriceListController extends Controller
         $this->savePriceListWithVersion(2, $result_v2, $request->user()->id);
 
         Cache::forever('last_upload', date('Y-m-d H:i:s'));
+        File::delete($pathname);
 
         return back()->with('success', 'Файл загружен и данный успешно обновленны!');
     }
