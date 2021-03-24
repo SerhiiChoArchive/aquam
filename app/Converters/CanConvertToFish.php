@@ -20,6 +20,7 @@ trait CanConvertToFish
         for ($i = 3, $i_max = count($price_list[0]); $i < $i_max; $i++) {
             $name = $price_list[2][$i];
             $article = $price_list[1][$i];
+            $first_column_value = $price_list[0][$i] ?? null;
 
             $columns = [
                 'article' => is_string($article) ? trim($article) : $article,
@@ -31,16 +32,14 @@ trait CanConvertToFish
 
             $not_nulls = $this->getNotNulls($columns);
 
-            if (empty($not_nulls)) {
-                continue;
-            }
-
-            if (count($not_nulls) === 1) {
-                if (is_object(current($not_nulls))) {
+            if ($first_column_value && empty($not_nulls)) {
+                if (is_object($first_column_value)) {
                     continue;
                 }
 
-                $title = current($not_nulls);
+                if (!str_contains($first_column_value, 'Сумма')) {
+                    $title = $first_column_value;
+                }
                 continue;
             }
 
