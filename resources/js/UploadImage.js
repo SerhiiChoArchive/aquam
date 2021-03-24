@@ -27,9 +27,7 @@ export default class {
             }
         })
             .then(res => res.text())
-            .then(imageUrl => {
-                currentImage.src = imageUrl
-            })
+            .then(imageUrl => currentImage.src = imageUrl)
             .catch(err => console.error(err))
     }
 
