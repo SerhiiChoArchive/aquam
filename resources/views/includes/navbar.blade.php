@@ -22,11 +22,6 @@
                         <i class="material-icons">insert_drive_file</i>Прайс лист
                     </a>
                 </li>
-                <li class="{{ App\Helper::activeIfRouteIs(['images']) }}">
-                    <a href="{{ action('ImagesController@index') }}" class="black-text">
-                        <i class="material-icons">photo_library</i>Изображения
-                    </a>
-                </li>
                 <li>
                     <a href="javascript:" onclick="document.getElementById('logout-form').submit()" class="black-text">
                         <i class="material-icons">exit_to_app</i>Выйти
