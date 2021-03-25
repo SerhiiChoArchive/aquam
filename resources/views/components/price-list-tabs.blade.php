@@ -22,7 +22,7 @@
             :categories="$price->fish"
             names="Артикль,Название,Цена,Размер"
             keys="article,name,price,size"
-            category="fish"
+            header="fish"
         ></x-price-tab-content>
     </div>
     <div id="equipment" class="col s12">
@@ -30,7 +30,7 @@
             :categories="$price->equipment"
             names="Артикль,Название,Описание,Производитель,Цена"
             keys="article,name,description,producer,price"
-            category="equipment"
+            header="equipment"
         ></x-price-tab-content>
     </div>
     <div id="feed" class="col s12">
@@ -38,7 +38,7 @@
             :categories="$price->feed"
             names="Артикль,Название,Описание,Упаковка,Цена"
             keys="article,name,description,weight,price"
-            category="feed"
+            header="feed"
         ></x-price-tab-content>
     </div>
     <div id="chemistry" class="col s12">
@@ -46,7 +46,7 @@
             :categories="$price->chemistry"
             names="Артикль,Название,Производитель,Описание,Цена"
             keys="article,name,capacity,description,price"
-            category="chemistry"
+            header="chemistry"
         ></x-price-tab-content>
     </div>
     <div id="aquariums" class="col s12">
@@ -54,7 +54,7 @@
             :categories="$price->aquariums"
             names="Артикль,Название,Обьем,Описание,Цена"
             keys="article,name,capacity,description,price"
-            category="aquariums"
+            header="aquariums"
         ></x-price-tab-content>
     </div>
 @else
