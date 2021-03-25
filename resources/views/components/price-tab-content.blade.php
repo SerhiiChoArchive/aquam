@@ -23,6 +23,9 @@
                             </thead>
                             <tbody class="striped">
                                 @foreach ($items as $item)
+                                    @php
+                                        $rand = random_int(0, 99999);
+                                    @endphp
                                     @isset($item['article'])
                                         <tr>
                                             @foreach ($keys as $key)
@@ -33,24 +36,24 @@
                                                      class="async-load spinner"
                                                      data-async-load="{{ $item['image'] ?? '' }}"
                                                      data-class="z-depth-1"
-                                                     data-id="image-{{ $loop->index }}-{{ $header }}"
+                                                     data-id="image-{{ $loop->index }}-{{ $rand }}"
                                                 ></div>
                                             </td>
                                             <td>
                                                 <form>
                                                     <input type="file"
                                                            style="display: none"
-                                                           id="input-{{ $loop->index }}-{{ $header }}"
+                                                           id="input-{{ $loop->index }}-{{ $rand }}"
                                                            class="_upload-image"
                                                            data-article="{{ $item['article'] }}"
-                                                           data-image="image-{{ $loop->index }}-{{ $header }}"
+                                                           data-image="image-{{ $loop->index }}-{{ $rand }}"
                                                            data-category="{{ $header }}"
                                                     >
 
                                                     <label
                                                             class="upload-image"
                                                             title="Выбрать изображение"
-                                                            for="input-{{ $loop->index }}-{{ $header }}"
+                                                            for="input-{{ $loop->index }}-{{ $rand }}"
                                                     >
                                                         <img src="{{ asset('storage/upload-image.png') }}"
                                                              alt="upload"
@@ -63,6 +66,9 @@
                                         </tr>
                                     @else
                                         @foreach ($item as $single)
+                                            @php
+                                                $rand = random_int(0, 99999);
+                                            @endphp
                                             <tr>
                                                 @foreach ($keys as $key)
                                                     <td>{{ $single[$key] }}</td>
@@ -72,24 +78,24 @@
                                                          class="async-load spinner"
                                                          data-async-load="{{ $single['image'] ?? '' }}"
                                                          data-class="z-depth-1"
-                                                         data-id="image-{{ $loop->index }}-{{ $header }}"
+                                                         data-id="image-{{ $loop->index }}-{{ $rand }}"
                                                     ></div>
                                                 </td>
                                                 <td>
                                                     <form>
                                                         <input type="file"
                                                                style="display: none"
-                                                               id="input-{{ $loop->index }}-{{ $header }}"
+                                                               id="input-{{ $loop->index }}-{{ $rand }}"
                                                                class="_upload-image"
                                                                data-article="{{ $single['article'] }}"
-                                                               data-image="image-{{ $loop->index }}-{{ $header }}"
+                                                               data-image="image-{{ $loop->index }}-{{ $rand }}"
                                                                data-category="{{ $header }}"
                                                         >
 
                                                         <label
                                                                 class="upload-image"
                                                                 title="Выбрать изображение"
-                                                                for="input-{{ $loop->index }}-{{ $header }}"
+                                                                for="input-{{ $loop->index }}-{{ $rand }}"
                                                         >
                                                             <img src="{{ asset('storage/upload-image.png') }}"
                                                                  alt="upload"
