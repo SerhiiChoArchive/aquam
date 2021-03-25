@@ -33,21 +33,15 @@ class ImagesController extends Controller
 
     private function updatePriceListInDatabase(string $image_url, string $category, string $article): void
     {
-        $price_list_v1 = PriceList::getLatest(1);
-        $price_list_v2 = PriceList::getLatest(2);
+        $price_list = PriceList::getLatest(1);
 
-        if (!$price_list_v1 || !$price_list_v2) {
+        if (!$price_list) {
             return;
         }
 
-        if ($category === 'fish') {
-            $this->updateFish($article, $image_url, $price_list_v1);
-            $this->updateFish($article, $image_url, $price_list_v2);
-            return;
-        }
-
-        $this->updateOthers($article, $image_url, $price_list_v1, $category);
-        $this->updateOthers($article, $image_url, $price_list_v2, $category);
+        $category === 'fish'
+            ? $this->updateFish($article, $image_url, $price_list)
+            : $this->updateOthers($article, $image_url, $price_list, $category);
     }
 
     private function updateFish(string $article, string $image_url, PriceList $price_list): void
@@ -68,13 +62,10 @@ class ImagesController extends Controller
 
     private function updateOthers(string $article, string $image_url, PriceList $price_list, string $category): void
     {
-        return;
         $result = array_map(static function ($items) use ($article, $image_url) {
-            foreach ($items as &$item) {
-                if ($item['article'] === $article) {
-                    $item['image'] = $image_url;
-                    break;
-                }
+            dd($items);
+            foreach ($items as $item) {
+                //
             }
 
             return $items;

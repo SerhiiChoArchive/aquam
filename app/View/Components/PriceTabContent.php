@@ -9,14 +9,14 @@ class PriceTabContent extends Component
     public array $categories;
     public array $names;
     public array $keys;
-    public string $category;
+    public string $header;
 
-    public function __construct(?array $categories, string $names, string $keys, string $category)
+    public function __construct(?array $categories, string $names, string $keys, string $header)
     {
         $this->categories = $categories ?? [];
         $this->names = explode(',', $names);
         $this->keys = explode(',', $keys);
-        $this->category = $category;
+        $this->header = $header;
     }
 
     /**

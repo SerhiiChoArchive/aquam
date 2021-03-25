@@ -16,8 +16,16 @@ class DashboardController extends Controller
      */
     public function index(): View
     {
+        $price = PriceList::getLatest(2);
+
+        if ($price) {
+            $price->fish = array_map(static function ($category) {
+                return [$category];
+            }, $price->fish);
+        }
+
         return view('dashboard', [
-            'price' => $price = PriceList::getLatest(1),
+            'price' => $price,
             'last_upload' => $price ? TimeAgo::trans($price->created_at->toDateTimeString()) : '-',
             'last_request' => TimeAgo::trans(cache()->get('last_request')),
         ]);
