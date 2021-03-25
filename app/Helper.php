@@ -24,12 +24,11 @@ class Helper
      * @param array[] $arr
      *
      * @return int
+     * @throws \JsonException
      */
     public static function countArrayItems(?array $arr): int
     {
-        return array_reduce($arr ?? [], static function ($carry, $item) {
-            return $carry + count($item);
-        }, 0);
+        return preg_match_all('/"article"/', json_encode($arr, JSON_THROW_ON_ERROR));
     }
 
     public static function getCategoriesDiff(?array $categories1, ?array $categories2, string $column_to_compare): array
