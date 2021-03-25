@@ -43,6 +43,10 @@ trait CanConvertToFish
                 continue;
             }
 
+            if (empty($not_nulls)) {
+                continue;
+            }
+
             $image = $this->getImageFrom($article, 'fish');
 
             $result[$title][] = array_merge($columns, compact('image'));
