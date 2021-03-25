@@ -31,9 +31,9 @@
                                             @foreach ($keys as $key)
                                                 <td>{{ $item[$key] }}</td>
                                             @endforeach
-                                            <td>
+                                            <td class="center">
                                                 <img data-src="{{ $item['image'] ?? '' }}"
-                                                     height="70"
+                                                     height="60"
                                                      class="lazy-loader z-depth-1"
                                                      id="image-{{ $loop->index }}-{{ $rand }}"
                                                 >
@@ -72,9 +72,9 @@
                                                 @foreach ($keys as $key)
                                                     <td>{{ $single[$key] }}</td>
                                                 @endforeach
-                                                <td>
+                                                <td class="center">
                                                     <img data-src="{{ $single['image'] ?? '' }}"
-                                                         height="70"
+                                                         height="60"
                                                          class="lazy-loader z-depth-1"
                                                          id="image-{{ $loop->index }}-{{ $rand }}"
                                                     >
