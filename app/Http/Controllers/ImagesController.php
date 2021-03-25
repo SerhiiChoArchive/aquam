@@ -63,9 +63,20 @@ class ImagesController extends Controller
     private function updateOthers(string $article, string $image_url, PriceList $price_list, string $category): void
     {
         $result = array_map(static function ($items) use ($article, $image_url) {
-            dd($items);
-            foreach ($items as $item) {
-                //
+            foreach ($items as &$inner_items) {
+                if (isset($inner_items['article'])) {
+                    if ($inner_items['article'] === $article) {
+                        $inner_items['image'] = $image_url;
+                        break;
+                    }
+                } else {
+                    foreach ($inner_items as &$item) {
+                        if ($item['article'] === $article) {
+                            $item['image'] = $image_url;
+                            break 2;
+                        }
+                    }
+                }
             }
 
             return $items;
