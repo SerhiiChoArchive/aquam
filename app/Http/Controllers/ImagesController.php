@@ -15,10 +15,12 @@ class ImagesController extends Controller
     {
         $file = $request->file('file');
         $article = $request->get('article');
+        $category = $request->get('category');
 
         $image_url = $this->saveFile($article, $file);
 
-        $this->updatePriceListInDatabase($image_url, $request->get('category'), $article);
+        $this->updatePriceListInDatabase($image_url, $category, $article);
+        $this->updateImageInCsvFile($image_url, $category, $article);
 
         return $image_url;
     }
@@ -28,7 +30,7 @@ class ImagesController extends Controller
         $file_name = sprintf("%s-%s.%s", Str::slug($article), time(), $file->getClientOriginalExtension());
         $file->move(storage_path('app/public/uploads'), $file_name);
 
-        return asset("storage/uploads/$file_name");
+        return "/storage/uploads/$file_name";
     }
 
     private function updatePriceListInDatabase(string $image_url, string $category, string $article): void
@@ -83,5 +85,16 @@ class ImagesController extends Controller
         }, $price_list->{$category});
 
         $price_list->update([$category => $result]);
+    }
+
+    private function updateImageInCsvFile(string $image_url, string $category, string $article): void
+    {
+        $path = storage_path("app/csv/$category.csv");
+
+        $content = file_get_contents($path);
+
+        $new_content = preg_replace(sprintf('/\b(%s)\|(.*)/u', $article), '${1}|' . $image_url, $content);
+
+        file_put_contents($path, $new_content);
     }
 }
