@@ -19,6 +19,7 @@
                                     <th>{{ $name }}</th>
                                 @endforeach
                                 <th>Изображение</th>
+                                <th>Выбрать</th>
                             </tr>
                             </thead>
                             <tbody class="striped">
