@@ -32,12 +32,11 @@
                                                 <td>{{ $item[$key] }}</td>
                                             @endforeach
                                             <td>
-                                                <div data-width="120"
-                                                     class="async-load spinner"
-                                                     data-async-load="{{ $item['image'] ?? '' }}"
-                                                     data-class="z-depth-1"
-                                                     data-id="image-{{ $loop->index }}-{{ $rand }}"
-                                                ></div>
+                                                <img data-src="{{ $item['image'] ?? '' }}"
+                                                     height="70"
+                                                     class="lazy-loader z-depth-1"
+                                                     id="image-{{ $loop->index }}-{{ $rand }}"
+                                                >
                                             </td>
                                             <td>
                                                 <form>
@@ -74,12 +73,11 @@
                                                     <td>{{ $single[$key] }}</td>
                                                 @endforeach
                                                 <td>
-                                                    <div data-width="120"
-                                                         class="async-load spinner"
-                                                         data-async-load="{{ $single['image'] ?? '' }}"
-                                                         data-class="z-depth-1"
-                                                         data-id="image-{{ $loop->index }}-{{ $rand }}"
-                                                    ></div>
+                                                    <img data-src="{{ $single['image'] ?? '' }}"
+                                                         height="70"
+                                                         class="lazy-loader z-depth-1"
+                                                         id="image-{{ $loop->index }}-{{ $rand }}"
+                                                    >
                                                 </td>
                                                 <td>
                                                     <form>

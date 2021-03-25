@@ -1,11 +1,11 @@
-import AsyncLoader from './AsyncLoader'
 import './materialize'
 import UploadImage from './UploadImage'
+import LazyLoader from './LazyLoader'
 
 document.addEventListener('DOMContentLoaded', () => {
-    (function RunAsyncLoader() {
-        let holders = document.querySelectorAll('.async-load')
-        holders.length > 0 ? new AsyncLoader(holders).start() : null
+    ;(function RunLazyLoader() {
+        const images = document.querySelectorAll('.lazy-loader')
+        images ? new LazyLoader(images).start() : null
     })()
 
     ;(function ListenForFileUploading() {
