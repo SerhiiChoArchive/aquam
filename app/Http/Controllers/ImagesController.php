@@ -33,7 +33,7 @@ class ImagesController extends Controller
 
     private function updatePriceListInDatabase(string $image_url, string $category, string $article): void
     {
-        $price_list = PriceList::getLatest(1);
+        $price_list = PriceList::getLatest(2);
 
         if (!$price_list) {
             return;
