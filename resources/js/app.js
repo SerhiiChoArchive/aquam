@@ -1,13 +1,10 @@
 import './materialize'
 import UploadImage from './UploadImage'
-import LazyLoader from './LazyLoader'
+import smoothLoader from 'smooth-loader'
+
+smoothLoader()
 
 document.addEventListener('DOMContentLoaded', () => {
-    ;(function RunLazyLoader() {
-        const images = document.querySelectorAll('.lazy-loader')
-        images ? new LazyLoader(images).start() : null
-    })()
-
     ;(function ListenForFileUploading() {
         const inputs = document.querySelectorAll('._upload-image')
 

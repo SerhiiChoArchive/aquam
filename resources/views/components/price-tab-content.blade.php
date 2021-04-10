@@ -35,7 +35,7 @@
                                             <td class="center">
                                                 <img data-src="{{ $item['image'] ?? '' }}"
                                                      height="60"
-                                                     class="lazy-loader z-depth-1"
+                                                     class="smooth-loader z-depth-1"
                                                      id="image-{{ $loop->index }}-{{ $rand }}"
                                                 >
                                             </td>
@@ -76,7 +76,7 @@
                                                 <td class="center">
                                                     <img data-src="{{ $single['image'] ?? '' }}"
                                                          height="60"
-                                                         class="lazy-loader z-depth-1"
+                                                         class="smooth-loader z-depth-1"
                                                          id="image-{{ $loop->index }}-{{ $rand }}"
                                                     >
                                                 </td>

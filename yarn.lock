@@ -4942,6 +4942,11 @@ slash@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
 
+smooth-loader@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/smooth-loader/-/smooth-loader-1.0.3.tgz#ac29190e12967ff1cc2844aa8eac1dd3539e5f44"
+  integrity sha512-HkbnCxQ17xVY84X90m6JKvEgYXreC2tKMkTA7dP7XdokpNtqQAnEll7Ch+bp0Upj0B6r0AKR5DFJwsGoNgZT6g==
+
 snapdragon-node@^2.0.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/snapdragon-node/-/snapdragon-node-2.1.1.tgz#6c175f86ff14bdb0724563e8f3c1b021a286853b"
