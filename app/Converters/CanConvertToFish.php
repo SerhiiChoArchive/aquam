@@ -52,7 +52,7 @@ trait CanConvertToFish
                 continue;
             }
 
-            $image = $this->getImageFrom((string) $article, 'fish');
+            $image = $this->getImageFrom((string) $name, 'fish');
 
             $result[$title][] = array_merge($columns, compact('image'));
         }
