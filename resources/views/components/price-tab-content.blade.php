@@ -29,7 +29,11 @@
                                     @isset($item['article'])
                                         <tr>
                                             @foreach ($keys as $key)
-                                                <td>{{ $item[$key] }}</td>
+                                                @if (isset($item[$key]) && !is_array($item[$key]))
+                                                    <td>{{ $item[$key] }}</td>
+                                                @else
+                                                    <td>?</td>
+                                                @endif
                                             @endforeach
                                             <td class="center">
                                                 <img data-src="{{ $item['image'] ?? '' }}"
@@ -49,9 +53,10 @@
                                                     @if(isset($single[$key]) && !is_array($single[$key]))
                                                         <td>{{ $single[$key] }}</td>
                                                     @else
-                                                        <td>-error-</td>
+                                                        <td>?</td>
                                                     @endif
                                                 @endforeach
+
                                                 <td class="center">
                                                     <img data-src="{{ $single['image'] ?? '' }}"
                                                          height="60"
