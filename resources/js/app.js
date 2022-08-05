@@ -1,4 +1,4 @@
 import './materialize'
 import smoothLoader from 'smooth-loader'
 
-smoothLoader()
+smoothLoader('.smooth-loader')

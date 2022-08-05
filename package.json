@@ -12,7 +12,7 @@
     "dependencies": {
         "material-icons": "^0.3.1",
         "materialize-css": "^1.0.0",
-        "smooth-loader": "^1.0.3"
+        "smooth-loader": "^1.0.7"
     },
     "devDependencies": {
         "cross-env": "^5.2.0",
