@@ -71,7 +71,11 @@
                                             @endphp
                                             <tr>
                                                 @foreach ($keys as $key)
-                                                    <td>{{ $single[$key] }}</td>
+                                                    @if(isset($single[$key]) && !is_array($single[$key]))
+                                                        <td>{{ $single[$key] }}</td>
+                                                    @else
+                                                        <td>-error-</td>
+                                                    @endif
                                                 @endforeach
                                                 <td class="center">
                                                     <img data-src="{{ $single['image'] ?? '' }}"
@@ -82,24 +86,28 @@
                                                 </td>
                                                 <td>
                                                     <form>
-                                                        <input type="file"
-                                                               style="display: none"
-                                                               id="input-{{ $loop->index }}-{{ $rand }}"
-                                                               class="_upload-image"
-                                                               data-article="{{ $single['article'] }}"
-                                                               data-image="image-{{ $loop->index }}-{{ $rand }}"
-                                                               data-category="{{ $header }}"
-                                                        >
+                                                        @isset($single['article'])
+                                                            <input type="file"
+                                                                style="display: none"
+                                                                id="input-{{ $loop->index }}-{{ $rand }}"
+                                                                class="_upload-image"
+                                                                data-article="{{ $single['article'] }}"
+                                                                data-image="image-{{ $loop->index }}-{{ $rand }}"
+                                                                data-category="{{ $header }}"
+                                                            >
+                                                        @else
+                                                            -error-
+                                                        @endisset
 
                                                         <label
-                                                                class="upload-image"
-                                                                title="Выбрать изображение"
-                                                                for="input-{{ $loop->index }}-{{ $rand }}"
+                                                            class="upload-image"
+                                                            title="Выбрать изображение"
+                                                            for="input-{{ $loop->index }}-{{ $rand }}"
                                                         >
                                                             <img src="{{ asset('storage/upload-image.png') }}"
-                                                                 alt="upload"
-                                                                 width="30"
-                                                                 height="30"
+                                                                alt="upload"
+                                                                width="30"
+                                                                height="30"
                                                             >
                                                         </label>
                                                     </form>
