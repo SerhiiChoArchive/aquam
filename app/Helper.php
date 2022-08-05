@@ -40,6 +40,22 @@ class Helper
         $names1 = self::getAllNames($categories1, $column_to_compare);
         $names2 = self::getAllNames($categories2, $column_to_compare);
 
+        foreach ($names1 as &$item1) {
+            if (is_array($item1)) {
+                $item1 = '';
+            }
+        }
+
+        unset($item1);
+
+        foreach ($names2 as &$item2) {
+            if (is_array($item2)) {
+                $item2 = '';
+            }
+        }
+
+        unset($item2);
+
         $diff = array_diff($names1, $names2) + array_diff($names2, $names1);
 
         $new_items1 = self::getDifferentItems($column_to_compare, $diff, $categories1);

@@ -19,7 +19,6 @@
                                     <th>{{ $name }}</th>
                                 @endforeach
                                 <th>Изображение</th>
-                                <th>Выбрать</th>
                             </tr>
                             </thead>
                             <tbody class="striped">
@@ -38,30 +37,6 @@
                                                      class="smooth-loader z-depth-1"
                                                      id="image-{{ $loop->index }}-{{ $rand }}"
                                                 >
-                                            </td>
-                                            <td>
-                                                <form>
-                                                    <input type="file"
-                                                           style="display: none"
-                                                           id="input-{{ $loop->index }}-{{ $rand }}"
-                                                           class="_upload-image"
-                                                           data-article="{{ $item['article'] }}"
-                                                           data-image="image-{{ $loop->index }}-{{ $rand }}"
-                                                           data-category="{{ $header }}"
-                                                    >
-
-                                                    <label
-                                                            class="upload-image"
-                                                            title="Выбрать изображение"
-                                                            for="input-{{ $loop->index }}-{{ $rand }}"
-                                                    >
-                                                        <img src="{{ asset('storage/upload-image.png') }}"
-                                                             alt="upload"
-                                                             width="30"
-                                                             height="30"
-                                                        >
-                                                    </label>
-                                                </form>
                                             </td>
                                         </tr>
                                     @else
@@ -83,34 +58,6 @@
                                                          class="smooth-loader z-depth-1"
                                                          id="image-{{ $loop->index }}-{{ $rand }}"
                                                     >
-                                                </td>
-                                                <td>
-                                                    <form>
-                                                        @isset($single['article'])
-                                                            <input type="file"
-                                                                style="display: none"
-                                                                id="input-{{ $loop->index }}-{{ $rand }}"
-                                                                class="_upload-image"
-                                                                data-article="{{ $single['article'] }}"
-                                                                data-image="image-{{ $loop->index }}-{{ $rand }}"
-                                                                data-category="{{ $header }}"
-                                                            >
-                                                        @else
-                                                            -error-
-                                                        @endisset
-
-                                                        <label
-                                                            class="upload-image"
-                                                            title="Выбрать изображение"
-                                                            for="input-{{ $loop->index }}-{{ $rand }}"
-                                                        >
-                                                            <img src="{{ asset('storage/upload-image.png') }}"
-                                                                alt="upload"
-                                                                width="30"
-                                                                height="30"
-                                                            >
-                                                        </label>
-                                                    </form>
                                                 </td>
                                             </tr>
                                         @endforeach
