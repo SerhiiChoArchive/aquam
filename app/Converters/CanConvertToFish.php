@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Converters;
 
+use PhpOffice\PhpSpreadsheet\RichText\RichText;
+
 trait CanConvertToFish
 {
     /**
@@ -20,12 +22,17 @@ trait CanConvertToFish
         for ($i = 4, $i_max = count($price_list[0]); $i < $i_max; $i++) {
             $article = $price_list[0][$i];
             $name = $price_list[1][$i];
+            $size = $price_list[2][$i];
             $first_column_value = $price_list[0][$i] ?? null;
+
+            if ($size instanceof RichText) {
+                $size = $size->getPlainText();
+            }
 
             $columns = [
                 'article' => is_string($article) ? trim($article) : $article,
                 'name' => is_string($name) ? trim($name) : $name,
-                'size' => $price_list[2][$i],
+                'size' => $size,
                 'price' => $price_list[3][$i],
                 'comment' => trim($price_list[4][$i] ?? ''),
             ];
